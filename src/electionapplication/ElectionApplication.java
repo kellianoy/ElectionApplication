@@ -25,14 +25,16 @@ public class ElectionApplication {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         // TODO code application logic here
         try{
-
+            String user = "kebecks";
+            String mdp = "electionapplication";
+            String database = "electionApplication";
             Class.forName("com.mysql.cj.jdbc.Driver");
-            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3308/electionapplication?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "")) {
+            try (Connection con = DriverManager.getConnection("jdbc:mysql://82.124.134.253:3306/" + database, user, mdp)) {
                 Statement stm=con.createStatement();
                 ResultSet res=stm.executeQuery("select * from user");
 
                 while (res.next()){
-                    System.out.println("email :"+res.getString(1)+ " | id : " + res.getString(2)  + " | password : "+res.getString(3));
+                    System.out.println("email : "+res.getString(1)+ " | id : " + res.getString(2)  + " | password : "+res.getString(3));
                 }
             } 
         }
