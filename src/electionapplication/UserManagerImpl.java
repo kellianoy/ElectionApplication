@@ -33,7 +33,11 @@ public class UserManagerImpl implements UserManager {
                   + "VALUES ('"+v.getEmail()+"', NULL, '"+v.getPassword()+"', '"+v.getSQLdate()+"', '"+v.getFirstName()+"', '"+v.getLastName()+"')");
                 
                 ResultSet userID=stm.executeQuery("SELECT UserID FROM user WHERE email LIKE '" + v.getEmail() + "'"); 
-                stm.executeUpdate("INSERT INTO voter (VoterID, state, votedFor) VALUES ('" + userID.getInt(1) + "', '"+ v.getState() +"', NULL");
+                if (userID.next())
+                {
+                    System.out.println(" USER ID : " + userID.getInt(1) + " State : " + v.getState());
+                    stm.executeUpdate("INSERT INTO voter (VoterID, state, votedFor) VALUES ('" + userID.getInt(1) + "', \""+ v.getState() +"\", NULL)");
+                }
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
