@@ -24,7 +24,8 @@ public class UserManagerImpl implements UserManager {
         data=new Database();
     }
     
-    /* Using a voter, can create a user entry in the database*/
+    /* Using a voter, can create a user entry in the database, returns true if it worked, false if it didn't*/
+    
     @Override
     public boolean insertVoter(Voter v) {
         try (Connection con = data.establishConnection()) {
