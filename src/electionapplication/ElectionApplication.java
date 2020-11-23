@@ -5,16 +5,16 @@
  */
 package electionapplication;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.GregorianCalendar;
 
 /**
  *
  * @author Keke
  */
+
+
+
 public class ElectionApplication {
 
     /**
@@ -24,23 +24,14 @@ public class ElectionApplication {
      */
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         // TODO code application logic here
-        try{
-            String user = "kebecks";
-            String mdp = "electionapplication";
-            String database = "electionApplication";
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            try (Connection con = DriverManager.getConnection("jdbc:mysql://82.124.134.253:3306/" + database, user, mdp)) {
-                Statement stm=con.createStatement();
-                ResultSet res=stm.executeQuery("select * from user");
-
-                while (res.next()){
-                    System.out.println("email : "+res.getString(1)+ " | id : " + res.getString(2)  + " | password : "+res.getString(3));
-                }
-            } 
-        }
-        catch (ClassNotFoundException | SQLException e) { 
-            e.printStackTrace();
-        } 
     
+        GUI_Start window = new GUI_Start();
+        window.embeddedMain();
+        
+    }
+    
+    /* Take a SQL date as a parameter, converts it and returns it to GregorianCalender */
+    public static GregorianCalendar convertSQLtoGregorian(String SQLdate){
+      return new GregorianCalendar(Integer.parseInt(SQLdate.substring(0, 4)), Integer.parseInt(SQLdate.substring(5, 7)), Integer.parseInt(SQLdate.substring(8)));
     }
 }

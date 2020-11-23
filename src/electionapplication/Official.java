@@ -13,8 +13,15 @@ import java.util.GregorianCalendar;
  */
 public class Official extends User {
     
+    UserManagerImpl dataController;
+    
     public Official(String email, String password, GregorianCalendar dateOfBirth, String firstName, String lastName) {
         super(email, password, dateOfBirth, firstName, lastName);
+        dataController = new UserManagerImpl();
+    }
+    
+    public boolean addVoter(Voter v){
+        return dataController.insertVoter(v);
     }
     
 }

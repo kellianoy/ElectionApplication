@@ -43,6 +43,11 @@ public abstract class User {
     {
         return dateOfBirth;
     }
+    public String getSQLdate(){
+        return dateOfBirth.get(dateOfBirth.YEAR) + "-" + dateOfBirth.get(dateOfBirth.MONTH)+ "-" + dateOfBirth.get(dateOfBirth.DAY_OF_MONTH);
+    }
+    
+    
     public String getFirstName()
     {
         return firstName;
@@ -52,6 +57,7 @@ public abstract class User {
     {
         return lastName;
     }
+    
     
   
             

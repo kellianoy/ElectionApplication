@@ -19,7 +19,15 @@ public class Voter extends User {
     public Voter(String email, String password, GregorianCalendar dateOfBirth, String firstName, String lastName, String state, Candidate votedFor) {
         super(email, password, dateOfBirth, firstName, lastName);
         this.state=state;
-        this.votedFor=votedFor;        
+        this.votedFor=null;        
+    }
+    
+    public String getState() {
+        return state;
+    }
+    
+    public Candidate getVotedFor() {
+        return votedFor;
     }
     
 }
