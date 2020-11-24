@@ -8,7 +8,7 @@ package electionapplication;
 import java.util.GregorianCalendar;
 
 /**
- *
+ * Class used as an administrator, has almost all accesses. 
  * @author Keke
  */
 public class Official extends User {
@@ -20,6 +20,11 @@ public class Official extends User {
         dataController = new UserManagerImpl();
     }
     
+    /** 
+     * Add a voter to the database
+     * @param v
+     * @return 
+     */
     public boolean addVoter(Voter v){
         return dataController.insertVoter(v);
     }

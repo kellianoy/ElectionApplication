@@ -8,7 +8,7 @@ package electionapplication;
 import java.util.GregorianCalendar;
 
 /**
- *
+ * Self-Explanatory.
  * @author Keke
  */
 

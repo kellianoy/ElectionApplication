@@ -1,8 +1,5 @@
 package electionapplication;
 
-import static electionapplication.ElectionApplication.convertSQLtoGregorian;
-import java.sql.*;
-import java.util.logging.*;
 import javax.swing.JOptionPane;
 
 /*
@@ -12,18 +9,20 @@ import javax.swing.JOptionPane;
  */
 
 /**
- *
+ * GUI used to log into the program.
  * @author Keke
  */
 public class GUI_Start extends javax.swing.JFrame {
 
+    /* LoggerManagerImpl that will allow database connectivity to the gui without using sql in the gui or gui in loggermanagerimpl */
+    private LoggerManagerImpl manager;
     /**
      * Creates new form GUI_Start
      */
     public GUI_Start() {
         initComponents();
+        manager=new LoggerManagerImpl();
         setTitle("Election Simulation");
-        data = new Database();
     }
 
     /**
@@ -43,6 +42,7 @@ public class GUI_Start extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(676, 440));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Email"));
 
@@ -127,15 +127,15 @@ public class GUI_Start extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -148,27 +148,26 @@ public class GUI_Start extends javax.swing.JFrame {
     
     /* Let's check if, when we press the button, if the email and password provided are correct with the database. If they're not, send a message, if it is, then go on */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         
-        try (Connection con = data.establishConnection()) {
+        
+        User check=manager.loggingCheck(jTextField1.getText(), new String(jPasswordField1.getPassword()));
+        if (check!=null)
+        {
+            if (check.getClass().getSimpleName().equals("Official"))
+            {
+                GUI_Official officialWindow = new GUI_Official((Official) check);
+                officialWindow.embeddedMain();
+                setVisible(false);
+            }
+            else if (check.getClass().getSimpleName().equals("Candidate"))
+            {
+                JOptionPane.showMessageDialog(null, "This is a candidate. //NOT YET IMPLEMENTED" , "Election Simulation", 1 );
+            }
+            else
+                JOptionPane.showMessageDialog(null, "This is a voter. //NOT YET IMPLEMENTED" , "Election Simulation", 1 );
             
-                PreparedStatement stm = con.prepareStatement("SELECT * FROM user where email=? AND password=?");
-                stm.setString(1, jTextField1.getText());
-                stm.setString(2, new String(jPasswordField1.getPassword()));
-                
-                try (ResultSet user = stm.executeQuery()) {
-                    if (user.next())
-                    {
-                        GUI_Official officialWindow = new GUI_Official(user.getString(1), user.getString(3), convertSQLtoGregorian(user.getString(4)) ,user.getString(5), user.getString(6));
-                        officialWindow.embeddedMain();
-                        setVisible(false);
-                    }
-                    else
-                        JOptionPane.showMessageDialog(null, "Wrong informations, please retry." , "Election Simulation", 1 );
-                }
-            } 
-        catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
+        else
+             JOptionPane.showMessageDialog(null, "Wrong informations, please retry." , "Election Simulation", 1 );
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed

@@ -6,26 +6,18 @@
 package electionapplication;
 
 import static electionapplication.ElectionApplication.convertSQLtoGregorian;
-import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * GUI used by the officials.
  * @author Keke
  */
 public class GUI_Official extends javax.swing.JFrame {
 
     private Official admin;
-    /**
-     * Creates new form GUI_Official
-     * @param email
-     * @param password
-     * @param dateOfBirth
-     * @param firstName
-     * @param lastName
-     */
-    public GUI_Official(String email, String password, GregorianCalendar dateOfBirth, String firstName, String lastName) {
-        admin = new Official(email, password, dateOfBirth, firstName, lastName);
+
+    public GUI_Official(Official admin) {
+        this.admin = admin;
         initComponents();
         setVisible(true);
 

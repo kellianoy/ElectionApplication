@@ -13,8 +13,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * The class is used to do operations from an official, it connects to the database and requests / writes to the database freely using the methods provided.
  * @author Keke
+ * 
  */
 public class UserManagerImpl implements UserManager {
    
@@ -24,7 +25,10 @@ public class UserManagerImpl implements UserManager {
         data=new Database();
     }
     
-    /* Using a voter, can create a user entry in the database, returns true if it worked, false if it didn't*/
+    /** Using a voter, can create a user entry in the database, returns true if it worked, false if it didn't
+     * @param v
+     * @return 
+     */
     
     @Override
     public boolean insertVoter(Voter v) {

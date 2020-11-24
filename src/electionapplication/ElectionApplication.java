@@ -30,7 +30,9 @@ public class ElectionApplication {
         
     }
     
-    /* Take a SQL date as a parameter, converts it and returns it to GregorianCalender */
+    /** Take a SQL date as a parameter, converts it and returns it to GregorianCalender
+     * @param SQLdate
+     * @return  */
     public static GregorianCalendar convertSQLtoGregorian(String SQLdate){
       return new GregorianCalendar(Integer.parseInt(SQLdate.substring(0, 4)), Integer.parseInt(SQLdate.substring(5, 7)), Integer.parseInt(SQLdate.substring(8)));
     }

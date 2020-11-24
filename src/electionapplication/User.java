@@ -8,7 +8,7 @@ package electionapplication;
 import java.util.*;
 
 /**
- *
+ * Base class for the 3 others.
  * @author Keke
  */
 
