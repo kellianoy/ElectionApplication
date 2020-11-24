@@ -25,7 +25,14 @@ public class Candidate extends User {
         this.politicalParty=politicalParty;
         this.description=description;
     }
+
+    public String getParty() {
+        return politicalParty;
+    }
     
+    public String getDescription() {
+        return description;
+    }
     
     
 }

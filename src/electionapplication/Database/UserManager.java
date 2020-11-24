@@ -5,7 +5,7 @@
  */
 package electionapplication.Database;
 
-import electionapplication.User.Voter;
+import electionapplication.User.*;
 
 /**
  * DB Interface for the Official Class
@@ -15,5 +15,7 @@ public interface UserManager {
     
     public boolean insertVoter(Voter v);
     public boolean deleteVoter(Voter v);
+    
+    public boolean insertCandidate(Candidate c);
     
 }
