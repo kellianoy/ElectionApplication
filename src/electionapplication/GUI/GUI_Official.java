@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package electionapplication;
+package electionapplication.GUI;
 
+import electionapplication.Enum.State;
+import electionapplication.User.Voter;
+import electionapplication.User.Official;
 import static electionapplication.ElectionApplication.convertSQLtoGregorian;
 import javax.swing.JOptionPane;
 
@@ -334,13 +337,11 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }

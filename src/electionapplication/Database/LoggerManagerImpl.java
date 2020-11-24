@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package electionapplication;
+package electionapplication.Database;
 
+import electionapplication.User.Official;
+import electionapplication.User.Voter;
+import electionapplication.User.Candidate;
+import electionapplication.User.User;
 import static electionapplication.ElectionApplication.convertSQLtoGregorian;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,5 +1,9 @@
-package electionapplication;
+package electionapplication.GUI;
 
+import electionapplication.Database.LoggerManagerImpl;
+import electionapplication.Database.Database;
+import electionapplication.User.Official;
+import electionapplication.User.User;
 import javax.swing.JOptionPane;
 
 /*

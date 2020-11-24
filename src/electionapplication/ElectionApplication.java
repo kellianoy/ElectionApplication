@@ -5,6 +5,7 @@
  */
 package electionapplication;
 
+import electionapplication.GUI.GUI_Start;
 import java.sql.SQLException;
 import java.util.GregorianCalendar;
 
