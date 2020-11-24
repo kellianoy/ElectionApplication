@@ -174,7 +174,7 @@ public class GUI_Official extends javax.swing.JFrame {
 
         addVoterDate.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Date of birth"));
         addVoterDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
-        addVoterDate.setText("ex : 24 Nov. 1995");
+        addVoterDate.setText("yyyy-mm-dd");
         addVoterDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addVoterDateActionPerformed(evt);
@@ -285,7 +285,7 @@ public class GUI_Official extends javax.swing.JFrame {
 
         addCandidateDate.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Date of birth"));
         addCandidateDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
-        addCandidateDate.setText("ex : 24 Nov. 1995");
+        addCandidateDate.setText("yyyy-mm-dd");
         addCandidateDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addCandidateDateActionPerformed(evt);

@@ -355,7 +355,7 @@
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                   <Format format="yyyy-MM-dd" subtype="-1" type="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="ex : 24 Nov. 1995"/>
+                <Property name="text" type="java.lang.String" value="yyyy-mm-dd"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addVoterDateActionPerformed"/>
@@ -565,7 +565,7 @@
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                   <Format format="yyyy-MM-dd" subtype="-1" type="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="ex : 24 Nov. 1995"/>
+                <Property name="text" type="java.lang.String" value="yyyy-mm-dd"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addCandidateDateActionPerformed"/>
