@@ -5,6 +5,7 @@
  */
 package electionapplication.Database;
 
+import electionapplication.User.Candidate;
 import electionapplication.User.Voter;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -41,7 +42,6 @@ public class UserManagerImpl implements UserManager {
                 ResultSet userID=stm.executeQuery("SELECT UserID FROM user WHERE email LIKE '" + v.getEmail() + "'"); 
                 if (userID.next())
                 {
-                    System.out.println(" USER ID : " + userID.getInt(1) + " State : " + v.getState());
                     stm.executeUpdate("INSERT INTO voter (VoterID, state, votedFor) VALUES ('" + userID.getInt(1) + "', \""+ v.getState() +"\", NULL)");
                 }
                 return true;
@@ -55,6 +55,30 @@ public class UserManagerImpl implements UserManager {
     @Override
     public boolean deleteVoter(Voter v) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /** Using a candidate, can create a user entry in the database, returns true if it worked, false if it didn't
+     * @param c
+     * @return 
+     */
+    @Override
+    public boolean insertCandidate(Candidate c) {
+        try (Connection con = data.establishConnection()) {
+                Statement stm=con.createStatement();
+                stm.executeUpdate("INSERT INTO user (email, UserID, password, dateOfBirth, firstName, lastName) "
+                  + "VALUES ('"+c.getEmail()+"', NULL, '"+c.getPassword()+"', '"+c.getSQLdate()+"', '"+c.getFirstName()+"', '"+c.getLastName()+"')");
+                
+                ResultSet userID=stm.executeQuery("SELECT UserID FROM user WHERE email LIKE '" + c.getEmail() + "'"); 
+                if (userID.next())
+                {
+                    stm.executeUpdate("INSERT INTO candidate (CandidateID, politicalParty, description) VALUES ('" + userID.getInt(1) + "', \""+ c.getParty() +"\",'"+ c.getDescription() +"')");
+                }
+                return true;
+            } 
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return false;
     }
     
 }

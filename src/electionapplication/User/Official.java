@@ -29,5 +29,9 @@ public class Official extends User {
     public boolean addVoter(Voter v){
         return dataController.insertVoter(v);
     }
+
+    public boolean addCandidate(Candidate c) {
+        return dataController.insertCandidate(c);
+    }
     
 }
