@@ -28,7 +28,6 @@ public class GUI_Start extends javax.swing.JFrame {
     public GUI_Start() {
         initComponents();
         manager=new LoggerManagerImpl();
-        setTitle("Election Simulation");
         setLocationRelativeTo(null);
         
         
@@ -91,6 +90,7 @@ public class GUI_Start extends javax.swing.JFrame {
         settingsPopUp.add(jMenuItem3);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Election Simulator");
         setLocation(new java.awt.Point(0, 0));
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
@@ -344,14 +344,14 @@ public class GUI_Start extends javax.swing.JFrame {
             }
             else if (check.getClass().getSimpleName().equals("Candidate"))
             {
-                JOptionPane.showMessageDialog(null, "This is a candidate. //NOT YET IMPLEMENTED" , "Election Simulation", 1 );
+                JOptionPane.showMessageDialog(null, "This is a candidate. //NOT YET IMPLEMENTED" , this.getTitle(), 1 );
             }
             else
-                JOptionPane.showMessageDialog(null, "This is a voter. //NOT YET IMPLEMENTED" , "Election Simulation", 1 );
+                JOptionPane.showMessageDialog(null, "This is a voter. //NOT YET IMPLEMENTED" , this.getTitle(), 1 );
             
         }
         else
-             JOptionPane.showMessageDialog(null, "Wrong informations, please retry." , "Election Simulation", 1 );
+             JOptionPane.showMessageDialog(null, "Wrong informations, please retry." , this.getTitle(), 1 );
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
@@ -363,7 +363,7 @@ public class GUI_Start extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void jMenu1MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu1MenuSelected
-        JOptionPane.showMessageDialog(null, "Hello ! This program was made by two ECE Paris Students.\nKind regards,\nRebecca Fossa & Kellian Cottart" , "Election Simulation", 1 );
+        JOptionPane.showMessageDialog(null, "Hello ! This program was made by two ECE Paris Students.\nKind regards,\nRebecca Fossa & Kellian Cottart" , this.getTitle(), 1 );
     }//GEN-LAST:event_jMenu1MenuSelected
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

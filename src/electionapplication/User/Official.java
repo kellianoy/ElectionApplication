@@ -34,4 +34,17 @@ public class Official extends User {
         return dataController.insertCandidate(c);
     }
     
+    public boolean removeUser(String email)
+    {
+        return dataController.deleteUser(email);
+    }
+    
+    public String[][] getAllVoters(){
+        return dataController.getAllVoters();
+    }
+    
+    public boolean modifyVoter(Voter v, String lastEmail)
+    {
+        return dataController.modifyVoter(v, lastEmail);
+    }
 }
