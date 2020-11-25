@@ -29,9 +29,13 @@ public class GUI_Official extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        
+       jComboBox1.addItem("STATE");
+       jComboBox1.setSelectedItem("STATE");
         for (State s : State.values())
             jComboBox1.addItem(s.toString());
+        
+       jComboBox2.addItem("PARTY");
+       jComboBox2.setSelectedItem("PARTY");
         for (Party s : Party.values())
             jComboBox2.addItem(s.toString());
         
