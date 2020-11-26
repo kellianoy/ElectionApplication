@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package electionapplication.Database;
+package Database;
 
-import electionapplication.User.Candidate;
-import electionapplication.User.Voter;
+import User.Candidate;
+import User.Voter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -101,6 +102,7 @@ public class UserManagerImpl implements UserManager {
         } 
         return null;
     }
+    
     
     /** Returns all candidates of the database as a two-dimensional array of Strings containing every data about them
      * @return  */
@@ -206,5 +208,45 @@ public class UserManagerImpl implements UserManager {
         } 
         return false;
     }
-   
+    
+   /** 
+    * Add an entry to the status table with a set status
+     * @param status
+     * @return 
+    */
+    @Override
+    public boolean addElectionEntry(String status)
+    {
+        try (Connection con = data.establishConnection()) {
+                Statement stm=con.createStatement();
+                Calendar calendar = Calendar.getInstance();
+                java.sql.Date date = new java.sql.Date(calendar.getTime().getTime());
+                
+                stm.executeUpdate("INSERT INTO status (StateID, Date, Status) VALUES (NULL, \"" + date +"\",\""+ status +"\") ");
+                return true;
+            } 
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return false;
+    }
+    
+    /**
+     *  Returns last status from the database in the form of a string
+     * @return
+     */
+    @Override
+    public String getLastStatus()
+    {
+        try (Connection con = data.establishConnection()) {
+                Statement stm=con.createStatement();
+                ResultSet set= stm.executeQuery("SELECT Status FROM status ORDER BY StateID DESC");
+                if (set.next())
+                    return set.getString(1);
+            } 
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return null;
+    }
 }

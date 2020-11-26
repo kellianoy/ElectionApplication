@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package electionapplication.User;
+package User;
 
-import electionapplication.Database.UserManagerImpl;
+import Database.UserManagerImpl;
 import java.util.GregorianCalendar;
 
 /**
@@ -85,5 +85,24 @@ public class Official extends User {
     public boolean modifyCandidate(Candidate c, String lastEmail)
     {
         return dataController.modifyCandidate(c, lastEmail);
+    }
+    
+    /** 
+     * Add an election entry in the status database
+     * @param status
+     * @return 
+     */
+    public boolean addElectionEntry(String status)
+    {
+        return dataController.addElectionEntry(status);
+    }
+    
+     /** 
+     * Get last Status of election entry in the status database
+     * @return 
+     */
+    public String getLastStatus()
+    {
+        return dataController.getLastStatus();
     }
 }

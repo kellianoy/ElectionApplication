@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package electionapplication;
+package Application;
 
-import electionapplication.GUI.GUI_Start;
+import GUI.GUI_Start;
 import java.sql.SQLException;
 import java.util.GregorianCalendar;
 

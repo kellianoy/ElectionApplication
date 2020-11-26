@@ -3,23 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package electionapplication.GUI;
+package GUI;
 
-import electionapplication.Enum.State;
-import electionapplication.User.Voter;
-import electionapplication.User.Official;
-import static electionapplication.ElectionApplication.convertSQLtoGregorian;
-import electionapplication.Enum.Party;
-import electionapplication.User.Candidate;
+import static Application.ElectionApplication.convertSQLtoGregorian;
+import Enum.Party;
+import Enum.State;
+import User.Candidate;
+import User.Official;
+import User.Voter;
 import java.awt.CardLayout;
 import java.awt.Color;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -42,6 +38,7 @@ public class GUI_Official extends javax.swing.JFrame {
        jComboBox1.addItem("STATE");
        jComboBox1.setSelectedItem("STATE");
        
+       //Setting State values in the combo boxes
         for (State s : State.values())
         {
             jComboBox1.addItem(s.toString());
@@ -51,6 +48,7 @@ public class GUI_Official extends javax.swing.JFrame {
        jComboBox2.addItem("PARTY");
        jComboBox2.setSelectedItem("PARTY");
        
+       //Setting Party values in the combo boxes
         for (Party s : Party.values())
         {
             jComboBox2.addItem(s.toString());
@@ -58,8 +56,36 @@ public class GUI_Official extends javax.swing.JFrame {
         }
         
         cards = (CardLayout)mainPanel.getLayout();
-
+        
+        statusText.setText(admin.getLastStatus());
+        UpdateStatusButtons(statusText);
     }
+    
+        /**
+     * Main after construction of Panel object
+     */
+    public void embeddedMain() {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(GUI_Start.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        
+        UpdateStatusButtons(statusText);
+
+        
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -184,9 +210,7 @@ public class GUI_Official extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Election Simulator");
-        setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
 
@@ -197,7 +221,7 @@ public class GUI_Official extends javax.swing.JFrame {
 
         settingsButton.setBackground(new java.awt.Color(255, 255, 255));
         settingsButton.setForeground(new java.awt.Color(255, 255, 255));
-        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/electionapplication/GUI/gearIcon.png"))); // NOI18N
+        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/gearIcon.png"))); // NOI18N
         settingsButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         settingsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,7 +231,7 @@ public class GUI_Official extends javax.swing.JFrame {
 
         exitButton.setBackground(new java.awt.Color(255, 255, 255));
         exitButton.setForeground(new java.awt.Color(255, 255, 255));
-        exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/electionapplication/GUI/logoutIcon.png"))); // NOI18N
+        exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/logoutIcon.png"))); // NOI18N
         exitButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         exitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,8 +279,18 @@ public class GUI_Official extends javax.swing.JFrame {
         statusText.setText("Active");
 
         startButton.setText("Start");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startButtonActionPerformed(evt);
+            }
+        });
 
         pauseButton.setText("Pause");
+        pauseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pauseButtonActionPerformed(evt);
+            }
+        });
 
         stopButton.setText("Stop");
         stopButton.addActionListener(new java.awt.event.ActionListener() {
@@ -1050,6 +1084,34 @@ public class GUI_Official extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /** 
+     * Change the enabled buttons and the color when status change 
+     * @param status
+     */
+    private void UpdateStatusButtons(JLabel status){
+        switch(status.getText())
+        {
+            case "Active" :
+                status.setForeground(new Color(100,200,70));
+                startButton.setEnabled(false);
+                stopButton.setEnabled(true);
+                pauseButton.setEnabled(true);
+                break;
+            case "Paused" :
+                status.setForeground(new Color(0,102,130));
+                startButton.setEnabled(false);
+                stopButton.setEnabled(false);
+                pauseButton.setEnabled(true);
+                break;
+            case "Done":
+                status.setForeground(new Color(170,40,50));
+                startButton.setEnabled(true);
+                stopButton.setEnabled(false);
+                pauseButton.setEnabled(false);
+                break;
+        }
+    }
+    
     private void newMenuVoterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuVoterActionPerformed
         cards.show(mainPanel, "addVoter");
     }//GEN-LAST:event_newMenuVoterActionPerformed
@@ -1156,7 +1218,9 @@ public class GUI_Official extends javax.swing.JFrame {
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
-        // TODO add your handling code here:
+        statusText.setText("Done");
+        UpdateStatusButtons(statusText);
+        admin.addElectionEntry(statusText.getText());
     }//GEN-LAST:event_stopButtonActionPerformed
 
     private void addVoterBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVoterBackActionPerformed
@@ -1391,6 +1455,26 @@ public class GUI_Official extends javax.swing.JFrame {
            editInvisible(editCandidatesDescriptionPanel, editCandidatesDelete);
         }
     }//GEN-LAST:event_editMenuCandidateActionPerformed
+
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        
+        statusText.setText("Active");
+        UpdateStatusButtons(statusText);
+        admin.addElectionEntry(statusText.getText());
+        
+    }//GEN-LAST:event_startButtonActionPerformed
+
+    private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseButtonActionPerformed
+        String lastEntry= admin.getLastStatus();
+        if (lastEntry.equals("Paused"))
+            statusText.setText("Active");
+        else
+            statusText.setText("Paused");
+        
+        UpdateStatusButtons(statusText);
+        admin.addElectionEntry(statusText.getText());
+        
+    }//GEN-LAST:event_pauseButtonActionPerformed
     
     /** Set a panel to visible and enabled, and put a button to disabled
      * @param edit
@@ -1410,36 +1494,6 @@ public class GUI_Official extends javax.swing.JFrame {
         delete.setEnabled(true);
     }
     
-    public boolean isCellEditable(int row,int col){
-        return false;
-    } 
-
-    public void embeddedMain() {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI_Start.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI_Start.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI_Start.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI_Start.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        
-
-        
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar MenuBar;

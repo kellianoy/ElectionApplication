@@ -1,11 +1,10 @@
-package electionapplication.GUI;
+package GUI;
 
-import electionapplication.Database.LoggerManagerImpl;
-import electionapplication.Database.Database;
-import electionapplication.User.Official;
-import electionapplication.User.User;
+import Database.LoggerManagerImpl;
+import Database.Database;
+import User.Official;
+import User.User;
 import java.awt.Color;
-import java.awt.MouseInfo;
 import javax.swing.JOptionPane;
 
 /*
@@ -92,9 +91,7 @@ public class GUI_Start extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Election Simulator");
         setLocation(new java.awt.Point(0, 0));
-        setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
 
@@ -116,7 +113,7 @@ public class GUI_Start extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/electionapplication/GUI/userIcon.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/userIcon.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -149,7 +146,7 @@ public class GUI_Start extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/electionapplication/GUI/lockIcon.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/lockIcon.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -213,7 +210,7 @@ public class GUI_Start extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/electionapplication/GUI/gearIcon.png"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/gearIcon.png"))); // NOI18N
         jButton2.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -378,7 +375,7 @@ public class GUI_Start extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        jPanel3.setBackground(new Color(100,210,50));
+        jPanel3.setBackground(new Color(100,200,70));
         jPanel1.setBackground(new Color(110,170,60));
         jPanel2.setBackground(new Color(110,170,60));
         jPanel5.setBackground(new Color(110,170,60));
