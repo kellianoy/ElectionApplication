@@ -8,14 +8,17 @@ package electionapplication.Database;
 import electionapplication.User.*;
 
 /**
- * DB Interface for the Official Class
+ * DB Interface for the Official Class, can access tables, delete, modify, add on the DB
  * @author Keke
  */
 public interface UserManager {
     
     public boolean insertVoter(Voter v);
-    public boolean deleteVoter(Voter v);
+    public boolean deleteUser(String email);
+    public boolean modifyVoter(Voter v, String lastEmail) ;
+    public boolean modifyCandidate(Candidate c, String lastEmail) ;
     
     public boolean insertCandidate(Candidate c);
-    
+    public String[][] getAllVoters();
+    public String[][] getAllCandidates();
 }

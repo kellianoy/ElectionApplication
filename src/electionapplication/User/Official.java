@@ -9,7 +9,7 @@ import electionapplication.Database.UserManagerImpl;
 import java.util.GregorianCalendar;
 
 /**
- * Class used as an administrator, has almost all accesses. 
+ * Class used as an administrator, has almost all accesses to the database. 
  * @author Keke
  */
 public class Official extends User {
@@ -30,8 +30,60 @@ public class Official extends User {
         return dataController.insertVoter(v);
     }
 
+     /** 
+     * Add a candidate to the database
+     * @param c
+     * @return 
+     */
     public boolean addCandidate(Candidate c) {
         return dataController.insertCandidate(c);
     }
     
+     /** 
+     * Remove a user from the database using its email
+     * @param email
+     * @return 
+     */
+    public boolean removeUser(String email)
+    {
+        return dataController.deleteUser(email);
+    }
+    
+    /** 
+     * Get all voters from the database
+     * @return 
+     */
+    public String[][] getAllVoters(){
+        return dataController.getAllVoters();
+    }
+    
+    /** 
+     * Get all candidates from the database
+     * @return 
+     */
+    public String[][] getAllCandidates(){
+        return dataController.getAllCandidates();
+    }
+    
+    /** 
+     * Modify an instance of Voter in the database
+     * @param v
+     * @param lastEmail
+     * @return 
+     */
+    public boolean modifyVoter(Voter v, String lastEmail)
+    {
+        return dataController.modifyVoter(v, lastEmail);
+    }
+    
+    /** 
+     * Modify an instance of Candidate in the database
+     * @param c
+     * @param lastEmail
+     * @return 
+     */
+    public boolean modifyCandidate(Candidate c, String lastEmail)
+    {
+        return dataController.modifyCandidate(c, lastEmail);
+    }
 }
