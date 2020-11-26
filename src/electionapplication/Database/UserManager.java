@@ -16,7 +16,9 @@ public interface UserManager {
     public boolean insertVoter(Voter v);
     public boolean deleteUser(String email);
     public boolean modifyVoter(Voter v, String lastEmail) ;
+    public boolean modifyCandidate(Candidate c, String lastEmail) ;
     
     public boolean insertCandidate(Candidate c);
     public String[][] getAllVoters();
+    public String[][] getAllCandidates();
 }

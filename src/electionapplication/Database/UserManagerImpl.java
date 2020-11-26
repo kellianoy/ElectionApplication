@@ -102,6 +102,39 @@ public class UserManagerImpl implements UserManager {
         return null;
     }
     
+    /** Returns all candidates of the database as a two-dimensional array of Strings containing every data about them
+     * @return  */
+    @Override
+    public String[][] getAllCandidates() {
+        
+        try (Connection con = data.establishConnection()) {
+                
+                int i=0;
+                Statement stm=con.createStatement();
+                
+                ResultSet candidate = stm.executeQuery("SELECT COUNT(*) FROM candidate");
+                if (candidate.next())
+                {
+                    String[][] infos = new String[candidate.getInt(1)][7];  
+
+                    candidate = stm.executeQuery("SELECT user.firstName, user.lastName, user.email, user.password, user.dateOfBirth, candidate.politicalParty, candidate.description FROM user, candidate WHERE UserID=CandidateID");
+
+                    while(candidate.next())
+                    {
+                        for (int k=1 ; k < infos[i].length+1 ; k++)
+                            infos[i][k-1]=candidate.getString(k);
+                        ++i;
+                    }
+                    return infos;
+                }
+                
+            } 
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return null;
+    }
+    
     /** Using a candidate, can create a user entry in the database, returns true if it worked, false if it didn't
      * @param c
      * @return 
@@ -116,7 +149,7 @@ public class UserManagerImpl implements UserManager {
                 ResultSet userID=stm.executeQuery("SELECT UserID FROM user WHERE email LIKE '" + c.getEmail() + "'"); 
                 if (userID.next())
                 {
-                    stm.executeUpdate("INSERT INTO candidate (CandidateID, politicalParty, description) VALUES ('" + userID.getInt(1) + "', \""+ c.getParty() +"\",'"+ c.getDescription() +"')");
+                    stm.executeUpdate("INSERT INTO candidate (CandidateID, politicalParty, description) VALUES ('" + userID.getInt(1) + "', \""+ c.getParty() +"\",\""+ c.getDescription() +"\")");
                 }
                 return true;
             } 
@@ -141,6 +174,30 @@ public class UserManagerImpl implements UserManager {
                 if (userID.next())
                 {
                     stm.executeUpdate("UPDATE voter SET state =\""+ v.getState() + "\" WHERE VoterID =" + userID.getInt(1));
+                }
+                return true;
+            } 
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return false;
+    }
+    
+    /** Using a candidate and the last known email, can modify a user entry in the database, returns true if it worked, false if it didn't
+     * @param c
+     * @param lastEmail
+     * @return 
+     */
+    @Override
+    public boolean modifyCandidate(Candidate c, String lastEmail) {
+        try (Connection con = data.establishConnection()) {
+                Statement stm=con.createStatement();
+                stm.executeUpdate("UPDATE user SET email='" + c.getEmail() + "', password = '"+ c.getPassword() 
+                        + "', dateOfBirth ='"+ c.getSQLdate() + "', firstName ='"+ c.getFirstName() + "', lastName ='"+ c.getLastName() +"' WHERE email='" + lastEmail + "'");
+                ResultSet userID=stm.executeQuery("SELECT UserID FROM user WHERE email LIKE '" + c.getEmail() + "'"); 
+                if (userID.next())
+                {
+                    stm.executeUpdate("UPDATE candidate SET politicalParty =\""+ c.getParty() + "\", description =\""+ c.getDescription() +"\" WHERE CandidateID =" + userID.getInt(1));
                 }
                 return true;
             } 

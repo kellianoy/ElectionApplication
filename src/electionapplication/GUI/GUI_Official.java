@@ -31,6 +31,7 @@ public class GUI_Official extends javax.swing.JFrame {
     private Official admin;
     private CardLayout cards;
     private DefaultTableModel voterTableModel;
+    private DefaultTableModel candidateTableModel;
     
     public GUI_Official(Official admin) {
         
@@ -45,11 +46,13 @@ public class GUI_Official extends javax.swing.JFrame {
             jComboBox3.addItem(s.toString());
         }
         for (Party s : Party.values())
+        {
             jComboBox2.addItem(s.toString());
+            jComboBox4.addItem(s.toString());      
+        }
         
         cards = (CardLayout)mainPanel.getLayout();
-        
-        
+
     }
 
     /**
@@ -120,6 +123,25 @@ public class GUI_Official extends javax.swing.JFrame {
         editVoterDate = new javax.swing.JFormattedTextField();
         jComboBox3 = new javax.swing.JComboBox<>();
         editVoterPassword = new javax.swing.JTextField();
+        editCandidatePanel = new javax.swing.JPanel();
+        editCandidatesBack = new javax.swing.JButton();
+        editCandidatesScrollPanel = new javax.swing.JScrollPane();
+        editCandidatesTable = new javax.swing.JTable();
+        editCandidatesEdit = new javax.swing.JButton();
+        editCandidatesDelete = new javax.swing.JButton();
+        editCandidatesTextPanel = new javax.swing.JPanel();
+        editCandidatesText = new javax.swing.JLabel();
+        editCandidatesCaption = new javax.swing.JLabel();
+        editCandidatesEditPanel = new javax.swing.JPanel();
+        editCandidatesEditOK = new javax.swing.JButton();
+        editCandidatesFirstName = new javax.swing.JTextField();
+        editCandidatesLastName = new javax.swing.JTextField();
+        editCandidatesEmail = new javax.swing.JTextField();
+        editCandidatesDate = new javax.swing.JFormattedTextField();
+        jComboBox4 = new javax.swing.JComboBox<>();
+        editCandidatesPassword = new javax.swing.JTextField();
+        editCandidatesDescriptionPanel = new javax.swing.JPanel();
+        editCandidatesDescription = new javax.swing.JTextField();
         MenuBar = new javax.swing.JMenuBar();
         newMenu = new javax.swing.JMenu();
         newMenuVoter = new javax.swing.JMenuItem();
@@ -201,7 +223,7 @@ public class GUI_Official extends javax.swing.JFrame {
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(538, Short.MAX_VALUE)
                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -364,10 +386,7 @@ public class GUI_Official extends javax.swing.JFrame {
         addVoterTextPanel.setLayout(addVoterTextPanelLayout);
         addVoterTextPanelLayout.setHorizontalGroup(
             addVoterTextPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addVoterTextPanelLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(addVoterCaption, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(addVoterCaption, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(addVoterText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         addVoterTextPanelLayout.setVerticalGroup(
@@ -742,12 +761,229 @@ public class GUI_Official extends javax.swing.JFrame {
                     .addComponent(editVotersScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(editVotersEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
                 .addComponent(editVotersBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         mainPanel.add(editVotersPanel, "editVoter");
+
+        editCandidatePanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        editCandidatesBack.setText("Go back");
+        editCandidatesBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editCandidatesBackActionPerformed(evt);
+            }
+        });
+
+        editCandidatesTable.setAutoCreateRowSorter(true);
+        editCandidatesTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        editCandidatesScrollPanel.setViewportView(editCandidatesTable);
+
+        editCandidatesEdit.setText("Edit");
+        editCandidatesEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editCandidatesEditActionPerformed(evt);
+            }
+        });
+
+        editCandidatesDelete.setText("Delete");
+        editCandidatesDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editCandidatesDeleteActionPerformed(evt);
+            }
+        });
+
+        editCandidatesTextPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        editCandidatesText.setBackground(new java.awt.Color(255, 255, 255));
+        editCandidatesText.setFont(new java.awt.Font("Montserrat Medium", 0, 36)); // NOI18N
+        editCandidatesText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        editCandidatesText.setText("Edit Candidates");
+
+        editCandidatesCaption.setBackground(new java.awt.Color(255, 255, 255));
+        editCandidatesCaption.setFont(new java.awt.Font("Montserrat Medium", 0, 18)); // NOI18N
+        editCandidatesCaption.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        editCandidatesCaption.setText("Edit or delete candidates by selecting one and using an option");
+
+        javax.swing.GroupLayout editCandidatesTextPanelLayout = new javax.swing.GroupLayout(editCandidatesTextPanel);
+        editCandidatesTextPanel.setLayout(editCandidatesTextPanelLayout);
+        editCandidatesTextPanelLayout.setHorizontalGroup(
+            editCandidatesTextPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editCandidatesTextPanelLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(editCandidatesTextPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(editCandidatesCaption, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
+                    .addComponent(editCandidatesText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        editCandidatesTextPanelLayout.setVerticalGroup(
+            editCandidatesTextPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editCandidatesTextPanelLayout.createSequentialGroup()
+                .addComponent(editCandidatesText)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(editCandidatesCaption)
+                .addGap(30, 30, 30))
+        );
+
+        editCandidatesEditPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        editCandidatesEditOK.setText("OK");
+        editCandidatesEditOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editCandidatesEditOKActionPerformed(evt);
+            }
+        });
+
+        editCandidatesFirstName.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "First Name"));
+        editCandidatesFirstName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editCandidatesFirstNameActionPerformed(evt);
+            }
+        });
+
+        editCandidatesLastName.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Last Name"));
+
+        editCandidatesEmail.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Email"));
+
+        editCandidatesDate.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Date of birth"));
+        editCandidatesDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
+        editCandidatesDate.setText("yyyy-mm-dd");
+        editCandidatesDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editCandidatesDateActionPerformed(evt);
+            }
+        });
+
+        jComboBox4.setBorder(null);
+        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox4ActionPerformed(evt);
+            }
+        });
+
+        editCandidatesPassword.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Password"));
+        editCandidatesPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editCandidatesPasswordActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout editCandidatesEditPanelLayout = new javax.swing.GroupLayout(editCandidatesEditPanel);
+        editCandidatesEditPanel.setLayout(editCandidatesEditPanelLayout);
+        editCandidatesEditPanelLayout.setHorizontalGroup(
+            editCandidatesEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editCandidatesEditPanelLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(editCandidatesEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(editCandidatesFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                    .addComponent(editCandidatesEmail))
+                .addGap(26, 26, 26)
+                .addGroup(editCandidatesEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(editCandidatesLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                    .addComponent(editCandidatesPassword))
+                .addGap(26, 26, 26)
+                .addGroup(editCandidatesEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(editCandidatesEditPanelLayout.createSequentialGroup()
+                        .addComponent(editCandidatesDate, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(editCandidatesEditOK, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        editCandidatesEditPanelLayout.setVerticalGroup(
+            editCandidatesEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editCandidatesEditPanelLayout.createSequentialGroup()
+                .addGroup(editCandidatesEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editCandidatesDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editCandidatesLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editCandidatesFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editCandidatesEditOK))
+                .addGap(18, 18, 18)
+                .addGroup(editCandidatesEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editCandidatesEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editCandidatesPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
+        editCandidatesDescriptionPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        editCandidatesDescription.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Description"));
+        editCandidatesDescription.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editCandidatesDescriptionActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout editCandidatesDescriptionPanelLayout = new javax.swing.GroupLayout(editCandidatesDescriptionPanel);
+        editCandidatesDescriptionPanel.setLayout(editCandidatesDescriptionPanelLayout);
+        editCandidatesDescriptionPanelLayout.setHorizontalGroup(
+            editCandidatesDescriptionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editCandidatesDescriptionPanelLayout.createSequentialGroup()
+                .addComponent(editCandidatesDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        editCandidatesDescriptionPanelLayout.setVerticalGroup(
+            editCandidatesDescriptionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editCandidatesDescriptionPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(editCandidatesDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+
+        javax.swing.GroupLayout editCandidatePanelLayout = new javax.swing.GroupLayout(editCandidatePanel);
+        editCandidatePanel.setLayout(editCandidatePanelLayout);
+        editCandidatePanelLayout.setHorizontalGroup(
+            editCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(editCandidatesTextPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(editCandidatePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(editCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(editCandidatePanelLayout.createSequentialGroup()
+                        .addComponent(editCandidatesBack)
+                        .addGap(107, 107, 107)
+                        .addComponent(editCandidatesDescriptionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0))
+                    .addGroup(editCandidatePanelLayout.createSequentialGroup()
+                        .addGroup(editCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(editCandidatePanelLayout.createSequentialGroup()
+                                .addComponent(editCandidatesScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(editCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(editCandidatesDelete)
+                                    .addComponent(editCandidatesEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(editCandidatesEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, 0))))
+        );
+        editCandidatePanelLayout.setVerticalGroup(
+            editCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editCandidatePanelLayout.createSequentialGroup()
+                .addComponent(editCandidatesTextPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addGroup(editCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(editCandidatePanelLayout.createSequentialGroup()
+                        .addComponent(editCandidatesEdit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(editCandidatesDelete))
+                    .addComponent(editCandidatesScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(editCandidatesEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(editCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(editCandidatesDescriptionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editCandidatesBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        mainPanel.add(editCandidatePanel, "editCandidate");
 
         MenuBar.setBorder(javax.swing.BorderFactory.createCompoundBorder());
 
@@ -782,6 +1018,11 @@ public class GUI_Official extends javax.swing.JFrame {
         editMenu.add(editMenuVoter);
 
         editMenuCandidate.setText("Candidate");
+        editMenuCandidate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editMenuCandidateActionPerformed(evt);
+            }
+        });
         editMenu.add(editMenuCandidate);
 
         MenuBar.add(editMenu);
@@ -801,8 +1042,8 @@ public class GUI_Official extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
             .addComponent(leftPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         pack();
@@ -971,6 +1212,12 @@ public class GUI_Official extends javax.swing.JFrame {
         tModel.setDataVector(admin.getAllVoters(), names);
         table.updateUI();
     }
+    /** updates the candidates table after an operation */
+     private void updateCandidateTable(DefaultTableModel tModel, JTable table){
+        String[] names = {"First name", "Last name", "Email", "Password", "Date of Birth", "Party", "Description"};
+        tModel.setDataVector(admin.getAllCandidates(), names);
+        table.updateUI();
+    }
     
     private void editVoterFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editVoterFirstNameActionPerformed
         // TODO add your handling code here:
@@ -1029,6 +1276,120 @@ public class GUI_Official extends javax.swing.JFrame {
            else
                JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
     }//GEN-LAST:event_editVotersEditOKActionPerformed
+
+    private void editCandidatesBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCandidatesBackActionPerformed
+        cards.show(mainPanel, "mainMenu");
+    }//GEN-LAST:event_editCandidatesBackActionPerformed
+
+    private void editCandidatesEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCandidatesEditActionPerformed
+        if (editCandidatesTable.getSelectedRow()!=-1)
+           if (editCandidatesEditPanel.isVisible())
+           {
+                 editInvisible(editCandidatesEditPanel, editCandidatesDelete);
+                 editInvisible(editCandidatesDescriptionPanel, editCandidatesDelete);
+           }
+           else
+           {
+                 editVisible(editCandidatesEditPanel, editCandidatesDelete);
+                 editVisible(editCandidatesDescriptionPanel, editCandidatesDelete);
+           }
+       else 
+           JOptionPane.showMessageDialog(null, "You have to select a row before editing" , this.getTitle(), 1 );
+    }//GEN-LAST:event_editCandidatesEditActionPerformed
+
+    private void editCandidatesDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCandidatesDeleteActionPerformed
+        int row=editCandidatesTable.getSelectedRow();
+        if (row!=-1)
+        {
+            String firstName = (String) editCandidatesTable.getValueAt(row, 0);
+                String lastName = (String) editCandidatesTable.getValueAt(row, 1);
+                int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + firstName + " " + lastName + " from the database ?", this.getTitle(), JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    if (admin.removeUser((String) editCandidatesTable.getValueAt(row, 2)))
+                    {
+                        JOptionPane.showMessageDialog(null, "You have successfully removed " + firstName + " " + lastName + " from the database" , this.getTitle(), 1 );
+                        updateCandidateTable(candidateTableModel, editCandidatesTable);
+                        
+                    }
+                    else
+                        JOptionPane.showMessageDialog(null, firstName + " " + lastName + " has not been deleted from the database due to an error" , this.getTitle(), 1 );
+                } 
+        }
+        else 
+           JOptionPane.showMessageDialog(null, "You have to select a row before deleting" , this.getTitle(), 1 );
+    }//GEN-LAST:event_editCandidatesDeleteActionPerformed
+
+    private void editCandidatesEditOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCandidatesEditOKActionPerformed
+        if (admin.modifyCandidate(new Candidate(editCandidatesEmail.getText(), editCandidatesPassword.getText(), convertSQLtoGregorian(editCandidatesDate.getText()), editCandidatesFirstName.getText(), 
+                   editCandidatesLastName.getText(), (String)jComboBox4.getModel().getSelectedItem(), editCandidatesDescription.getText()) , 
+                (String)editCandidatesTable.getValueAt(editCandidatesTable.getSelectedRow(), 2)))
+           {
+               JOptionPane.showMessageDialog(null, "Informations successfully edited" , this.getTitle(), 1 );
+               updateCandidateTable(candidateTableModel, editCandidatesTable);
+               editInvisible(editCandidatesEditPanel, editCandidatesDelete);
+               editInvisible(editCandidatesDescriptionPanel, editCandidatesDelete);
+           }
+           else
+               JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
+    }//GEN-LAST:event_editCandidatesEditOKActionPerformed
+
+    private void editCandidatesFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCandidatesFirstNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editCandidatesFirstNameActionPerformed
+
+    private void editCandidatesDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCandidatesDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editCandidatesDateActionPerformed
+
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox4ActionPerformed
+
+    private void editCandidatesPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCandidatesPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editCandidatesPasswordActionPerformed
+
+    private void editCandidatesDescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCandidatesDescriptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editCandidatesDescriptionActionPerformed
+
+    private void editMenuCandidateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMenuCandidateActionPerformed
+        cards.show(mainPanel, "editCandidate");
+        String[] names = {"First name", "Last name", "Email", "Password", "Date of Birth", "Party", "Description"};
+        
+        candidateTableModel = new DefaultTableModel(admin.getAllCandidates(), names){
+        
+        /** Making the rows uneditable so that we can't modify the information */ 
+        @Override
+        public boolean isCellEditable(int row, int column){  
+          return false;  
+        }
+        };
+
+        editCandidatesTable.setModel(candidateTableModel);
+        editCandidatesTable.getTableHeader().setReorderingAllowed(false);
+        editCandidatesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+        @Override
+        public void valueChanged(ListSelectionEvent event) {
+            int row=editCandidatesTable.getSelectedRow();
+            if (row!=-1){
+                editCandidatesFirstName.setText((String)editCandidatesTable.getValueAt(row, 0));
+                editCandidatesLastName.setText((String)editCandidatesTable.getValueAt(row, 1));
+                editCandidatesEmail.setText((String)editCandidatesTable.getValueAt(row, 2));
+                editCandidatesPassword.setText((String)editCandidatesTable.getValueAt(row, 3));
+                editCandidatesDate.setText((String)editCandidatesTable.getValueAt(row, 4));
+                jComboBox4.getModel().setSelectedItem((String)editCandidatesTable.getValueAt(row, 5));
+                editCandidatesDescription.setText((String)editCandidatesTable.getValueAt(row, 6));
+            }   
+        }
+    });
+        
+        if (editCandidatesEditPanel.isVisible()||editCandidatesDescriptionPanel.isVisible())
+        {
+           editInvisible(editCandidatesEditPanel, editCandidatesDelete);
+           editInvisible(editCandidatesDescriptionPanel, editCandidatesDelete);
+        }
+    }//GEN-LAST:event_editMenuCandidateActionPerformed
     
     /** Set a panel to visible and enabled, and put a button to disabled
      * @param edit
@@ -1105,6 +1466,24 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JLabel addVoterText;
     private javax.swing.JPanel addVoterTextPanel;
     private javax.swing.JMenuItem blueOption;
+    private javax.swing.JPanel editCandidatePanel;
+    private javax.swing.JButton editCandidatesBack;
+    private javax.swing.JLabel editCandidatesCaption;
+    private javax.swing.JFormattedTextField editCandidatesDate;
+    private javax.swing.JButton editCandidatesDelete;
+    private javax.swing.JTextField editCandidatesDescription;
+    private javax.swing.JPanel editCandidatesDescriptionPanel;
+    private javax.swing.JButton editCandidatesEdit;
+    private javax.swing.JButton editCandidatesEditOK;
+    private javax.swing.JPanel editCandidatesEditPanel;
+    private javax.swing.JTextField editCandidatesEmail;
+    private javax.swing.JTextField editCandidatesFirstName;
+    private javax.swing.JTextField editCandidatesLastName;
+    private javax.swing.JTextField editCandidatesPassword;
+    private javax.swing.JScrollPane editCandidatesScrollPanel;
+    private javax.swing.JTable editCandidatesTable;
+    private javax.swing.JLabel editCandidatesText;
+    private javax.swing.JPanel editCandidatesTextPanel;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem editMenuCandidate;
     private javax.swing.JMenuItem editMenuVoter;
@@ -1129,6 +1508,7 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JPanel mainMenu;
     private javax.swing.JLabel mainMenuDescription;
