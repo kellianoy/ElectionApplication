@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package electionapplication.Database;
+package Database;
 
-import electionapplication.User.Voter;
-import electionapplication.User.Official;
-import electionapplication.User.Candidate;
-import electionapplication.User.User;
+import User.Voter;
+import User.Official;
+import User.Candidate;
+import User.User;
 import java.sql.SQLException;
 
 

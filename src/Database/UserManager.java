@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package electionapplication.Database;
+package Database;
 
-import electionapplication.User.*;
+import User.Candidate;
+import User.Voter;
 
 /**
  * DB Interface for the Official Class, can access tables, delete, modify, add on the DB
@@ -14,11 +15,17 @@ import electionapplication.User.*;
 public interface UserManager {
     
     public boolean insertVoter(Voter v);
-    public boolean deleteUser(String email);
+    public boolean insertCandidate(Candidate c);
+    
     public boolean modifyVoter(Voter v, String lastEmail) ;
     public boolean modifyCandidate(Candidate c, String lastEmail) ;
     
-    public boolean insertCandidate(Candidate c);
+    public boolean setVotesToNull();
     public String[][] getAllVoters();
     public String[][] getAllCandidates();
+    
+    public boolean deleteUser(String email);
+    
+    public boolean addElectionEntry(String status);
+    public String getLastStatus();
 }

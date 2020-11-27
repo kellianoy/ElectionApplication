@@ -1,7 +1,7 @@
 /*
   * 
  */
-package electionapplication.Database;
+package Database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
