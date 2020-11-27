@@ -56,7 +56,6 @@ public class GUI_Official extends javax.swing.JFrame {
         }
         
         cards = (CardLayout)mainPanel.getLayout();
-        
         statusText.setText(admin.getLastStatus());
         UpdateStatusButtons(statusText);
     }
@@ -1109,6 +1108,10 @@ public class GUI_Official extends javax.swing.JFrame {
                 stopButton.setEnabled(false);
                 pauseButton.setEnabled(false);
                 break;
+            default :
+                status.setText("Done");
+                UpdateStatusButtons(status);
+                break;
         }
     }
     
@@ -1218,9 +1221,13 @@ public class GUI_Official extends javax.swing.JFrame {
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
-        statusText.setText("Done");
-        UpdateStatusButtons(statusText);
-        admin.addElectionEntry(statusText.getText());
+       int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to conclude the election and announce the winner ?", this.getTitle(), JOptionPane.YES_NO_OPTION);
+       if (reply == JOptionPane.YES_OPTION) {
+            statusText.setText("Done");
+            UpdateStatusButtons(statusText);
+        if (!admin.addElectionEntry(statusText.getText()))
+            JOptionPane.showMessageDialog(null, "Something happened with the entry in the status Database." , this.getTitle(), 1 );
+       }
     }//GEN-LAST:event_stopButtonActionPerformed
 
     private void addVoterBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVoterBackActionPerformed
@@ -1457,10 +1464,18 @@ public class GUI_Official extends javax.swing.JFrame {
     }//GEN-LAST:event_editMenuCandidateActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        
-        statusText.setText("Active");
-        UpdateStatusButtons(statusText);
-        admin.addElectionEntry(statusText.getText());
+        int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to start the election and erase all votes ?", this.getTitle(), JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            statusText.setText("Active");
+            UpdateStatusButtons(statusText);
+            if(admin.resetVotes())
+                JOptionPane.showMessageDialog(null, "Votes were successfully cleared. Election will now start." , this.getTitle(), 1 );
+            else
+                JOptionPane.showMessageDialog(null, "Something happened. Votes were not deleted." , this.getTitle(), 1 );
+            if (!admin.addElectionEntry(statusText.getText()))
+                JOptionPane.showMessageDialog(null, "Something happened with the entry in the status Database." , this.getTitle(), 1 );
+
+        }
         
     }//GEN-LAST:event_startButtonActionPerformed
 
@@ -1472,7 +1487,8 @@ public class GUI_Official extends javax.swing.JFrame {
             statusText.setText("Paused");
         
         UpdateStatusButtons(statusText);
-        admin.addElectionEntry(statusText.getText());
+        if (!admin.addElectionEntry(statusText.getText()))
+                JOptionPane.showMessageDialog(null, "Something happened with the entry in the status Database." , this.getTitle(), 1 );
         
     }//GEN-LAST:event_pauseButtonActionPerformed
     

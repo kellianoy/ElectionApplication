@@ -20,6 +20,7 @@ public interface UserManager {
     public boolean modifyVoter(Voter v, String lastEmail) ;
     public boolean modifyCandidate(Candidate c, String lastEmail) ;
     
+    public boolean setVotesToNull();
     public String[][] getAllVoters();
     public String[][] getAllCandidates();
     

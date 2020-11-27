@@ -105,4 +105,12 @@ public class Official extends User {
     {
         return dataController.getLastStatus();
     }
+    
+    /** 
+     * Set all votedFor attributes to null in the database
+     * @return 
+     */
+    public boolean resetVotes(){
+        return dataController.setVotesToNull();
+    }
 }

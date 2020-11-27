@@ -8,6 +8,7 @@ package Database;
 import User.Candidate;
 import User.Voter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,15 +37,22 @@ public class UserManagerImpl implements UserManager {
     @Override
     public boolean insertVoter(Voter v) {
         try (Connection con = data.establishConnection()) {
-                Statement stm=con.createStatement();
-                stm.executeUpdate("INSERT INTO user (email, UserID, password, dateOfBirth, firstName, lastName) "
-                  + "VALUES ('"+v.getEmail()+"', NULL, '"+v.getPassword()+"', '"+v.getSQLdate()+"', '"+v.getFirstName()+"', '"+v.getLastName()+"')");
+            
+                //Preparing statement for user DB
+                PreparedStatement userStm=con.prepareStatement("INSERT INTO user (email, UserID, password, dateOfBirth, firstName, lastName) VALUES (?, null, ?, ?, ?, ?)");
+                userStm.setString(1, v.getEmail());
+                userStm.setString(2, v.getPassword());
+                userStm.setString(3, v.getSQLdate());
+                userStm.setString(4, v.getFirstName());
+                userStm.setString(5, v.getLastName());
                 
-                ResultSet userID=stm.executeQuery("SELECT UserID FROM user WHERE email LIKE '" + v.getEmail() + "'"); 
-                if (userID.next())
-                {
-                    stm.executeUpdate("INSERT INTO voter (VoterID, state, votedFor) VALUES ('" + userID.getInt(1) + "', \""+ v.getState() +"\", NULL)");
-                }
+                //Preparing statement for candidate DB
+                PreparedStatement voterStm=con.prepareStatement("INSERT INTO voter (VoterID, state, votedFor) VALUES(LAST_INSERT_ID(), ?, null)");
+                voterStm.setString(1, v.getState());
+                
+                //Doing updates in the DB
+                userStm.executeUpdate();
+                voterStm.executeUpdate();
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
@@ -59,8 +67,9 @@ public class UserManagerImpl implements UserManager {
     @Override
     public boolean deleteUser(String email) {
         try (Connection con = data.establishConnection()) {
-                Statement stm=con.createStatement();
-                stm.executeUpdate("DELETE FROM user WHERE email LIKE '" + email + "'"); 
+                PreparedStatement stm=con.prepareStatement("DELETE FROM user WHERE email=?");
+                stm.setString(1, email);
+                stm.executeUpdate(); 
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
@@ -123,7 +132,7 @@ public class UserManagerImpl implements UserManager {
 
                     while(candidate.next())
                     {
-                        for (int k=1 ; k < infos[i].length+1 ; k++)
+                        for (int k=1 ; k < infos[i].length+1 ; ++k)
                             infos[i][k-1]=candidate.getString(k);
                         ++i;
                     }
@@ -144,15 +153,23 @@ public class UserManagerImpl implements UserManager {
     @Override
     public boolean insertCandidate(Candidate c) {
         try (Connection con = data.establishConnection()) {
-                Statement stm=con.createStatement();
-                stm.executeUpdate("INSERT INTO user (email, UserID, password, dateOfBirth, firstName, lastName) "
-                  + "VALUES ('"+c.getEmail()+"', NULL, '"+c.getPassword()+"', '"+c.getSQLdate()+"', '"+c.getFirstName()+"', '"+c.getLastName()+"')");
+            
+                //Preparing statement for user DB
+                PreparedStatement userStm=con.prepareStatement("INSERT INTO user (email, UserID, password, dateOfBirth, firstName, lastName) VALUES (?, null, ?, ?, ?, ?)");
+                userStm.setString(1, c.getEmail());
+                userStm.setString(2, c.getPassword());
+                userStm.setString(3, c.getSQLdate());
+                userStm.setString(4, c.getFirstName());
+                userStm.setString(5, c.getLastName());
                 
-                ResultSet userID=stm.executeQuery("SELECT UserID FROM user WHERE email LIKE '" + c.getEmail() + "'"); 
-                if (userID.next())
-                {
-                    stm.executeUpdate("INSERT INTO candidate (CandidateID, politicalParty, description) VALUES ('" + userID.getInt(1) + "', \""+ c.getParty() +"\",\""+ c.getDescription() +"\")");
-                }
+                //Preparing statement for candidate DB
+                PreparedStatement candidateStm=con.prepareStatement("INSERT INTO candidate (CandidateID, politicalParty, description) VALUES(LAST_INSERT_ID(), ?, ?)");
+                candidateStm.setString(1, c.getParty());
+                candidateStm.setString(2, c.getDescription());
+                
+                //Doing updates in the DB
+                userStm.executeUpdate();
+                candidateStm.executeUpdate();
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
@@ -169,14 +186,19 @@ public class UserManagerImpl implements UserManager {
     @Override
     public boolean modifyVoter(Voter v, String lastEmail) {
         try (Connection con = data.establishConnection()) {
-                Statement stm=con.createStatement();
-                stm.executeUpdate("UPDATE user SET email='" + v.getEmail() + "', password = '"+ v.getPassword() 
-                        + "', dateOfBirth ='"+ v.getSQLdate() + "', firstName ='"+ v.getFirstName() + "', lastName ='"+ v.getLastName() +"' WHERE email='" + lastEmail + "'");
-                ResultSet userID=stm.executeQuery("SELECT UserID FROM user WHERE email LIKE '" + v.getEmail() + "'"); 
-                if (userID.next())
-                {
-                    stm.executeUpdate("UPDATE voter SET state =\""+ v.getState() + "\" WHERE VoterID =" + userID.getInt(1));
-                }
+            
+                //Preparing statement for update
+               PreparedStatement userStm=con.prepareStatement("UPDATE user, voter SET email=?, password=?, dateOfBirth=?, firstName=?, lastName=?, state = ? "
+                        + "WHERE email=? AND UserID=VoterID");
+                userStm.setString(1, v.getEmail());
+                userStm.setString(2, v.getPassword());
+                userStm.setString(3, v.getSQLdate());
+                userStm.setString(4, v.getFirstName());
+                userStm.setString(5, v.getLastName());
+                userStm.setString(6, v.getState());
+                userStm.setString(7, lastEmail);
+                System.out.println(userStm.toString());
+                userStm.executeUpdate();
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
@@ -193,14 +215,17 @@ public class UserManagerImpl implements UserManager {
     @Override
     public boolean modifyCandidate(Candidate c, String lastEmail) {
         try (Connection con = data.establishConnection()) {
-                Statement stm=con.createStatement();
-                stm.executeUpdate("UPDATE user SET email='" + c.getEmail() + "', password = '"+ c.getPassword() 
-                        + "', dateOfBirth ='"+ c.getSQLdate() + "', firstName ='"+ c.getFirstName() + "', lastName ='"+ c.getLastName() +"' WHERE email='" + lastEmail + "'");
-                ResultSet userID=stm.executeQuery("SELECT UserID FROM user WHERE email LIKE '" + c.getEmail() + "'"); 
-                if (userID.next())
-                {
-                    stm.executeUpdate("UPDATE candidate SET politicalParty =\""+ c.getParty() + "\", description =\""+ c.getDescription() +"\" WHERE CandidateID =" + userID.getInt(1));
-                }
+                PreparedStatement userStm=con.prepareStatement("UPDATE user, candidate SET email=?, password=?, dateOfBirth=?, firstName=?, lastName=?, politicalParty = ? , description = ? "
+                        + "WHERE user.email=? AND user.UserID=candidate.CandidateID");
+                userStm.setString(1, c.getEmail());
+                userStm.setString(2, c.getPassword());
+                userStm.setString(3, c.getSQLdate());
+                userStm.setString(4, c.getFirstName());
+                userStm.setString(5, c.getLastName());
+                userStm.setString(6, c.getParty());
+                userStm.setString(7, c.getDescription());
+                userStm.setString(8, lastEmail);
+                userStm.executeUpdate();
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
@@ -218,11 +243,13 @@ public class UserManagerImpl implements UserManager {
     public boolean addElectionEntry(String status)
     {
         try (Connection con = data.establishConnection()) {
-                Statement stm=con.createStatement();
+
                 Calendar calendar = Calendar.getInstance();
                 java.sql.Date date = new java.sql.Date(calendar.getTime().getTime());
-                
-                stm.executeUpdate("INSERT INTO status (StateID, Date, Status) VALUES (NULL, \"" + date +"\",\""+ status +"\") ");
+                PreparedStatement stm=con.prepareStatement("INSERT INTO status (StateID, Date, Status) VALUES (NULL, ?, ?)");
+                stm.setString(1,""+ date);
+                stm.setString(2, status);
+                stm.executeUpdate();
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
@@ -248,5 +275,22 @@ public class UserManagerImpl implements UserManager {
             Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
+    }
+
+    /**
+     * Set all votedFor attributes to null in the database
+     * @return 
+     */
+    @Override
+    public boolean setVotesToNull() {
+        try (Connection con = data.establishConnection()) {
+                Statement stm=con.createStatement();
+                stm.executeUpdate("UPDATE voter SET votedFor = null");
+                return true;
+            } 
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return false;
     }
 }
