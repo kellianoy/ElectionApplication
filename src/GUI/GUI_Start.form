@@ -138,7 +138,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="flagIcon" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="185" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="186" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -153,13 +153,13 @@
                   <Component id="votingSystemText" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Component id="coloredPanel" min="-2" pref="265" max="-2" attributes="0"/>
-                  <EmptySpace pref="41" max="32767" attributes="0"/>
+                  <EmptySpace pref="23" max="32767" attributes="0"/>
                   <Component id="flagIcon" min="-2" pref="134" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="littleText" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
-              <Component id="leftPanel" pref="624" max="32767" attributes="0"/>
+              <Component id="leftPanel" pref="589" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
