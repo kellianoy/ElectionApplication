@@ -113,4 +113,8 @@ public class Official extends User {
     public boolean resetVotes(){
         return dataController.setVotesToNull();
     }
+    
+    public String[][] getVotes(){
+        return dataController.getVotes();
+    }
 }

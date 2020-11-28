@@ -293,4 +293,48 @@ public class UserManagerImpl implements UserManager {
         } 
         return false;
     }
+    
+    /**
+     * We're getting the name and last name of each candidates and the number of votes that have been casted for them 
+     * @return 
+     */
+    
+    @Override
+    public String[][] getVotes() {
+        try (Connection con = data.establishConnection()) {
+            
+                String[][] retrievedData;
+                int i=0;
+                
+                PreparedStatement countStm=con.prepareStatement("SELECT COUNT(CandidateID) FROM candidate"); //To get the number of candidates
+                PreparedStatement userStm=con.prepareStatement("SELECT user.firstName, user.lastName, user.UserID FROM user, candidate WHERE UserID=CandidateID"); //To get the informations of the candidates
+                PreparedStatement votesStm=con.prepareStatement("SELECT COUNT(VoterID) FROM voter, candidate WHERE votedFor=CandidateID AND CandidateID=?"); //To get the number of votes of a candidate
+                
+                ResultSet numberOfRows=countStm.executeQuery();
+                if (numberOfRows.next())
+                {
+                    retrievedData= new String[numberOfRows.getInt(1)][2];
+                    ResultSet votesRetrieval;
+                    ResultSet candidateRetrieval=userStm.executeQuery();
+                    while(candidateRetrieval.next())
+                    {
+                        retrievedData[i][0]=candidateRetrieval.getString(1) + " " + candidateRetrieval.getString(2);
+                        votesStm.setString(1, candidateRetrieval.getString(3));
+                        votesRetrieval=votesStm.executeQuery();
+                        if (votesRetrieval.next())
+                            retrievedData[i][1]=votesRetrieval.getString(1);
+                        
+                        ++i;
+                    }
+                    candidateRetrieval.close();  
+                    return retrievedData;
+                }   
+                numberOfRows.close();
+            } 
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return null;
+    }
+    
 }

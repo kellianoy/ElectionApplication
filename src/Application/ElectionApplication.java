@@ -24,10 +24,10 @@ public class ElectionApplication {
      * @throws java.lang.ClassNotFoundException
      */
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        // TODO code application logic here
-    
+        
         GUI_Start window = new GUI_Start();
         window.embeddedMain();
+        
         
     }
     

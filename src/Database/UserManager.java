@@ -28,4 +28,5 @@ public interface UserManager {
     
     public boolean addElectionEntry(String status);
     public String getLastStatus();
+    public String[][] getVotes();
 }
