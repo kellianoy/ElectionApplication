@@ -21,15 +21,22 @@ public class GUI_Start extends javax.swing.JFrame {
 
     /* LoggerManagerImpl that will allow database connectivity to the gui without using sql in the gui or gui in loggermanagerimpl */
     private LoggerManagerImpl manager;
+    
+    public final static Color BLUE_COLOR = new Color(0,102,130);
+    public final static Color GREEN_COLOR =new Color(100,200,70);
+    public final static Color RED_COLOR = new Color(170,40,50);
+    public static Color actualColor;
+    
     /**
      * Creates new form GUI_Start
      */
     public GUI_Start() {
         initComponents();
+        if (actualColor==null)
+            actualColor=BLUE_COLOR;
+        colorChange(actualColor);
         manager=new LoggerManagerImpl();
         setLocationRelativeTo(null);
-        
-        
     }
 
     /**
@@ -341,25 +348,26 @@ public class GUI_Start extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Hello ! This program was made by two ECE Paris Students.\nKind regards,\nRebecca Fossa & Kellian Cottart" , this.getTitle(), 1 );
     }//GEN-LAST:event_InformationsMenuSelected
 
+    private void colorChange(Color color){
+        leftPanel.setBackground(color);
+        Color darkerColor=new Color(color.getRed(), color.getGreen()-30, color.getBlue()-30);
+        emailPanel.setBackground(darkerColor);
+        passwordPanel.setBackground(darkerColor);
+        coloredPanel.setBackground(darkerColor);
+    }
     private void redOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redOptionActionPerformed
-        leftPanel.setBackground(new Color(170,40,50));
-        emailPanel.setBackground(new Color(200,40,60));
-        passwordPanel.setBackground(new Color(200,40,60));
-        coloredPanel.setBackground(new Color(200,40,60));
+        actualColor=RED_COLOR;
+        colorChange(actualColor);
     }//GEN-LAST:event_redOptionActionPerformed
 
     private void greenOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_greenOptionActionPerformed
-        leftPanel.setBackground(new Color(100,200,70));
-        emailPanel.setBackground(new Color(110,170,60));
-        passwordPanel.setBackground(new Color(110,170,60));
-        coloredPanel.setBackground(new Color(110,170,60));
+        actualColor=GREEN_COLOR;
+        colorChange(actualColor);
     }//GEN-LAST:event_greenOptionActionPerformed
 
     private void blueOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blueOptionActionPerformed
-        leftPanel.setBackground(new Color(0,102,130));
-        emailPanel.setBackground(new Color(44,82,104));
-        passwordPanel.setBackground(new Color(44,82,104));
-        coloredPanel.setBackground(new Color(44,82,104));
+        actualColor=BLUE_COLOR;
+        colorChange(actualColor);
     }//GEN-LAST:event_blueOptionActionPerformed
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed

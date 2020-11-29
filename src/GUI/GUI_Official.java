@@ -7,6 +7,7 @@ package GUI;
 
 import static Application.ElectionApplication.convertSQLtoGregorian;
 import Enum.*;
+import static GUI.GUI_Start.*;
 import User.*;
 import java.awt.*;
 import javax.swing.*;
@@ -17,11 +18,13 @@ import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 
 import org.jfree.chart.*;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.*;
+import org.jfree.ui.RectangleInsets;
 
 
 
@@ -38,47 +41,48 @@ public class GUI_Official extends javax.swing.JFrame {
     private ChartPanel mainMenuChartPanel;
     private JFreeChart mainMenuChart;
     
+   
+    
     
     public GUI_Official(Official admin) {
         
         this.admin = admin;
         
-        //Dataset setting
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        String [][] votes = admin.getVotes();
-        for (int i = 0 ; i<votes.length ; ++i)
-            dataset.setValue(Integer.parseInt(votes[i][1]), "votes", votes[i][0]);
+       
         
         //Chart creation
-        mainMenuChart= ChartFactory.createBarChart("Votes so far", "Candidates", "Votes", dataset, PlotOrientation.VERTICAL, true, true, false);
-        
-        mainMenuChartPanel = new ChartPanel(mainMenuChart);
+        mainMenuChart=createVotesBarChart(createBarDataset());
+        mainMenuChartPanel= new ChartPanel(mainMenuChart);
         
         initComponents();
-        
+        leftPanel.setBackground(actualColor);
         setLocationRelativeTo(null);
         setVisible(true);
-        jComboBox1.addItem("STATE");
-        jComboBox1.setSelectedItem("STATE");
+        
+        //Initialization of combo boxes
        
        //Setting State values in the combo boxes
+        jComboBox1.addItem("STATE");
+        jComboBox1.setSelectedItem("STATE");
         for (State s : State.values())
         {
             jComboBox1.addItem(s.toString());
             jComboBox3.addItem(s.toString());
         }
         
+        //Setting Party values in the combo boxes
         jComboBox2.addItem("PARTY");
         jComboBox2.setSelectedItem("PARTY");
-       
-       //Setting Party values in the combo boxes
         for (Party s : Party.values())
         {
             jComboBox2.addItem(s.toString());
             jComboBox4.addItem(s.toString());      
         }
         
+        //Getting layout
         cards = (CardLayout)mainPanel.getLayout();
+        
+        //Updating status of vote
         statusText.setText(admin.getLastStatus());
         UpdateStatusButtons(statusText);
         
@@ -112,7 +116,50 @@ public class GUI_Official extends javax.swing.JFrame {
         
     }
 
+    /** 
+     * Create a DefaultCategoryDataset corresponding to all the votes for each candidates
+     * @return 
+     */
+    private DefaultCategoryDataset createBarDataset(){
+        
+        //Dataset setting
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        String [][] votes = admin.getVotes();
+        for (int i = 0 ; i<votes.length ; ++i)
+            dataset.setValue(Integer.parseInt(votes[i][1]), "votes", votes[i][0]);
+        
+        return dataset;
+    }
 
+    /** 
+     * Create a JFreeChart out of a DefaultCategoryDataset for votes
+     * @param dataset
+     * @return 
+     */
+     public JFreeChart createVotesBarChart(DefaultCategoryDataset dataset)
+    {
+        JFreeChart myChart; 
+        myChart=ChartFactory.createBarChart("Votes", "Candidates", "Number of votes", createBarDataset(), PlotOrientation.VERTICAL, true, true, false);
+        
+        StandardChartTheme theme = (StandardChartTheme)StandardChartTheme.createJFreeTheme();
+        theme.setTitlePaint(actualColor);
+        theme.setBarPainter(new StandardBarPainter());
+        theme.setRegularFont( new Font("montserrat" , Font.PLAIN , 11));
+        theme.apply(myChart);
+        
+        CategoryPlot p=myChart.getCategoryPlot();
+        p.getRangeAxis().setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        p.setBackgroundPaint(Color.white);
+        p.setRangeGridlinePaint(Color.black);
+        
+        BarRenderer r=(BarRenderer) p.getRenderer();
+        r.setSeriesPaint(0, new Color(50,50,50));
+        r.setDrawBarOutline(false);
+        r.setMaximumBarWidth(0.1);
+       
+        return myChart;
+    }
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,6 +177,7 @@ public class GUI_Official extends javax.swing.JFrame {
         leftPanel = new javax.swing.JPanel();
         settingsButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         mainMenu = new javax.swing.JPanel();
         voteStatusText = new javax.swing.JLabel();
@@ -269,6 +317,8 @@ public class GUI_Official extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Analyze Votes");
+
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
         leftPanel.setLayout(leftPanelLayout);
         leftPanelLayout.setHorizontalGroup(
@@ -279,11 +329,17 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                 .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
-                .addContainerGap(538, Short.MAX_VALUE)
+                .addGap(19, 19, 19)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -354,7 +410,7 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addComponent(mainMenuText)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainMenuDescription)
-                .addGap(0, 30, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout chartPanelLayout = new javax.swing.GroupLayout(chartPanel);
@@ -365,7 +421,7 @@ public class GUI_Official extends javax.swing.JFrame {
         );
         chartPanelLayout.setVerticalGroup(
             chartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 385, Short.MAX_VALUE)
+            .addGap(0, 353, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout mainMenuLayout = new javax.swing.GroupLayout(mainMenu);
@@ -378,10 +434,11 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mainMenuLayout.createSequentialGroup()
-                        .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(mainMenuLayout.createSequentialGroup()
                                 .addComponent(voteStatusText)
-                                .addGap(62, 62, 62)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(statusText))
                             .addGroup(mainMenuLayout.createSequentialGroup()
                                 .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -396,16 +453,16 @@ public class GUI_Official extends javax.swing.JFrame {
             mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainMenuLayout.createSequentialGroup()
                 .addComponent(textPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(30, 30, 30)
+                .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(voteStatusText)
-                    .addComponent(statusText))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(statusText, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
                 .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pauseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(30, 30, 30)
                 .addComponent(chartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -506,7 +563,7 @@ public class GUI_Official extends javax.swing.JFrame {
                         .addGroup(addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(addVoterDate)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addVoterPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addVoterButton)
@@ -528,7 +585,7 @@ public class GUI_Official extends javax.swing.JFrame {
                     .addComponent(addVoterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addComponent(addVoterButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 273, Short.MAX_VALUE)
                 .addComponent(addVoterBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -641,7 +698,7 @@ public class GUI_Official extends javax.swing.JFrame {
                             .addGroup(addCandidatePanelLayout.createSequentialGroup()
                                 .addGap(86, 86, 86)
                                 .addComponent(addCandidateButton)))
-                        .addContainerGap(14, Short.MAX_VALUE))))
+                        .addContainerGap(18, Short.MAX_VALUE))))
         );
         addCandidatePanelLayout.setVerticalGroup(
             addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -665,7 +722,7 @@ public class GUI_Official extends javax.swing.JFrame {
                     .addGroup(addCandidatePanelLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(addCandidateButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 256, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
                 .addComponent(addCandidateBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -831,7 +888,7 @@ public class GUI_Official extends javax.swing.JFrame {
                                 .addGroup(editVotersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(editVotersDelete)
                                     .addComponent(editVotersEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 22, Short.MAX_VALUE)))
+                        .addGap(0, 26, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         editVotersPanelLayout.setVerticalGroup(
@@ -845,7 +902,7 @@ public class GUI_Official extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(editVotersDelete))
                     .addComponent(editVotersScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(editVotersEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(editVotersBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1056,7 +1113,7 @@ public class GUI_Official extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(editCandidatesDelete))
                     .addComponent(editCandidatesScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(editCandidatesEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(editCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1124,8 +1181,8 @@ public class GUI_Official extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(leftPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(leftPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
         );
 
         pack();
@@ -1139,19 +1196,19 @@ public class GUI_Official extends javax.swing.JFrame {
         switch(status.getText())
         {
             case "Active" :
-                status.setForeground(new Color(100,200,70));
+                status.setForeground(GREEN_COLOR);
                 startButton.setEnabled(false);
                 stopButton.setEnabled(true);
                 pauseButton.setEnabled(true);
                 break;
             case "Paused" :
-                status.setForeground(new Color(0,102,130));
+                status.setForeground(BLUE_COLOR);
                 startButton.setEnabled(false);
                 stopButton.setEnabled(false);
                 pauseButton.setEnabled(true);
                 break;
             case "Done":
-                status.setForeground(new Color(170,40,50));
+                status.setForeground(RED_COLOR);
                 startButton.setEnabled(true);
                 stopButton.setEnabled(false);
                 pauseButton.setEnabled(false);
@@ -1222,7 +1279,12 @@ public class GUI_Official extends javax.swing.JFrame {
             if (admin.addCandidate(new Candidate(addCandidateEmail.getText(), new String(addCandidatePassword.getPassword()), 
                     convertSQLtoGregorian(addCandidateDate.getText()), addCandidateFirstName.getText(), addCandidateLastName.getText(), 
                     jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), addCandidateDescription.getText())))
+            {
                 JOptionPane.showMessageDialog(null, "Added successfully " + addCandidateFirstName.getText() + " " + addCandidateLastName.getText() + " to the database" , this.getTitle(), 1 );
+                mainMenuChart=createVotesBarChart(createBarDataset());
+                mainMenuChartPanel.setChart(mainMenuChart);
+                
+            }
             else
                 JOptionPane.showMessageDialog(null, "An error occured. Email adress is already in use." , this.getTitle(), 1 );
         }
@@ -1246,15 +1308,18 @@ public class GUI_Official extends javax.swing.JFrame {
     }//GEN-LAST:event_newMenuCandidateActionPerformed
 
     private void redOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redOptionActionPerformed
-        leftPanel.setBackground(new Color(170,40,50));
+        actualColor=RED_COLOR;
+        leftPanel.setBackground(actualColor);
     }//GEN-LAST:event_redOptionActionPerformed
 
     private void greenOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_greenOptionActionPerformed
-        leftPanel.setBackground(new Color(100,210,50));
+        actualColor=GREEN_COLOR;
+        leftPanel.setBackground(actualColor);
     }//GEN-LAST:event_greenOptionActionPerformed
 
     private void blueOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blueOptionActionPerformed
-        leftPanel.setBackground(new Color(0,102,130));
+        actualColor=BLUE_COLOR;
+        leftPanel.setBackground(actualColor);
     }//GEN-LAST:event_blueOptionActionPerformed
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
@@ -1284,6 +1349,7 @@ public class GUI_Official extends javax.swing.JFrame {
 
     private void addCandidateBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCandidateBackActionPerformed
         cards.show(mainPanel, "mainMenu");
+        mainMenuChart=createVotesBarChart(createBarDataset());
     }//GEN-LAST:event_addCandidateBackActionPerformed
 
     private void editVotersBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editVotersBackActionPerformed
@@ -1429,6 +1495,8 @@ public class GUI_Official extends javax.swing.JFrame {
                     {
                         JOptionPane.showMessageDialog(null, "You have successfully removed " + firstName + " " + lastName + " from the database" , this.getTitle(), 1 );
                         updateCandidateTable(candidateTableModel, editCandidatesTable);
+                        mainMenuChart=createVotesBarChart(createBarDataset());
+                        mainMenuChartPanel.setChart(mainMenuChart);
                         
                     }
                     else
@@ -1446,8 +1514,12 @@ public class GUI_Official extends javax.swing.JFrame {
            {
                JOptionPane.showMessageDialog(null, "Informations successfully edited" , this.getTitle(), 1 );
                updateCandidateTable(candidateTableModel, editCandidatesTable);
+               
                editInvisible(editCandidatesEditPanel, editCandidatesDelete);
                editInvisible(editCandidatesDescriptionPanel, editCandidatesDelete);
+               
+               mainMenuChart=createVotesBarChart(createBarDataset());
+               mainMenuChartPanel.setChart(mainMenuChart);
            }
            else
                JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
@@ -1625,6 +1697,7 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JPanel editVotersTextPanel;
     private javax.swing.JButton exitButton;
     private javax.swing.JMenuItem greenOption;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;

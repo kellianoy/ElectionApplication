@@ -310,20 +310,28 @@ public class UserManagerImpl implements UserManager {
                 PreparedStatement userStm=con.prepareStatement("SELECT user.firstName, user.lastName, user.UserID FROM user, candidate WHERE UserID=CandidateID"); //To get the informations of the candidates
                 PreparedStatement votesStm=con.prepareStatement("SELECT COUNT(VoterID) FROM voter, candidate WHERE votedFor=CandidateID AND CandidateID=?"); //To get the number of votes of a candidate
                 
+                //I get the number of rows to know how many candidates there is
                 ResultSet numberOfRows=countStm.executeQuery();
                 if (numberOfRows.next())
                 {
+                    //I create my retrievedData two dimensionnal array with the values it returned
                     retrievedData= new String[numberOfRows.getInt(1)][2];
                     ResultSet votesRetrieval;
+                    
+                    //Sending a request in order to retrieve the informations of the candidates : first name, last name, UserID
                     ResultSet candidateRetrieval=userStm.executeQuery();
                     while(candidateRetrieval.next())
                     {
+                        //I set the first case of my array to firstname + lastname 
                         retrievedData[i][0]=candidateRetrieval.getString(1) + " " + candidateRetrieval.getString(2);
+                        
+                        //I look for all the votes of that candidate in the tables 
                         votesStm.setString(1, candidateRetrieval.getString(3));
                         votesRetrieval=votesStm.executeQuery();
+                        //I set the number of votes for a candidate inside of the second case of the array
                         if (votesRetrieval.next())
                             retrievedData[i][1]=votesRetrieval.getString(1);
-                        
+                        //I go on to the next candidate
                         ++i;
                     }
                     candidateRetrieval.close();  

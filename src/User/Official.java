@@ -114,6 +114,10 @@ public class Official extends User {
         return dataController.setVotesToNull();
     }
     
+    /**
+     * We're getting the name and last name of each candidates and the number of votes that have been casted for them 
+     * @return 
+     */
     public String[][] getVotes(){
         return dataController.getVotes();
     }
