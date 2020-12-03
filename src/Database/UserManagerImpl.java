@@ -323,10 +323,10 @@ public class UserManagerImpl implements UserManager {
                     while(candidateRetrieval.next())
                     {
                         //I set the first case of my array to firstname + lastname 
-                        retrievedData[i][0]=candidateRetrieval.getString(1) + " " + candidateRetrieval.getString(2);
+                        retrievedData[i][0]=candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName");
                         
                         //I look for all the votes of that candidate in the tables 
-                        votesStm.setString(1, candidateRetrieval.getString(3));
+                        votesStm.setString(1, candidateRetrieval.getString("UserID"));
                         votesRetrieval=votesStm.executeQuery();
                         //I set the number of votes for a candidate inside of the second case of the array
                         if (votesRetrieval.next())

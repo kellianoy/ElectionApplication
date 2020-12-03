@@ -49,7 +49,7 @@ public class LoggerManagerImpl implements LoggerManager {
                 try (ResultSet user = stm.executeQuery()) {
                     if (user.next())
                     {
-                        int userID=user.getInt(2);
+                        int userID=user.getInt("UserID");
                         
                         User myUser=retrieveOfficial(userID);
                         if (myUser!=null)
@@ -87,13 +87,13 @@ public class LoggerManagerImpl implements LoggerManager {
             {
                         if (user.next())
                         {
-                            String userEmail=user.getString(1), userPassword=user.getString(3), userFirstName=user.getString(5), userLastName=user.getString(6);
-                            GregorianCalendar userDOB=convertSQLtoGregorian(user.getString(4));
+                            String userEmail=user.getString("email"), userPassword=user.getString("password"), userFirstName=user.getString("firstName"), userLastName=user.getString("lastName");
+                            GregorianCalendar userDOB=convertSQLtoGregorian(user.getString("dateOfBirth"));
                             try (ResultSet testCandidate = stm.executeQuery("SELECT politicalParty, description FROM candidate WHERE CandidateID="+ userID)) 
                             {
                                     if (testCandidate.next())
                                     {
-                                        String userPoliticalParty=testCandidate.getString(1), userDescription=testCandidate.getString(2);
+                                        String userPoliticalParty=testCandidate.getString("politicalParty"), userDescription=testCandidate.getString("description");
                                         return new Candidate(userEmail, userPassword, userDOB, userFirstName, userLastName, userPoliticalParty, userDescription);   
                                     }
 
@@ -118,14 +118,14 @@ public class LoggerManagerImpl implements LoggerManager {
             try (ResultSet user = stm.executeQuery("SELECT * FROM user where UserID=" + userID)) {
                         if (user.next())
                         {
-                            String userEmail=user.getString(1), userPassword=user.getString(3), userFirstName=user.getString(5), userLastName=user.getString(6);
-                            GregorianCalendar userDOB=convertSQLtoGregorian(user.getString(4));
+                            String userEmail=user.getString("email"), userPassword=user.getString("password"), userFirstName=user.getString("firstName"), userLastName=user.getString("lastName");
+                            GregorianCalendar userDOB=convertSQLtoGregorian(user.getString("dateOfBirth"));
                             
                             try (ResultSet testVoter = stm.executeQuery("SELECT state, votedFor FROM voter WHERE VoterID="+ userID)) 
                             {
                                     if (testVoter.next())
                                     {
-                                        String userState=testVoter.getString(1);
+                                        String userState=testVoter.getString("state");
                                         return new Voter(userEmail, userPassword, userDOB, userFirstName, userLastName, userState, retrieveCandidate(testVoter.getInt(2)));   
                                     }
 
@@ -151,8 +151,8 @@ public class LoggerManagerImpl implements LoggerManager {
             {
                         if (user.next())
                         {
-                            String userEmail=user.getString(1), userPassword=user.getString(3), userFirstName=user.getString(5), userLastName=user.getString(6);
-                            GregorianCalendar userDOB=convertSQLtoGregorian(user.getString(4));
+                            String userEmail=user.getString("email"), userPassword=user.getString("password"), userFirstName=user.getString("firstName"), userLastName=user.getString("lastName");
+                            GregorianCalendar userDOB=convertSQLtoGregorian(user.getString("dateOfBirth"));
                             try (ResultSet testOfficial = stm.executeQuery("SELECT OfficialID FROM official WHERE OfficialID="+ userID)) 
                             {
                                     if (testOfficial.next())
