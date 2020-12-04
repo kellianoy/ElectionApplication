@@ -5,6 +5,9 @@ import Database.Database;
 import User.Official;
 import User.User;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /*
@@ -30,7 +33,7 @@ public class GUI_Start extends javax.swing.JFrame {
     /**
      * Creates new form GUI_Start
      */
-    public GUI_Start() {
+    public GUI_Start() throws SQLException, ClassNotFoundException {
         initComponents();
         if (actualColor==null)
             actualColor=BLUE_COLOR;
@@ -433,8 +436,13 @@ public class GUI_Start extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new GUI_Start().setVisible(true);
+                try {
+                    new GUI_Start().setVisible(true);
+                } catch (SQLException | ClassNotFoundException ex) {
+                    Logger.getLogger(GUI_Start.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         
