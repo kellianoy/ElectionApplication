@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -299,45 +300,27 @@ public class UserManagerImpl implements UserManager {
      */
     
     @Override
-    public String[][] getVotes() {
+    public ArrayList<ArrayList<String>> getVotes() {
         try (Connection con = data.getCon()) {
-            
-                String[][] retrievedData;
-                int i=0;
+
                 
-                PreparedStatement countStm=con.prepareStatement("SELECT COUNT(CandidateID) FROM candidate"); //To get the number of candidates
-                PreparedStatement userStm=con.prepareStatement("SELECT user.firstName, user.lastName, user.UserID FROM user, candidate WHERE UserID=CandidateID"); //To get the informations of the candidates
-                PreparedStatement votesStm=con.prepareStatement("SELECT COUNT(VoterID) FROM voter, candidate WHERE votedFor=CandidateID AND CandidateID=?"); //To get the number of votes of a candidate
+                ArrayList<ArrayList<String>> retrievedData= new ArrayList();
                 
-                //I get the number of rows to know how many candidates there is
-                ResultSet numberOfRows=countStm.executeQuery();
-                if (numberOfRows.next())
+                PreparedStatement stm=con.prepareStatement("SELECT firstName, lastName, count(votedFor) FROM user JOIN candidate ON UserID = CandidateID JOIN voter ON votedFor = CandidateID GROUP BY votedFor");
+                ResultSet candidateRetrieval=stm.executeQuery();
+                
+                while(candidateRetrieval.next())
                 {
-                    //I create my retrievedData two dimensionnal array with the values it returned
-                    retrievedData= new String[numberOfRows.getInt(1)][2];
-                    ResultSet votesRetrieval;
-                    
-                    //Sending a request in order to retrieve the informations of the candidates : first name, last name, UserID
-                    ResultSet candidateRetrieval=userStm.executeQuery();
-                    while(candidateRetrieval.next())
-                    {
-                        //I set the first case of my array to firstname + lastname 
-                        retrievedData[i][0]=candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName");
+                        //I set the first case of my array to firstname + lastname
+                        ArrayList<String> temp=new ArrayList();
+                        temp.add(candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName"));
+                        temp.add(candidateRetrieval.getString("count(votedFor)"));
+                        retrievedData.add(temp);
                         
-                        //I look for all the votes of that candidate in the tables 
-                        votesStm.setString(1, candidateRetrieval.getString("UserID"));
-                        votesRetrieval=votesStm.executeQuery();
-                        //I set the number of votes for a candidate inside of the second case of the array
-                        if (votesRetrieval.next())
-                            retrievedData[i][1]=votesRetrieval.getString(1);
-                        //I go on to the next candidate
-                        ++i;
-                    }
-                    candidateRetrieval.close();  
-                    return retrievedData;
-                }   
-                numberOfRows.close();
-            } 
+                }
+                candidateRetrieval.close();                 
+                return retrievedData;
+        } 
         catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 

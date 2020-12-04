@@ -11,6 +11,7 @@ import static GUI.GUI_Start.*;
 import User.*;
 import java.awt.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -127,9 +128,9 @@ public class GUI_Official extends javax.swing.JFrame {
         
         //Dataset setting
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        String [][] votes = admin.getVotes();
-        for (int i = 0 ; i<votes.length ; ++i)
-            dataset.setValue(Integer.parseInt(votes[i][1]), "votes", votes[i][0]);
+        ArrayList<ArrayList<String>> votes = admin.getVotes();
+        for (int i = 0 ; i<votes.size() ; ++i)
+            dataset.setValue(Integer.parseInt(votes.get(i).get(1)), "votes", votes.get(i).get(0));
         
         return dataset;
     }
@@ -1251,8 +1252,8 @@ public class GUI_Official extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter an email adress." , this.getTitle(), 1 );
         else if (new String(addVoterPassword.getPassword()).equals(""))
             JOptionPane.showMessageDialog(null, "Please enter a password." , this.getTitle(), 1 );
-        else if (addVoterDate.getText().equals("")||Integer.parseInt(addVoterDate.getText().substring(0, 3))<1900||Integer.parseInt(addVoterDate.getText().substring(0, 3))>2002)
-            JOptionPane.showMessageDialog(null, "Please enter a date of birth." ,this.getTitle(), 1 );
+        else if (addVoterDate.getText().equals("")||Integer.parseInt(addVoterDate.getText().substring(0, 4))<1900||Integer.parseInt(addVoterDate.getText().substring(0, 4))>2002)
+            JOptionPane.showMessageDialog(null, "Please enter a correct date of birth." ,this.getTitle(), 1 );
         else if (jComboBox1.getItemAt(jComboBox1.getSelectedIndex())==null||jComboBox1.getItemAt(jComboBox1.getSelectedIndex())=="STATE")
             JOptionPane.showMessageDialog(null, "Please enter a state" , this.getTitle(), 1 );
         else
@@ -1289,8 +1290,8 @@ public class GUI_Official extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter an email adress." , this.getTitle(), 1 );
         else if (new String(addCandidatePassword.getPassword()).equals(""))
             JOptionPane.showMessageDialog(null, "Please enter a password." , this.getTitle(), 1 );
-        else if (addCandidateDate.getText().equals("")||Integer.parseInt(addCandidateDate.getText().substring(0, 3))<1900||Integer.parseInt(addCandidateDate.getText().substring(0, 3))>2002)
-            JOptionPane.showMessageDialog(null, "Please enter a date of birth." , this.getTitle(), 1 );
+        else if (addCandidateDate.getText().equals("")||Integer.parseInt(addCandidateDate.getText().substring(0, 4))<1900||Integer.parseInt(addCandidateDate.getText().substring(0, 4))>2002)
+            JOptionPane.showMessageDialog(null, "Please enter a correct date of birth." , this.getTitle(), 1 );
         else if (jComboBox2.getItemAt(jComboBox2.getSelectedIndex())==null||jComboBox2.getItemAt(jComboBox2.getSelectedIndex())=="PARTY")
             JOptionPane.showMessageDialog(null, "Please enter a state" , this.getTitle(), 1 );
         else

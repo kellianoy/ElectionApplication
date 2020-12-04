@@ -7,6 +7,7 @@ package User;
 
 import Database.UserManagerImpl;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 /**
@@ -119,7 +120,7 @@ public class Official extends User {
      * We're getting the name and last name of each candidates and the number of votes that have been casted for them 
      * @return 
      */
-    public String[][] getVotes(){
+    public ArrayList<ArrayList<String>> getVotes(){
         return dataController.getVotes();
     }
 }
