@@ -10,6 +10,9 @@ import Enum.*;
 import static GUI.GUI_Start.*;
 import User.*;
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -1344,8 +1347,13 @@ public class GUI_Official extends javax.swing.JFrame {
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         dispose();
-        GUI_Start main_menu=new GUI_Start();
-        main_menu.embeddedMain();
+        GUI_Start main_menu;
+        try {
+            main_menu = new GUI_Start();
+            main_menu.embeddedMain();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(GUI_Official.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
