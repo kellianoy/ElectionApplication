@@ -123,4 +123,8 @@ public class Official extends User {
     public ArrayList<ArrayList<String>> getVotes(){
         return dataController.getVotes();
     }
+    public ArrayList<ArrayList<String>> getVotesByStates(){
+        return dataController.getVotesByStates();
+    }
 }
+

@@ -30,4 +30,5 @@ public interface UserManager {
     public boolean addElectionEntry(String status);
     public String getLastStatus();
     public ArrayList<ArrayList<String>> getVotes();
+    public ArrayList<ArrayList<String>> getVotesByStates();
 }

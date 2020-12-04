@@ -327,4 +327,32 @@ public class UserManagerImpl implements UserManager {
         return null;
     }
     
+    public ArrayList<ArrayList<String>> getVotesByStates() {
+        try (Connection con = data.getCon()) {
+
+                
+                ArrayList<ArrayList<String>> retrievedData= new ArrayList();
+                
+                PreparedStatement stm=con.prepareStatement("SELECT firstName, lastName, state, count(votedFor) FROM user JOIN candidate ON UserID = CandidateID JOIN voter ON votedFor = CandidateID GROUP BY votedFor, state");
+                ResultSet candidateRetrieval=stm.executeQuery();
+                
+                while(candidateRetrieval.next())
+                {
+                        //I set the first case of my array to firstname + lastname
+                        ArrayList<String> temp=new ArrayList();
+                        temp.add(candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName"));
+                        temp.add(candidateRetrieval.getString("state"));
+                        temp.add(candidateRetrieval.getString("count(votedFor)"));
+                        retrievedData.add(temp);
+                        
+                }
+                candidateRetrieval.close();                 
+                return retrievedData;
+        } 
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return null;
+    }
+    
 }
