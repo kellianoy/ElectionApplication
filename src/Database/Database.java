@@ -18,30 +18,40 @@ public class Database {
     private final String DB_NAME;
     private final String USERNAME;
     private final String PASSWORD;
+    private Connection myCon;
     
     /** 
      * No parameters, it auto-fills the fields 
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
      */
-    public Database(){
+    public Database() throws SQLException, ClassNotFoundException{
         DB_NAME="jdbc:mysql://82.124.134.253:3306/electionApplication";
         USERNAME="kebecks";
         PASSWORD="electionapplication";
+        establishConnection();
     }
     
     /** Establishing a connection with the object fields, returns the connection if it was established, null if it wasn'
-     * @return 
      * @throws java.sql.SQLException
      * @throws java.lang.ClassNotFoundException*/
     
-    public Connection establishConnection() throws SQLException, ClassNotFoundException
+    public void establishConnection() throws SQLException, ClassNotFoundException
     {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            return DriverManager.getConnection(DB_NAME, USERNAME, PASSWORD);
+            myCon = DriverManager.getConnection(DB_NAME, USERNAME, PASSWORD);
         }
         catch (ClassNotFoundException | SQLException e) { 
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
-        } 
-        return null;             
+        }           
+    }
+    
+    public Connection getCon() throws SQLException, ClassNotFoundException
+    {
+        
+        if (myCon.isClosed())
+            establishConnection();
+        return myCon;
     }
 }

@@ -25,7 +25,7 @@ public class UserManagerImpl implements UserManager {
    
     private Database data;
     
-    public UserManagerImpl(){
+    public UserManagerImpl() throws SQLException, ClassNotFoundException{
         data=new Database();
     }
     
@@ -36,7 +36,7 @@ public class UserManagerImpl implements UserManager {
     
     @Override
     public boolean insertVoter(Voter v) {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
             
                 //Preparing statement for user DB
                 PreparedStatement userStm=con.prepareStatement("INSERT INTO user (email, UserID, password, dateOfBirth, firstName, lastName) VALUES (?, null, ?, ?, ?, ?)");
@@ -66,7 +66,7 @@ public class UserManagerImpl implements UserManager {
      * @return  */
     @Override
     public boolean deleteUser(String email) {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
                 PreparedStatement stm=con.prepareStatement("DELETE FROM user WHERE email=?");
                 stm.setString(1, email);
                 stm.executeUpdate(); 
@@ -84,7 +84,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     public String[][] getAllVoters() {
         
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
                 
                 int i=0;
                 Statement stm=con.createStatement();
@@ -118,7 +118,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     public String[][] getAllCandidates() {
         
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
                 
                 int i=0;
                 Statement stm=con.createStatement();
@@ -152,7 +152,7 @@ public class UserManagerImpl implements UserManager {
      */
     @Override
     public boolean insertCandidate(Candidate c) {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
             
                 //Preparing statement for user DB
                 PreparedStatement userStm=con.prepareStatement("INSERT INTO user (email, UserID, password, dateOfBirth, firstName, lastName) VALUES (?, null, ?, ?, ?, ?)");
@@ -185,7 +185,7 @@ public class UserManagerImpl implements UserManager {
      */
     @Override
     public boolean modifyVoter(Voter v, String lastEmail) {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
             
                 //Preparing statement for update
                PreparedStatement userStm=con.prepareStatement("UPDATE user, voter SET email=?, password=?, dateOfBirth=?, firstName=?, lastName=?, state = ? "
@@ -197,7 +197,6 @@ public class UserManagerImpl implements UserManager {
                 userStm.setString(5, v.getLastName());
                 userStm.setString(6, v.getState());
                 userStm.setString(7, lastEmail);
-                System.out.println(userStm.toString());
                 userStm.executeUpdate();
                 return true;
             } 
@@ -214,7 +213,7 @@ public class UserManagerImpl implements UserManager {
      */
     @Override
     public boolean modifyCandidate(Candidate c, String lastEmail) {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
                 PreparedStatement userStm=con.prepareStatement("UPDATE user, candidate SET email=?, password=?, dateOfBirth=?, firstName=?, lastName=?, politicalParty = ? , description = ? "
                         + "WHERE user.email=? AND user.UserID=candidate.CandidateID");
                 userStm.setString(1, c.getEmail());
@@ -242,7 +241,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     public boolean addElectionEntry(String status)
     {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
 
                 Calendar calendar = Calendar.getInstance();
                 java.sql.Date date = new java.sql.Date(calendar.getTime().getTime());
@@ -265,7 +264,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     public String getLastStatus()
     {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
                 Statement stm=con.createStatement();
                 ResultSet set= stm.executeQuery("SELECT Status FROM status ORDER BY StateID DESC");
                 if (set.next())
@@ -283,7 +282,7 @@ public class UserManagerImpl implements UserManager {
      */
     @Override
     public boolean setVotesToNull() {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
                 Statement stm=con.createStatement();
                 stm.executeUpdate("UPDATE voter SET votedFor = null");
                 return true;
@@ -301,7 +300,7 @@ public class UserManagerImpl implements UserManager {
     
     @Override
     public String[][] getVotes() {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
             
                 String[][] retrievedData;
                 int i=0;

@@ -85,6 +85,7 @@ public class GUI_Official extends javax.swing.JFrame {
         statusText.setText(admin.getLastStatus());
         UpdateStatusButtons(statusText);
         
+        
        
     }
     
@@ -177,6 +178,7 @@ public class GUI_Official extends javax.swing.JFrame {
         settingsButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        settingsButton1 = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         mainMenu = new javax.swing.JPanel();
         voteStatusText = new javax.swing.JLabel();
@@ -318,20 +320,34 @@ public class GUI_Official extends javax.swing.JFrame {
 
         jButton1.setText("Analyze Votes");
 
+        settingsButton1.setBackground(new java.awt.Color(255, 255, 255));
+        settingsButton1.setForeground(new java.awt.Color(255, 255, 255));
+        settingsButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/userIcon.png"))); // NOI18N
+        settingsButton1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        settingsButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
         leftPanel.setLayout(leftPanelLayout);
         leftPanelLayout.setHorizontalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
-                .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(leftPanelLayout.createSequentialGroup()
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(settingsButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
+                        .addGap(0, 29, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(0, 29, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,9 +355,10 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(exitButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(settingsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(settingsButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -389,7 +406,7 @@ public class GUI_Official extends javax.swing.JFrame {
         mainMenuDescription.setBackground(new java.awt.Color(255, 255, 255));
         mainMenuDescription.setFont(new java.awt.Font("Montserrat Medium", 0, 18)); // NOI18N
         mainMenuDescription.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mainMenuDescription.setText("Welcome to the admin center");
+        mainMenuDescription.setText("Welcome to the admin center " +  admin.getFirstName() + " " + admin.getLastName() + " !");
 
         mainMenuText.setBackground(new java.awt.Color(255, 255, 255));
         mainMenuText.setFont(new java.awt.Font("Montserrat Medium", 0, 36)); // NOI18N
@@ -400,7 +417,7 @@ public class GUI_Official extends javax.swing.JFrame {
         textPanel.setLayout(textPanelLayout);
         textPanelLayout.setHorizontalGroup(
             textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainMenuText, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
+            .addComponent(mainMenuText, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
             .addComponent(mainMenuDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         textPanelLayout.setVerticalGroup(
@@ -430,29 +447,28 @@ public class GUI_Official extends javax.swing.JFrame {
             .addComponent(textPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(mainMenuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(mainMenuLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(mainMenuLayout.createSequentialGroup()
-                                .addComponent(voteStatusText)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(statusText))
-                            .addGroup(mainMenuLayout.createSequentialGroup()
-                                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(pauseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(chartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(mainMenuLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(mainMenuLayout.createSequentialGroup()
+                        .addComponent(voteStatusText)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(statusText))
+                    .addGroup(mainMenuLayout.createSequentialGroup()
+                        .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(pauseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainMenuLayout.setVerticalGroup(
             mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainMenuLayout.createSequentialGroup()
                 .addComponent(textPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(34, 34, 34)
                 .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(voteStatusText)
                     .addComponent(statusText, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -461,7 +477,7 @@ public class GUI_Official extends javax.swing.JFrame {
                     .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pauseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(26, 26, 26)
                 .addComponent(chartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -562,7 +578,7 @@ public class GUI_Official extends javax.swing.JFrame {
                         .addGroup(addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(addVoterDate)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addVoterPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addVoterButton)
@@ -697,7 +713,7 @@ public class GUI_Official extends javax.swing.JFrame {
                             .addGroup(addCandidatePanelLayout.createSequentialGroup()
                                 .addGap(86, 86, 86)
                                 .addComponent(addCandidateButton)))
-                        .addContainerGap(18, Short.MAX_VALUE))))
+                        .addContainerGap(19, Short.MAX_VALUE))))
         );
         addCandidatePanelLayout.setVerticalGroup(
             addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -887,7 +903,7 @@ public class GUI_Official extends javax.swing.JFrame {
                                 .addGroup(editVotersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(editVotersDelete)
                                     .addComponent(editVotersEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 26, Short.MAX_VALUE)))
+                        .addGap(0, 27, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         editVotersPanelLayout.setVerticalGroup(
@@ -1232,7 +1248,7 @@ public class GUI_Official extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter an email adress." , this.getTitle(), 1 );
         else if (new String(addVoterPassword.getPassword()).equals(""))
             JOptionPane.showMessageDialog(null, "Please enter a password." , this.getTitle(), 1 );
-        else if (addVoterDate.getText().equals(""))
+        else if (addVoterDate.getText().equals("")||Integer.parseInt(addVoterDate.getText().substring(0, 3))<1900||Integer.parseInt(addVoterDate.getText().substring(0, 3))>2002)
             JOptionPane.showMessageDialog(null, "Please enter a date of birth." ,this.getTitle(), 1 );
         else if (jComboBox1.getItemAt(jComboBox1.getSelectedIndex())==null||jComboBox1.getItemAt(jComboBox1.getSelectedIndex())=="STATE")
             JOptionPane.showMessageDialog(null, "Please enter a state" , this.getTitle(), 1 );
@@ -1261,6 +1277,7 @@ public class GUI_Official extends javax.swing.JFrame {
     }//GEN-LAST:event_addVoterDateActionPerformed
 
     private void addCandidateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCandidateButtonActionPerformed
+
         if (addCandidateFirstName.getText().equals(""))
             JOptionPane.showMessageDialog(null, "Please enter a first name." , this.getTitle(), 1 );
         else if (addCandidateLastName.getText().equals(""))
@@ -1269,7 +1286,7 @@ public class GUI_Official extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter an email adress." , this.getTitle(), 1 );
         else if (new String(addCandidatePassword.getPassword()).equals(""))
             JOptionPane.showMessageDialog(null, "Please enter a password." , this.getTitle(), 1 );
-        else if (addCandidateDate.getText().equals(""))
+        else if (addCandidateDate.getText().equals("")||Integer.parseInt(addCandidateDate.getText().substring(0, 3))<1900||Integer.parseInt(addCandidateDate.getText().substring(0, 3))>2002)
             JOptionPane.showMessageDialog(null, "Please enter a date of birth." , this.getTitle(), 1 );
         else if (jComboBox2.getItemAt(jComboBox2.getSelectedIndex())==null||jComboBox2.getItemAt(jComboBox2.getSelectedIndex())=="PARTY")
             JOptionPane.showMessageDialog(null, "Please enter a state" , this.getTitle(), 1 );
@@ -1449,7 +1466,7 @@ public class GUI_Official extends javax.swing.JFrame {
     }//GEN-LAST:event_editVotersDeleteActionPerformed
 
     private void editVotersEditOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editVotersEditOKActionPerformed
-                   
+        if (Integer.parseInt(editVoterDate.getText().substring(0, 4))>1900 && Integer.parseInt(editVoterDate.getText().substring(0, 4))<2002)
            if (admin.modifyVoter(new Voter(editVoterEmail.getText(), editVoterPassword.getText(), convertSQLtoGregorian(editVoterDate.getText()), editVoterFirstName.getText(), 
                    editVoterLastName.getText(), (String)jComboBox3.getModel().getSelectedItem(), null) , (String)editVotersTable.getValueAt(editVotersTable.getSelectedRow(), 2)))
            {
@@ -1459,6 +1476,8 @@ public class GUI_Official extends javax.swing.JFrame {
            }
            else
                JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
+        else
+            JOptionPane.showMessageDialog(null, "Date has to be between 1900 and 2020." , this.getTitle(), 1 );
     }//GEN-LAST:event_editVotersEditOKActionPerformed
 
     private void editCandidatesBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCandidatesBackActionPerformed
@@ -1506,21 +1525,26 @@ public class GUI_Official extends javax.swing.JFrame {
     }//GEN-LAST:event_editCandidatesDeleteActionPerformed
 
     private void editCandidatesEditOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCandidatesEditOKActionPerformed
-        if (admin.modifyCandidate(new Candidate(editCandidatesEmail.getText(), editCandidatesPassword.getText(), convertSQLtoGregorian(editCandidatesDate.getText()), editCandidatesFirstName.getText(), 
-                   editCandidatesLastName.getText(), (String)jComboBox4.getModel().getSelectedItem(), editCandidatesDescription.getText()) , 
-                (String)editCandidatesTable.getValueAt(editCandidatesTable.getSelectedRow(), 2)))
-           {
-               JOptionPane.showMessageDialog(null, "Informations successfully edited" , this.getTitle(), 1 );
-               updateCandidateTable(candidateTableModel, editCandidatesTable);
-               
-               editInvisible(editCandidatesEditPanel, editCandidatesDelete);
-               editInvisible(editCandidatesDescriptionPanel, editCandidatesDelete);
-               
-               mainMenuChart=createVotesBarChart(createBarDataset());
-               mainMenuChartPanel.setChart(mainMenuChart);
-           }
-           else
-               JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
+      
+        if (Integer.parseInt(editCandidatesDate.getText().substring(0, 4))>1900 && Integer.parseInt(editCandidatesDate.getText().substring(0, 4))<2002)
+            if (admin.modifyCandidate(new Candidate(editCandidatesEmail.getText(), editCandidatesPassword.getText(), convertSQLtoGregorian(editCandidatesDate.getText()), editCandidatesFirstName.getText(), 
+                       editCandidatesLastName.getText(), (String)jComboBox4.getModel().getSelectedItem(), editCandidatesDescription.getText()),
+                    (String)editCandidatesTable.getValueAt(editCandidatesTable.getSelectedRow(), 2)))
+               {
+                   JOptionPane.showMessageDialog(null, "Informations successfully edited" , this.getTitle(), 1 );
+                   updateCandidateTable(candidateTableModel, editCandidatesTable);
+
+                   editInvisible(editCandidatesEditPanel, editCandidatesDelete);
+                   editInvisible(editCandidatesDescriptionPanel, editCandidatesDelete);
+
+                   mainMenuChart=createVotesBarChart(createBarDataset());
+                   mainMenuChartPanel.setChart(mainMenuChart);
+               }
+               else
+                   JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
+        else{
+            JOptionPane.showMessageDialog(null, "Date has to be between 1900 and 2002." , this.getTitle(), 1 );
+        }
     }//GEN-LAST:event_editCandidatesEditOKActionPerformed
 
     private void editCandidatesFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCandidatesFirstNameActionPerformed
@@ -1609,6 +1633,10 @@ public class GUI_Official extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Something happened with the entry in the status Database." , this.getTitle(), 1 );
         
     }//GEN-LAST:event_pauseButtonActionPerformed
+
+    private void settingsButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settingsButton1ActionPerformed
     
     /** Set a panel to visible and enabled, and put a button to disabled
      * @param edit
@@ -1712,6 +1740,7 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JButton pauseButton;
     private javax.swing.JMenuItem redOption;
     private javax.swing.JButton settingsButton;
+    private javax.swing.JButton settingsButton1;
     private javax.swing.JPopupMenu settingsPopUp;
     private javax.swing.JButton startButton;
     private javax.swing.JLabel statusText;

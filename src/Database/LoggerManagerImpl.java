@@ -28,7 +28,7 @@ public class LoggerManagerImpl implements LoggerManager {
     
     private Database data;
     
-    public LoggerManagerImpl(){
+    public LoggerManagerImpl() throws SQLException, ClassNotFoundException{
         data=new Database();
     }
     
@@ -40,7 +40,7 @@ public class LoggerManagerImpl implements LoggerManager {
     
     @Override
     public User loggingCheck(String email, String password){
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
             
                 PreparedStatement stm = con.prepareStatement("SELECT * FROM user where email=? AND password=?");
                 stm.setString(1, email);
@@ -80,7 +80,7 @@ public class LoggerManagerImpl implements LoggerManager {
     @Override
     public Candidate retrieveCandidate(int userID) throws SQLException, ClassNotFoundException 
     {
-        try (Connection con = data.establishConnection())
+        try (Connection con = data.getCon())
         {
             Statement stm=con.createStatement();
             try (ResultSet user = stm.executeQuery("SELECT * FROM user where UserID=" + userID)) 
@@ -113,7 +113,7 @@ public class LoggerManagerImpl implements LoggerManager {
     @Override
     public Voter retrieveVoter(int userID) throws SQLException, ClassNotFoundException {
 
-    try (Connection con = data.establishConnection()) {
+    try (Connection con = data.getCon()) {
             Statement stm=con.createStatement();
             try (ResultSet user = stm.executeQuery("SELECT * FROM user where UserID=" + userID)) {
                         if (user.next())
@@ -144,7 +144,7 @@ public class LoggerManagerImpl implements LoggerManager {
      * @throws java.lang.ClassNotFoundException */
     @Override
     public Official retrieveOfficial(int userID) throws SQLException, ClassNotFoundException {
-        try (Connection con = data.establishConnection()) 
+        try (Connection con = data.getCon()) 
          {
             Statement stm=con.createStatement();
             try (ResultSet user = stm.executeQuery("SELECT * FROM user where UserID=" + userID)) 
