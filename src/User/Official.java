@@ -6,6 +6,7 @@
 package User;
 
 import Database.UserManagerImpl;
+import java.sql.SQLException;
 import java.util.GregorianCalendar;
 
 /**
@@ -16,7 +17,7 @@ public class Official extends User {
     
     UserManagerImpl dataController;
     
-    public Official(String email, String password, GregorianCalendar dateOfBirth, String firstName, String lastName) {
+    public Official(String email, String password, GregorianCalendar dateOfBirth, String firstName, String lastName) throws SQLException, ClassNotFoundException {
         super(email, password, dateOfBirth, firstName, lastName);
         dataController = new UserManagerImpl();
     }
