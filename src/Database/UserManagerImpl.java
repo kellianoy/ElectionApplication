@@ -327,26 +327,62 @@ public class UserManagerImpl implements UserManager {
         return null;
     }
     
-    public ArrayList<ArrayList<String>> getVotesByStates() {
+    /**
+     * Return all the votes per states for each candidates in the form of an arraylist of string arrays
+     * @return
+     */
+    @Override
+    public ArrayList<String[]> getVotesByStates() {
         try (Connection con = data.getCon()) {
 
-                
-                ArrayList<ArrayList<String>> retrievedData= new ArrayList();
+                ArrayList<String[]> retrievedData= new ArrayList();
                 
                 PreparedStatement stm=con.prepareStatement("SELECT firstName, lastName, state, count(votedFor) FROM user JOIN candidate ON UserID = CandidateID JOIN voter ON votedFor = CandidateID GROUP BY votedFor, state");
                 ResultSet candidateRetrieval=stm.executeQuery();
-                
+                String[] temp= new String[] { "name" , ""+0, "" +0 , ""+0,  "" +0 , ""+0,  "" +0 , ""+0, ""+0 };
                 while(candidateRetrieval.next())
                 {
-                        //I set the first case of my array to firstname + lastname
-                        ArrayList<String> temp=new ArrayList();
-                        temp.add(candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName"));
-                        temp.add(candidateRetrieval.getString("state"));
-                        temp.add(candidateRetrieval.getString("count(votedFor)"));
-                        retrievedData.add(temp);
+                        if (!temp[0].equals(candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName")))
+                        {
+                            if (!temp[0].equals("name"))
+                            {
+                                retrievedData.add(temp);
+                            }
+                            temp = new String[] { ""+0 , ""+0, "" +0 , ""+0,  "" +0 , ""+0,  "" +0 , ""+0, ""+0 };
+                            temp[0]=candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName");
+                            
+                        }
+                        switch ( candidateRetrieval.getString("state"))
+                        {
+                            case "Padokea" :
+                                temp[1]=candidateRetrieval.getString("count(votedFor)");
+                                break;
+                            case "Heaven's Arena" :
+                                temp[2]=candidateRetrieval.getString("count(votedFor)");
+                                break;
+                            case "Kukan'yu" :
+                                temp[3]=candidateRetrieval.getString("count(votedFor)");
+                                break;
+                            case "Saherta" :
+                                temp[4]=candidateRetrieval.getString("count(votedFor)");
+                                break;
+                            case "Yorbia" :
+                                temp[5]=candidateRetrieval.getString("count(votedFor)");
+                                break;
+                            case "Begerosse" :
+                                temp[6]=candidateRetrieval.getString("count(votedFor)");
+                                break;
+                            case "Kakin" :
+                                temp[7]=candidateRetrieval.getString("count(votedFor)");
+                                break;
+                            case "Ochima" :
+                                temp[8]=candidateRetrieval.getString("count(votedFor)");
+                                break;   
+                        }    
                         
                 }
-                candidateRetrieval.close();                 
+                retrievedData.add(temp);
+                candidateRetrieval.close();           
                 return retrievedData;
         } 
         catch (SQLException | ClassNotFoundException ex) {
