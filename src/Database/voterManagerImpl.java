@@ -1,0 +1,147 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Database;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import java.util.Calendar;
+
+/**
+ *
+ * @author rebec
+ */
+public class voterManagerImpl implements voterManager{
+    
+    private Database data ; 
+    
+    private static final String QUERY_GET_CANDIDATE = "SELECT candidate.CandidateID, user.firstName, user.lastName, candidate.politicalParty, candidate.description FROM user, candidate WHERE UserID = CandidateID";
+    private static final String QUERY_UPDATE_VOTER = "UPDATE voter, user SET voter.state = ? , user.email = ? , user.password = ? WHERE VoterID = UserID AND VoterId = ?"; 
+    private static final String QUERY_FINDID = "SELECT UserID FROM user WHERE email = ?"; 
+    private static final String QUERY_UPDATE_VOTE = "UPDATE voter SET votedFor = ? WHERE VoterID = ?"; 
+    private static final String QUERY_ELECTION_ISOPEN = "SELECT Status, MAX(StateID) FROM status"; 
+    private static final String QUERY_NUMBER_CANDIDATE  = "SELECT COUNT(*) FROM candidate"; 
+    
+    
+    private PreparedStatement getCandidate ; 
+    private PreparedStatement getID ; 
+    private PreparedStatement updateVoter;
+    private PreparedStatement updateVote ; 
+    private PreparedStatement electionOpen ; 
+    private PreparedStatement numberOfCandidate;
+    
+    
+    public voterManagerImpl() throws SQLException, ClassNotFoundException
+    {
+        data = new Database() ; 
+        Connection dbConnection = data.getCon();
+        getCandidate = dbConnection.prepareStatement(QUERY_GET_CANDIDATE); 
+        getID = dbConnection.prepareStatement(QUERY_FINDID); 
+        updateVoter = dbConnection.prepareStatement(QUERY_UPDATE_VOTER);
+        updateVote = dbConnection.prepareStatement(QUERY_UPDATE_VOTE);
+        electionOpen = dbConnection.prepareStatement(QUERY_ELECTION_ISOPEN);
+        numberOfCandidate = dbConnection.prepareStatement(QUERY_NUMBER_CANDIDATE);
+    }
+    
+    public static GregorianCalendar convertSQLtoGregorian(String SQLdate){
+      return new GregorianCalendar(Integer.parseInt(SQLdate.substring(0, 4)), Integer.parseInt(SQLdate.substring(5, 7)), Integer.parseInt(SQLdate.substring(8)));
+    }
+    
+    @Override
+    public String[][] getAllCandidate()
+    {
+        try {
+            ResultSet numberOfCandidates = numberOfCandidate.executeQuery(); 
+            
+            if(numberOfCandidates.next())
+            {
+                int nbCandidate = numberOfCandidates.getInt(1); 
+                
+                String [][] infosCandidates = new String[nbCandidate][5]; 
+                ResultSet infos = getCandidate.executeQuery(); 
+                int i = 0 ;
+                while(infos.next())
+                {
+                    for (int k=1 ; k < infosCandidates[i].length+1 ; ++k)
+                        infosCandidates[i][k-1]=infos.getString(k);
+                    ++i;
+                }
+                    return infosCandidates;
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return null;
+    }
+    
+    /**
+     *
+     * @param key_candidate
+     * @param email   * @return
+     */
+    @Override
+    public boolean updateVote(int key_candidate, String email)
+    {
+        try {
+            getID.setString(1, email);
+            ResultSet userID = getID.executeQuery(); 
+            if(userID.next())
+            {
+                updateVote.setInt(1, key_candidate);
+                updateVote.setInt(2, userID.getInt(1));
+        
+                updateVote.executeUpdate(); 
+                return true; 
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false ; 
+    }
+    
+    @Override
+    public boolean updateVoter(String [] infos, String old_email)
+    {
+        
+       try {
+            getID.setString(1, old_email);
+            ResultSet userID = getID.executeQuery(); 
+            if(userID.next())
+            {
+                
+                updateVoter.setString(1, infos[0]);
+                updateVoter.setString(2, infos[1]);
+                updateVoter.setString(3, infos[2]);
+                updateVoter.executeUpdate(); 
+                return true; 
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false ; 
+    }
+     
+    @Override
+    public boolean electionIsOpen()
+    {
+        try 
+        {
+            ResultSet statue = electionOpen.executeQuery(); 
+            if(statue.next())
+                return statue.next() && statue.getString(1).equals("Active"); 
+        } catch (SQLException ex) {
+            Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return false ; 
+    }
+}

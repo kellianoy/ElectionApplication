@@ -6,6 +6,8 @@
 package User;
 
 import Database.UserManagerImpl;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 /**
@@ -16,7 +18,7 @@ public class Official extends User {
     
     UserManagerImpl dataController;
     
-    public Official(String email, String password, GregorianCalendar dateOfBirth, String firstName, String lastName) {
+    public Official(String email, String password, GregorianCalendar dateOfBirth, String firstName, String lastName) throws SQLException, ClassNotFoundException {
         super(email, password, dateOfBirth, firstName, lastName);
         dataController = new UserManagerImpl();
     }
@@ -113,4 +115,16 @@ public class Official extends User {
     public boolean resetVotes(){
         return dataController.setVotesToNull();
     }
+    
+    /**
+     * We're getting the name and last name of each candidates and the number of votes that have been casted for them 
+     * @return 
+     */
+    public ArrayList<ArrayList<String>> getVotes(){
+        return dataController.getVotes();
+    }
+    public ArrayList<String[]> getVotesByStates(){
+        return dataController.getVotesByStates();
+    }
 }
+

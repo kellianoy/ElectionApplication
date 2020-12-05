@@ -7,6 +7,7 @@ package Database;
 
 import User.Candidate;
 import User.Voter;
+import java.util.ArrayList;
 
 /**
  * DB Interface for the Official Class, can access tables, delete, modify, add on the DB
@@ -28,4 +29,6 @@ public interface UserManager {
     
     public boolean addElectionEntry(String status);
     public String getLastStatus();
+    public ArrayList<ArrayList<String>> getVotes();
+    public ArrayList<String[]> getVotesByStates();
 }

@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,7 @@ public class UserManagerImpl implements UserManager {
    
     private Database data;
     
-    public UserManagerImpl(){
+    public UserManagerImpl() throws SQLException, ClassNotFoundException{
         data=new Database();
     }
     
@@ -36,7 +37,7 @@ public class UserManagerImpl implements UserManager {
     
     @Override
     public boolean insertVoter(Voter v) {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
             
                 //Preparing statement for user DB
                 PreparedStatement userStm=con.prepareStatement("INSERT INTO user (email, UserID, password, dateOfBirth, firstName, lastName) VALUES (?, null, ?, ?, ?, ?)");
@@ -66,7 +67,7 @@ public class UserManagerImpl implements UserManager {
      * @return  */
     @Override
     public boolean deleteUser(String email) {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
                 PreparedStatement stm=con.prepareStatement("DELETE FROM user WHERE email=?");
                 stm.setString(1, email);
                 stm.executeUpdate(); 
@@ -84,7 +85,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     public String[][] getAllVoters() {
         
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
                 
                 int i=0;
                 Statement stm=con.createStatement();
@@ -118,7 +119,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     public String[][] getAllCandidates() {
         
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
                 
                 int i=0;
                 Statement stm=con.createStatement();
@@ -152,7 +153,7 @@ public class UserManagerImpl implements UserManager {
      */
     @Override
     public boolean insertCandidate(Candidate c) {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
             
                 //Preparing statement for user DB
                 PreparedStatement userStm=con.prepareStatement("INSERT INTO user (email, UserID, password, dateOfBirth, firstName, lastName) VALUES (?, null, ?, ?, ?, ?)");
@@ -185,7 +186,7 @@ public class UserManagerImpl implements UserManager {
      */
     @Override
     public boolean modifyVoter(Voter v, String lastEmail) {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
             
                 //Preparing statement for update
                PreparedStatement userStm=con.prepareStatement("UPDATE user, voter SET email=?, password=?, dateOfBirth=?, firstName=?, lastName=?, state = ? "
@@ -197,7 +198,6 @@ public class UserManagerImpl implements UserManager {
                 userStm.setString(5, v.getLastName());
                 userStm.setString(6, v.getState());
                 userStm.setString(7, lastEmail);
-                System.out.println(userStm.toString());
                 userStm.executeUpdate();
                 return true;
             } 
@@ -214,7 +214,7 @@ public class UserManagerImpl implements UserManager {
      */
     @Override
     public boolean modifyCandidate(Candidate c, String lastEmail) {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
                 PreparedStatement userStm=con.prepareStatement("UPDATE user, candidate SET email=?, password=?, dateOfBirth=?, firstName=?, lastName=?, politicalParty = ? , description = ? "
                         + "WHERE user.email=? AND user.UserID=candidate.CandidateID");
                 userStm.setString(1, c.getEmail());
@@ -242,7 +242,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     public boolean addElectionEntry(String status)
     {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
 
                 Calendar calendar = Calendar.getInstance();
                 java.sql.Date date = new java.sql.Date(calendar.getTime().getTime());
@@ -265,7 +265,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     public String getLastStatus()
     {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
                 Statement stm=con.createStatement();
                 ResultSet set= stm.executeQuery("SELECT Status FROM status ORDER BY StateID DESC");
                 if (set.next())
@@ -283,7 +283,7 @@ public class UserManagerImpl implements UserManager {
      */
     @Override
     public boolean setVotesToNull() {
-        try (Connection con = data.establishConnection()) {
+        try (Connection con = data.getCon()) {
                 Statement stm=con.createStatement();
                 stm.executeUpdate("UPDATE voter SET votedFor = null");
                 return true;
@@ -293,4 +293,102 @@ public class UserManagerImpl implements UserManager {
         } 
         return false;
     }
+    
+    /**
+     * We're getting the name and last name of each candidates and the number of votes that have been casted for them 
+     * @return 
+     */
+    
+    @Override
+    public ArrayList<ArrayList<String>> getVotes() {
+        try (Connection con = data.getCon()) {
+
+                
+                ArrayList<ArrayList<String>> retrievedData= new ArrayList();
+                
+                PreparedStatement stm=con.prepareStatement("SELECT firstName, lastName, count(votedFor) FROM user JOIN candidate ON UserID = CandidateID JOIN voter ON votedFor = CandidateID GROUP BY votedFor");
+                ResultSet candidateRetrieval=stm.executeQuery();
+                
+                while(candidateRetrieval.next())
+                {
+                        //I set the first case of my array to firstname + lastname
+                        ArrayList<String> temp=new ArrayList();
+                        temp.add(candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName"));
+                        temp.add(candidateRetrieval.getString("count(votedFor)"));
+                        retrievedData.add(temp);
+                        
+                }
+                candidateRetrieval.close();                 
+                return retrievedData;
+        } 
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return null;
+    }
+    
+    /**
+     * Return all the votes per states for each candidates in the form of an arraylist of string arrays
+     * @return
+     */
+    @Override
+    public ArrayList<String[]> getVotesByStates() {
+        try (Connection con = data.getCon()) {
+
+                ArrayList<String[]> retrievedData= new ArrayList();
+                
+                PreparedStatement stm=con.prepareStatement("SELECT firstName, lastName, state, count(votedFor) FROM user JOIN candidate ON UserID = CandidateID JOIN voter ON votedFor = CandidateID GROUP BY votedFor, state");
+                ResultSet candidateRetrieval=stm.executeQuery();
+                String[] temp= new String[] { "name" , ""+0, "" +0 , ""+0,  "" +0 , ""+0,  "" +0 , ""+0, ""+0 };
+                while(candidateRetrieval.next())
+                {
+                        if (!temp[0].equals(candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName")))
+                        {
+                            if (!temp[0].equals("name"))
+                            {
+                                retrievedData.add(temp);
+                            }
+                            temp = new String[] { ""+0 , ""+0, "" +0 , ""+0,  "" +0 , ""+0,  "" +0 , ""+0, ""+0 };
+                            temp[0]=candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName");
+                            
+                        }
+                        switch ( candidateRetrieval.getString("state"))
+                        {
+                            case "Padokea" :
+                                temp[1]=candidateRetrieval.getString("count(votedFor)");
+                                break;
+                            case "Heaven's Arena" :
+                                temp[2]=candidateRetrieval.getString("count(votedFor)");
+                                break;
+                            case "Kukan'yu" :
+                                temp[3]=candidateRetrieval.getString("count(votedFor)");
+                                break;
+                            case "Saherta" :
+                                temp[4]=candidateRetrieval.getString("count(votedFor)");
+                                break;
+                            case "Yorbia" :
+                                temp[5]=candidateRetrieval.getString("count(votedFor)");
+                                break;
+                            case "Begerosse" :
+                                temp[6]=candidateRetrieval.getString("count(votedFor)");
+                                break;
+                            case "Kakin" :
+                                temp[7]=candidateRetrieval.getString("count(votedFor)");
+                                break;
+                            case "Ochima" :
+                                temp[8]=candidateRetrieval.getString("count(votedFor)");
+                                break;   
+                        }    
+                        
+                }
+                retrievedData.add(temp);
+                candidateRetrieval.close();           
+                return retrievedData;
+        } 
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return null;
+    }
+    
 }
