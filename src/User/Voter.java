@@ -6,6 +6,7 @@
 package User;
 
 import Database.voterManagerImpl;
+import java.sql.SQLException;
 import java.util.GregorianCalendar;
 
 /**
@@ -15,20 +16,27 @@ import java.util.GregorianCalendar;
 public class Voter extends User {
     
     private String state;
-    private int votedFor;
+    private boolean votedFor;
     private voterManagerImpl dataController ; 
 
     public Voter(String email, String password, GregorianCalendar dateOfBirth, String firstName, String lastName, String state, Candidate votedFor) {
         super(email, password, dateOfBirth, firstName, lastName);
         this.state=state;
-        this.votedFor=0;        
+        if(votedFor != null)
+            this.votedFor = true ;
+        else this.votedFor = false ; 
+    }
+    
+    public void setDataController() throws SQLException, ClassNotFoundException
+    {
+        this.dataController = new voterManagerImpl(); 
     }
     
     public String getState() {
         return state;
     }
     
-    public int getVotedFor() {
+    public boolean getVotedFor() {
         return votedFor;
     }
     
@@ -37,13 +45,13 @@ public class Voter extends User {
         return dataController.getAllCandidate(); 
     }
     
-    public boolean vote(int candidate)
+    public boolean vote(String emailCandidate)
     {
-        if(votedFor == 0 && dataController.electionIsOpen())
+        if(votedFor == false || dataController.electionIsOpen())
         {
-            if(dataController.updateVote(candidate, super.getEmail())); 
+            if(dataController.updateVote(emailCandidate, super.getEmail())); 
             {
-                votedFor = candidate; 
+                votedFor = true; 
                 return true ; 
             }
         }
@@ -52,11 +60,11 @@ public class Voter extends User {
     
     public void updateProdile(String[] infos)
     {
-        if(dataController.updateVoter(infos, super.getEmail()))
+        if(dataController.updateVoter(infos, email))
         {
-            state = infos[0];
-            email = infos[1]; 
-            password = infos[2];
+            this.state = infos[0];
+            this.email = infos[1]; 
+            this.password = infos[2];
         }
     }
     

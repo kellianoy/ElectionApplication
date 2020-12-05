@@ -4,6 +4,7 @@ import Database.LoggerManagerImpl;
 import Database.Database;
 import User.Official;
 import User.User;
+import User.Voter;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -391,12 +392,20 @@ public class GUI_Start extends javax.swing.JFrame {
                 dispose();
             }
             else if (check.getClass().getSimpleName().equals("Candidate"))
-            {
-                JOptionPane.showMessageDialog(null, "This is a candidate. //NOT YET IMPLEMENTED" , this.getTitle(), 1 );
-            }
+                JOptionPane.showMessageDialog(null, "This is a Candidate. //NOT YET IMPLEMENTED" , this.getTitle(), 1 );
             else
-            JOptionPane.showMessageDialog(null, "This is a voter. //NOT YET IMPLEMENTED" , this.getTitle(), 1 );
-
+            {
+                try {
+                    GUI_Voter voterWindow = new GUI_Voter((Voter) check);
+                    setVisible(false);
+                    voterWindow.embeddedMain();
+                    dispose();
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUI_Start.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(GUI_Start.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
         else
         JOptionPane.showMessageDialog(null, "Wrong informations, please retry." , this.getTitle(), 1 );
