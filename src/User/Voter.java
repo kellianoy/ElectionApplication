@@ -58,14 +58,16 @@ public class Voter extends User {
         return false ; 
     }
     
-    public void updateProdile(String[] infos)
+    public boolean updateProdile(String[] infos)
     {
         if(dataController.updateVoter(infos, email))
         {
             this.state = infos[0];
             this.email = infos[1]; 
             this.password = infos[2];
+            return true; 
         }
+        return false ; 
     }
     
 }

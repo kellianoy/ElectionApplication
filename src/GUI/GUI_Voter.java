@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -114,6 +115,7 @@ public class GUI_Voter extends javax.swing.JFrame {
         voteForButton = new javax.swing.JButton();
         preCandidateButton = new javax.swing.JButton();
         nextCandidateButton = new javax.swing.JButton();
+        goBackMenuButton = new javax.swing.JButton();
 
         settingsPopUp.setMaximumSize(new java.awt.Dimension(32773, 98307));
         settingsPopUp.setPreferredSize(new java.awt.Dimension(200, 100));
@@ -250,29 +252,31 @@ public class GUI_Voter extends javax.swing.JFrame {
             .addComponent(mainMenuDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(mainMenuText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(main_menuLayout.createSequentialGroup()
-                .addGap(77, 77, 77)
                 .addGroup(main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(viewCandidateButton)
                     .addGroup(main_menuLayout.createSequentialGroup()
+                        .addGap(77, 77, 77)
                         .addComponent(questionVote)
                         .addGap(114, 114, 114)
-                        .addComponent(answerVote)))
-                .addContainerGap(244, Short.MAX_VALUE))
+                        .addComponent(answerVote))
+                    .addGroup(main_menuLayout.createSequentialGroup()
+                        .addGap(220, 220, 220)
+                        .addComponent(viewCandidateButton)))
+                .addContainerGap(225, Short.MAX_VALUE))
         );
         main_menuLayout.setVerticalGroup(
             main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_menuLayout.createSequentialGroup()
-                .addGap(51, 51, 51)
+                .addContainerGap()
                 .addComponent(mainMenuDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(3, 3, 3)
                 .addComponent(mainMenuText)
-                .addGap(102, 102, 102)
+                .addGap(150, 150, 150)
                 .addGroup(main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(questionVote)
                     .addComponent(answerVote))
-                .addGap(145, 145, 145)
+                .addGap(141, 141, 141)
                 .addComponent(viewCandidateButton)
-                .addGap(101, 101, 101))
+                .addGap(105, 105, 105))
         );
 
         mainPanel.add(main_menu, "mainMenu");
@@ -451,40 +455,54 @@ public class GUI_Voter extends javax.swing.JFrame {
             }
         });
 
+        goBackMenuButton.setText("Go back");
+        goBackMenuButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goBackMenuButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout viewCandidatePanelLayout = new javax.swing.GroupLayout(viewCandidatePanel);
         viewCandidatePanel.setLayout(viewCandidatePanelLayout);
         viewCandidatePanelLayout.setHorizontalGroup(
             viewCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(nameCandidateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(partyCandidateText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(viewCandidatePanelLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(preCandidateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(77, 77, 77)
-                .addComponent(voteForButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(95, 95, 95)
-                .addComponent(nextCandidateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewCandidatePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(descriptionCandidateText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(26, 26, 26))
+            .addGroup(viewCandidatePanelLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(viewCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(viewCandidatePanelLayout.createSequentialGroup()
+                        .addComponent(goBackMenuButton)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(viewCandidatePanelLayout.createSequentialGroup()
+                        .addComponent(preCandidateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(77, 77, 77)
+                        .addComponent(voteForButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(95, 95, 95)
+                        .addComponent(nextCandidateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         viewCandidatePanelLayout.setVerticalGroup(
             viewCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(viewCandidatePanelLayout.createSequentialGroup()
-                .addGap(65, 65, 65)
+                .addGap(39, 39, 39)
                 .addComponent(nameCandidateLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(partyCandidateText)
-                .addGap(50, 50, 50)
-                .addComponent(descriptionCandidateText, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                 .addGap(76, 76, 76)
-                .addGroup(viewCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(voteForButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(preCandidateButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(nextCandidateButton, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(56, 56, 56))
+                .addComponent(descriptionCandidateText, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                .addGap(55, 55, 55)
+                .addGroup(viewCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(preCandidateButton)
+                    .addComponent(voteForButton)
+                    .addComponent(nextCandidateButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(goBackMenuButton)
+                .addGap(20, 20, 20))
         );
 
         mainPanel.add(viewCandidatePanel, "viewCandidate");
@@ -542,7 +560,10 @@ public class GUI_Voter extends javax.swing.JFrame {
         infosModif[0] = (String)stateComboBox.getModel().getSelectedItem();
         infosModif[1] = editVoterEmail.getText(); 
         infosModif[2] = editVoterPassword.getText(); 
-        admin.updateProdile(infosModif);
+        if(admin.updateProdile(infosModif))
+            JOptionPane.showMessageDialog(null, "Informations successfully edited" , this.getTitle(), 1 );
+        else 
+            JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void stateComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stateComboBoxActionPerformed
@@ -572,7 +593,7 @@ public class GUI_Voter extends javax.swing.JFrame {
         
         nameCandidateLabel.setText(infosCandidate[cursorCandidate][1] + " " + infosCandidate[cursorCandidate][2]); 
         partyCandidateText.setText("Party : " + infosCandidate[cursorCandidate][3]); 
-        descriptionCandidateText.setText("Party : " + infosCandidate[cursorCandidate][3]); 
+        descriptionCandidateText.setText(infosCandidate[cursorCandidate][4]); 
         
         cards.show(mainPanel, "viewCandidate");
     }
@@ -604,6 +625,7 @@ public class GUI_Voter extends javax.swing.JFrame {
         {
             answerVote.setText("You have already voted.");
             answerVote.setForeground(GREEN_COLOR);
+            voteForButton.setEnabled(false);
         }
     }//GEN-LAST:event_voteForButtonActionPerformed
 
@@ -611,6 +633,10 @@ public class GUI_Voter extends javax.swing.JFrame {
         cursorCandidate -- ; 
         viewCandidateButtonActionPerformed(evt); 
     }//GEN-LAST:event_preCandidateButtonActionPerformed
+
+    private void goBackMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackMenuButtonActionPerformed
+        cards.show(mainPanel, "mainMenu");
+    }//GEN-LAST:event_goBackMenuButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -625,6 +651,7 @@ public class GUI_Voter extends javax.swing.JFrame {
     private javax.swing.JTextField editVoterPassword;
     private javax.swing.JButton exitButton;
     private javax.swing.JButton goBackButton;
+    private javax.swing.JButton goBackMenuButton;
     private javax.swing.JMenuItem greenOption;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
