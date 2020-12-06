@@ -10,7 +10,7 @@ package Database;
  * @author rebec
  */
 public interface voterManager {
-    public boolean updateVote(int key_candidate, String email); 
+    public boolean updateVote(String emailCandidate, String email); 
     public boolean updateVoter(String [] infos, String old_email); 
     public boolean electionIsOpen(); 
 

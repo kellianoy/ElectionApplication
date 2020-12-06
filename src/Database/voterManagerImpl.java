@@ -23,7 +23,7 @@ public class voterManagerImpl implements voterManager{
     
     private Database data ; 
     
-    private static final String QUERY_GET_CANDIDATE = "SELECT candidate.CandidateID, user.firstName, user.lastName, candidate.politicalParty, candidate.description FROM user, candidate WHERE UserID = CandidateID";
+    private static final String QUERY_GET_CANDIDATE = "SELECT user.email, user.firstName, user.lastName, candidate.politicalParty, candidate.description FROM user, candidate WHERE UserID = CandidateID";
     private static final String QUERY_UPDATE_VOTER = "UPDATE voter, user SET voter.state = ? , user.email = ? , user.password = ? WHERE VoterID = UserID AND VoterId = ?"; 
     private static final String QUERY_FINDID = "SELECT UserID FROM user WHERE email = ?"; 
     private static final String QUERY_UPDATE_VOTE = "UPDATE voter SET votedFor = ? WHERE VoterID = ?"; 
@@ -90,18 +90,24 @@ public class voterManagerImpl implements voterManager{
      * @param email   * @return
      */
     @Override
-    public boolean updateVote(int key_candidate, String email)
+    public boolean updateVote(String emailCandidate, String email)
     {
         try {
-            getID.setString(1, email);
-            ResultSet userID = getID.executeQuery(); 
-            if(userID.next())
-            {
-                updateVote.setInt(1, key_candidate);
-                updateVote.setInt(2, userID.getInt(1));
-        
-                updateVote.executeUpdate(); 
-                return true; 
+            getID.setString(1, emailCandidate); 
+            ResultSet candidateID = getID.executeQuery(); 
+            if(candidateID.next())
+            { 
+                updateVote.setInt(1, candidateID.getInt(1));
+                
+                getID.setString(1, email);
+                ResultSet userID = getID.executeQuery();
+                if(userID.next())
+                {
+                    updateVote.setInt(2, userID.getInt(1));
+                    
+                    updateVote.executeUpdate(); 
+                    return true; 
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -122,6 +128,7 @@ public class voterManagerImpl implements voterManager{
                 updateVoter.setString(1, infos[0]);
                 updateVoter.setString(2, infos[1]);
                 updateVoter.setString(3, infos[2]);
+                updateVoter.setString(4, userID.getString(1));
                 updateVoter.executeUpdate(); 
                 return true; 
             }
