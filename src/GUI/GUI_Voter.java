@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Calendar;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -91,11 +92,14 @@ public class GUI_Voter extends javax.swing.JFrame {
         profileButton = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         main_menu = new javax.swing.JPanel();
+        colorPanel = new javax.swing.JPanel();
         mainMenuText = new javax.swing.JLabel();
         questionVote = new javax.swing.JLabel();
         answerVote = new javax.swing.JLabel();
         viewCandidateButton = new javax.swing.JButton();
         mainMenuText1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        republicText = new javax.swing.JLabel();
         profilePanel = new javax.swing.JPanel();
         editProfileFirstName = new javax.swing.JTextField();
         editProfileLastName = new javax.swing.JTextField();
@@ -115,6 +119,7 @@ public class GUI_Voter extends javax.swing.JFrame {
         preCandidateButton = new javax.swing.JButton();
         nextCandidateButton = new javax.swing.JButton();
         goBackMenuButton = new javax.swing.JButton();
+        imageLabel = new javax.swing.JLabel();
 
         settingsPopUp.setMaximumSize(new java.awt.Dimension(32773, 98307));
         settingsPopUp.setPreferredSize(new java.awt.Dimension(200, 100));
@@ -216,6 +221,19 @@ public class GUI_Voter extends javax.swing.JFrame {
 
         main_menu.setBackground(new java.awt.Color(255, 255, 255));
 
+        colorPanel.setBackground(actualColor   );
+
+        javax.swing.GroupLayout colorPanelLayout = new javax.swing.GroupLayout(colorPanel);
+        colorPanel.setLayout(colorPanelLayout);
+        colorPanelLayout.setHorizontalGroup(
+            colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 406, Short.MAX_VALUE)
+        );
+        colorPanelLayout.setVerticalGroup(
+            colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 6, Short.MAX_VALUE)
+        );
+
         mainMenuText.setBackground(new java.awt.Color(255, 255, 255));
         mainMenuText.setFont(new java.awt.Font("Montserrat Medium", 0, 18)); // NOI18N
         mainMenuText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -243,6 +261,13 @@ public class GUI_Voter extends javax.swing.JFrame {
         mainMenuText1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mainMenuText1.setText("Voter Main Menu");
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/index.png"))); // NOI18N
+
+        republicText.setBackground(new java.awt.Color(255, 255, 255));
+        republicText.setFont(new java.awt.Font("Montserrat Medium", 0, 36)); // NOI18N
+        republicText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        republicText.setText("Republic of Moebus");
+
         javax.swing.GroupLayout main_menuLayout = new javax.swing.GroupLayout(main_menu);
         main_menu.setLayout(main_menuLayout);
         main_menuLayout.setHorizontalGroup(
@@ -250,17 +275,22 @@ public class GUI_Voter extends javax.swing.JFrame {
             .addComponent(mainMenuText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(mainMenuText1, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
             .addGroup(main_menuLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(questionVote, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(answerVote, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(republicText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(main_menuLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_menuLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(viewCandidateButton)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(answerVote, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(viewCandidateButton)
+                            .addComponent(jLabel1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(main_menuLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         main_menuLayout.setVerticalGroup(
             main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,13 +299,19 @@ public class GUI_Voter extends javax.swing.JFrame {
                 .addComponent(mainMenuText1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainMenuText)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 247, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(republicText)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(questionVote)
                 .addGap(18, 18, 18)
                 .addComponent(answerVote)
-                .addGap(46, 46, 46)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(viewCandidateButton)
-                .addGap(117, 117, 117))
+                .addGap(59, 59, 59))
         );
 
         mainPanel.add(main_menu, "mainMenu");
@@ -423,7 +459,6 @@ public class GUI_Voter extends javax.swing.JFrame {
 
         preCandidateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/leftArrowIcon.png"))); // NOI18N
         preCandidateButton.setContentAreaFilled(false);
-        preCandidateButton.setOpaque(false);
         preCandidateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 preCandidateButtonActionPerformed(evt);
@@ -445,6 +480,8 @@ public class GUI_Voter extends javax.swing.JFrame {
             }
         });
 
+        imageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout viewCandidatePanelLayout = new javax.swing.GroupLayout(viewCandidatePanel);
         viewCandidatePanel.setLayout(viewCandidatePanelLayout);
         viewCandidatePanelLayout.setHorizontalGroup(
@@ -462,7 +499,11 @@ public class GUI_Voter extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(voteForButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(nextCandidateButton)))
+                        .addComponent(nextCandidateButton))
+                    .addGroup(viewCandidatePanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         viewCandidatePanelLayout.setVerticalGroup(
@@ -472,9 +513,11 @@ public class GUI_Voter extends javax.swing.JFrame {
                 .addComponent(nameCandidateLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(partyCandidateText)
-                .addGap(30, 30, 30)
-                .addComponent(descriptionCandidateText, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(descriptionCandidateText)
+                .addGap(18, 18, 18)
                 .addGroup(viewCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(preCandidateButton)
                     .addComponent(voteForButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -521,17 +564,20 @@ public class GUI_Voter extends javax.swing.JFrame {
 
     private void redOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redOptionActionPerformed
         actualColor=RED_COLOR;
-        leftPanel.setBackground(new Color(170,40,50));
+        leftPanel.setBackground(actualColor);
+        colorPanel.setBackground(actualColor);
     }//GEN-LAST:event_redOptionActionPerformed
 
     private void greenOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_greenOptionActionPerformed
         actualColor=GREEN_COLOR;
-        leftPanel.setBackground(new Color(100,210,50));
+        leftPanel.setBackground(actualColor);
+        colorPanel.setBackground(actualColor);
     }//GEN-LAST:event_greenOptionActionPerformed
 
     private void blueOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blueOptionActionPerformed
         actualColor=BLUE_COLOR;
-        leftPanel.setBackground(new Color(0,102,130));
+        leftPanel.setBackground(actualColor);
+        colorPanel.setBackground(actualColor);
     }//GEN-LAST:event_blueOptionActionPerformed
 
     private void stateComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stateComboBoxActionPerformed
@@ -559,6 +605,20 @@ public class GUI_Voter extends javax.swing.JFrame {
         else 
             voteForButton.setEnabled(true);
         
+        byte[] myImage = admin.getImage(infosCandidate[cursorCandidate][0]);
+        if (myImage!=null)
+        {
+            ImageIcon image = new ImageIcon(myImage);
+            
+            imageLabel.setText("");
+            imageLabel.setIcon(image);
+        }
+        else
+        {
+            imageLabel.setText("There is no picture available.");
+            imageLabel.setIcon(null);
+        }
+        
         nameCandidateLabel.setText(infosCandidate[cursorCandidate][1] + " " + infosCandidate[cursorCandidate][2]); 
         partyCandidateText.setText("Party : " + infosCandidate[cursorCandidate][3]); 
         descriptionCandidateText.setText(infosCandidate[cursorCandidate][4]); 
@@ -585,6 +645,7 @@ public class GUI_Voter extends javax.swing.JFrame {
 
     private void voteForButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voteForButtonActionPerformed
         admin.vote(infosCandidate[cursorCandidate][0]); 
+        JOptionPane.showMessageDialog(null, "Your vote was successfully taken into account" , this.getTitle(), 1 );
         if(admin.getVotedFor())
         {
             answerVote.setText("You have already voted.");
@@ -607,7 +668,7 @@ public class GUI_Voter extends javax.swing.JFrame {
         infosModif[0] = (String)stateComboBox.getModel().getSelectedItem();
         infosModif[1] = editVoterEmail.getText();
         infosModif[2] = editVoterPassword.getText();
-        if(admin.updateProdile(infosModif))
+        if(admin.updateProfile(infosModif))
         JOptionPane.showMessageDialog(null, "Informations successfully edited" , this.getTitle(), 1 );
         else
         JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
@@ -622,6 +683,7 @@ public class GUI_Voter extends javax.swing.JFrame {
     private javax.swing.JButton SetingColorButton;
     private javax.swing.JLabel answerVote;
     private javax.swing.JMenuItem blueOption;
+    private javax.swing.JPanel colorPanel;
     private javax.swing.JLabel descriptionCandidateText;
     private javax.swing.JTextField editProfileFirstName;
     private javax.swing.JTextField editProfileLastName;
@@ -632,6 +694,8 @@ public class GUI_Voter extends javax.swing.JFrame {
     private javax.swing.JButton goBackButton;
     private javax.swing.JButton goBackMenuButton;
     private javax.swing.JMenuItem greenOption;
+    private javax.swing.JLabel imageLabel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JLabel mainMenuText;
@@ -647,6 +711,7 @@ public class GUI_Voter extends javax.swing.JFrame {
     private javax.swing.JPanel profilePanel;
     private javax.swing.JLabel questionVote;
     private javax.swing.JMenuItem redOption;
+    private javax.swing.JLabel republicText;
     private javax.swing.JButton saveButton;
     private javax.swing.JPopupMenu settingsPopUp;
     private javax.swing.JComboBox<String> stateComboBox;

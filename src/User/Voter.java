@@ -58,7 +58,7 @@ public class Voter extends User {
         return false ; 
     }
     
-    public boolean updateProdile(String[] infos)
+    public boolean updateProfile(String[] infos)
     {
         if(dataController.updateVoter(infos, email))
         {
@@ -68,6 +68,11 @@ public class Voter extends User {
             return true; 
         }
         return false ; 
+    }
+    
+       public byte[] getImage(String email)
+    {
+        return dataController.getPicture(email);
     }
     
 }
