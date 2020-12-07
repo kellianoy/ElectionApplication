@@ -9,13 +9,17 @@ import Enum.*;
 import static GUI.GUI_Start.*;
 import User.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartFactory;
@@ -162,7 +166,6 @@ public class GUI_Official extends javax.swing.JFrame {
      public JFreeChart createRingPlotChart(DefaultPieDataset dataset)
     {
         JFreeChart myChart = ChartFactory.createRingChart("Pourcentage of votes per candidate", dataset, true, true, false);
-        
         StandardChartTheme theme = (StandardChartTheme)StandardChartTheme.createJFreeTheme();
         theme.setBarPainter(new StandardBarPainter());
         theme.setRegularFont( new Font("montserrat" , Font.PLAIN , 11));
@@ -219,11 +222,13 @@ public class GUI_Official extends javax.swing.JFrame {
         p.setBackgroundPaint(Color.white);
         p.setRangeGridlinePaint(Color.black);
         
-        BarRenderer r=(BarRenderer) p.getRenderer();
-        r.setSeriesPaint(0, new Color(50,50,50));
-        r.setDrawBarOutline(false);
+        BarRenderer r = (BarRenderer) p.getRenderer();
+        r.setSeriesPaint(0, actualColor);
         r.setMaximumBarWidth(0.1);
-       
+        r.setBaseItemLabelsVisible(true);
+        r.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+        r.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+        r.setDrawBarOutline(false);
         return myChart;
     }
      
@@ -293,11 +298,11 @@ public class GUI_Official extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        imageChooser = new javax.swing.JFileChooser();
         settingsPopUp = new javax.swing.JPopupMenu();
         redOption = new javax.swing.JMenuItem();
         greenOption = new javax.swing.JMenuItem();
         blueOption = new javax.swing.JMenuItem();
-        jComboBox5 = new javax.swing.JComboBox<>();
         leftPanel = new javax.swing.JPanel();
         settingsButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
@@ -346,6 +351,8 @@ public class GUI_Official extends javax.swing.JFrame {
         addCandidateButton = new javax.swing.JButton();
         addCandidateFirstName = new javax.swing.JTextField();
         addCandidateLastName = new javax.swing.JTextField();
+        imageRetrieved = new javax.swing.JLabel();
+        dataPath = new javax.swing.JLabel();
         addCandidateEmail = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
         addCandidateDate = new javax.swing.JFormattedTextField();
@@ -355,6 +362,7 @@ public class GUI_Official extends javax.swing.JFrame {
         addCandidateTextPanel = new javax.swing.JPanel();
         addCandidateText = new javax.swing.JLabel();
         addCandidateCaption = new javax.swing.JLabel();
+        addCandidateButton1 = new javax.swing.JButton();
         editVotersPanel = new javax.swing.JPanel();
         editVotersBack = new javax.swing.JButton();
         editVotersScrollPanel = new javax.swing.JScrollPane();
@@ -427,6 +435,13 @@ public class GUI_Official extends javax.swing.JFrame {
         editMenuVoter = new javax.swing.JMenuItem();
         editMenuCandidate = new javax.swing.JMenuItem();
 
+        imageChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        imageChooser.setApproveButtonText("");
+        imageChooser.setApproveButtonToolTipText("");
+        imageChooser.setBackground(java.awt.Color.darkGray);
+        imageChooser.setCurrentDirectory(new java.io.File("C:\\Users\\Keke\\Images"));
+        imageChooser.setFileFilter(new ImageFilter());
+
         settingsPopUp.setPreferredSize(new java.awt.Dimension(200, 100));
         settingsPopUp.setRequestFocusEnabled(false);
 
@@ -453,8 +468,6 @@ public class GUI_Official extends javax.swing.JFrame {
             }
         });
         settingsPopUp.add(blueOption);
-
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Election Simulator");
@@ -913,42 +926,42 @@ public class GUI_Official extends javax.swing.JFrame {
             .addGroup(addVoterPanelLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addVoterBack)
                     .addGroup(addVoterPanelLayout.createSequentialGroup()
                         .addGroup(addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(addVoterFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                             .addComponent(addVoterEmail))
-                        .addGap(40, 40, 40)
+                        .addGap(72, 72, 72)
                         .addGroup(addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(addVoterLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                             .addComponent(addVoterPassword))
-                        .addGap(40, 40, 40)
+                        .addGap(72, 72, 72)
                         .addGroup(addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(addVoterDate, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                             .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(16, 16, 16)
-                        .addComponent(addVoterButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(20, 20, 20))
+                    .addGroup(addVoterPanelLayout.createSequentialGroup()
+                        .addComponent(addVoterBack)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addVoterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))))
         );
         addVoterPanelLayout.setVerticalGroup(
             addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(addVoterPanelLayout.createSequentialGroup()
                 .addComponent(addVoterTextPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(addVoterFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(addVoterLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(addVoterDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(addVoterPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addVoterButton)))
+                .addGroup(addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addVoterFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addVoterLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addVoterDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addVoterEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addVoterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 447, Short.MAX_VALUE)
-                .addComponent(addVoterBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addVoterBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addVoterButton))
                 .addContainerGap())
         );
 
@@ -971,6 +984,16 @@ public class GUI_Official extends javax.swing.JFrame {
         });
 
         addCandidateLastName.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Last Name"));
+
+        imageRetrieved.setBackground(new java.awt.Color(255, 255, 255));
+        imageRetrieved.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        imageRetrieved.setForeground(new java.awt.Color(50, 50, 50));
+        imageRetrieved.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imageRetrieved.setText("Select an image");
+
+        dataPath.setBackground(new java.awt.Color(255, 255, 255));
+        dataPath.setForeground(new java.awt.Color(50, 50, 50));
+        dataPath.setText("Data Path");
 
         addCandidateEmail.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Email"));
 
@@ -1029,6 +1052,13 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addGap(30, 30, 30))
         );
 
+        addCandidateButton1.setText("Search Image");
+        addCandidateButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCandidateButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout addCandidatePanelLayout = new javax.swing.GroupLayout(addCandidatePanel);
         addCandidatePanel.setLayout(addCandidatePanelLayout);
         addCandidatePanelLayout.setHorizontalGroup(
@@ -1038,22 +1068,26 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addCandidateBack)
-                    .addComponent(addCandidateEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(addCandidatePanelLayout.createSequentialGroup()
-                        .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(addCandidatePanelLayout.createSequentialGroup()
+                        .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, addCandidatePanelLayout.createSequentialGroup()
                                 .addComponent(addCandidateFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
+                                .addGap(72, 72, 72)
                                 .addComponent(addCandidateLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(addCandidateDescription))
-                        .addGap(40, 40, 40)
-                        .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(addCandidatePassword)
-                            .addComponent(addCandidateDate, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(16, 16, 16)
-                        .addComponent(addCandidateButton)))
-                .addGap(16, 16, 16))
+                            .addComponent(addCandidateDescription, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addCandidateEmail)
+                            .addComponent(imageRetrieved, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dataPath, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(72, 72, 72)
+                        .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addCandidateButton1)
+                            .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(addCandidateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(addCandidatePassword)
+                                    .addComponent(addCandidateDate, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addGap(20, 20, 20))
         );
         addCandidatePanelLayout.setVerticalGroup(
             addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1062,10 +1096,7 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addCandidateFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addCandidateLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addCandidateDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(addCandidatePanelLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(addCandidateButton)))
+                    .addComponent(addCandidateDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addCandidateEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1074,8 +1105,19 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addCandidateDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 340, Short.MAX_VALUE)
-                .addComponent(addCandidateBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addCandidatePanelLayout.createSequentialGroup()
+                        .addComponent(addCandidateButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 278, Short.MAX_VALUE))
+                    .addGroup(addCandidatePanelLayout.createSequentialGroup()
+                        .addComponent(imageRetrieved, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(dataPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(30, 30, 30)))
+                .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addCandidateBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addCandidateButton))
                 .addContainerGap())
         );
 
@@ -1242,7 +1284,7 @@ public class GUI_Official extends javax.swing.JFrame {
                                 .addGroup(editVotersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(editVotersDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(editVotersEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(25, 25, 25))))
+                        .addContainerGap())))
         );
         editVotersPanelLayout.setVerticalGroup(
             editVotersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1482,11 +1524,12 @@ public class GUI_Official extends javax.swing.JFrame {
         analyzeTextPanel.setLayout(analyzeTextPanelLayout);
         analyzeTextPanelLayout.setHorizontalGroup(
             analyzeTextPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(analyzeTextPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, analyzeTextPanelLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addGroup(analyzeTextPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(AnalyzeText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(AnalyzeCaption, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(analyzeTextPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(AnalyzeCaption, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(AnalyzeText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         analyzeTextPanelLayout.setVerticalGroup(
             analyzeTextPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1558,17 +1601,18 @@ public class GUI_Official extends javax.swing.JFrame {
         idlePanelLayout.setHorizontalGroup(
             idlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(idlePanelLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
                 .addGroup(idlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(idlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jTextArea2)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextArea9, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextArea1, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addContainerGap(230, Short.MAX_VALUE))
+                    .addComponent(jTextArea2)
+                    .addComponent(jTextArea1)
+                    .addGroup(idlePanelLayout.createSequentialGroup()
+                        .addGroup(idlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel6)
+                            .addComponent(jTextArea9, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         idlePanelLayout.setVerticalGroup(
             idlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1577,16 +1621,16 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextArea9, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextArea9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextArea2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(208, Short.MAX_VALUE))
+                .addComponent(jTextArea2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(258, Short.MAX_VALUE))
         );
 
         chartMainPanel.add(idlePanel, "idle");
@@ -1599,7 +1643,7 @@ public class GUI_Official extends javax.swing.JFrame {
         );
         ringPlotPanelLayout.setVerticalGroup(
             ringPlotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 465, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
         );
 
         chartMainPanel.add(ringPlotPanel, "ringPlot");
@@ -1614,7 +1658,7 @@ public class GUI_Official extends javax.swing.JFrame {
         );
         stackedBarPanelLayout.setVerticalGroup(
             stackedBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 465, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
         );
 
         chartMainPanel.add(stackedBarPanel, "stackedBar");
@@ -1627,7 +1671,7 @@ public class GUI_Official extends javax.swing.JFrame {
         );
         barPanelLayout.setVerticalGroup(
             barPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 465, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
         );
 
         chartMainPanel.add(barPanel, "bar");
@@ -1659,18 +1703,16 @@ public class GUI_Official extends javax.swing.JFrame {
             analyzeVotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(analyzeTextPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(analyzeVotesPanelLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(analyzeVotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chartMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(analyzeVotesPanelLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
                         .addComponent(barChartButton)
                         .addGap(20, 20, 20)
                         .addComponent(stackedBarChartButton)
                         .addGap(20, 20, 20)
-                        .addComponent(ringChartButton))
-                    .addGroup(analyzeVotesPanelLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(chartMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(ringChartButton)))
+                .addGap(20, 20, 20))
         );
         analyzeVotesPanelLayout.setVerticalGroup(
             analyzeVotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1678,7 +1720,7 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addComponent(analyzeTextPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chartMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addGroup(analyzeVotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(barChartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(stackedBarChartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1759,10 +1801,14 @@ public class GUI_Official extends javax.swing.JFrame {
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(profileText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(profileCaptionText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(profilePanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, profilePanelLayout.createSequentialGroup()
+                    .addGroup(profilePanelLayout.createSequentialGroup()
+                        .addComponent(profileBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(profileSaveButton))
+                    .addGroup(profilePanelLayout.createSequentialGroup()
                         .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(profilePassword, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(profileEmail)
@@ -1771,11 +1817,8 @@ public class GUI_Official extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(profileLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(profileDate, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, profilePanelLayout.createSequentialGroup()
-                        .addComponent(profileBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 591, Short.MAX_VALUE)
-                        .addComponent(profileSaveButton)))
+                        .addComponent(profileDate, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 271, Short.MAX_VALUE)))
                 .addGap(20, 20, 20))
         );
         profilePanelLayout.setVerticalGroup(
@@ -1790,11 +1833,11 @@ public class GUI_Official extends javax.swing.JFrame {
                         .addComponent(profileLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(profileDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(profileFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(profileEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addGap(18, 18, 18)
                 .addComponent(profilePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(339, 339, 339)
+                .addGap(18, 374, Short.MAX_VALUE)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(profileBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(profileSaveButton))
@@ -2363,6 +2406,23 @@ public class GUI_Official extends javax.swing.JFrame {
     private void mainMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainMenuButtonActionPerformed
         cards.show(mainPanel, "mainMenu");
     }//GEN-LAST:event_mainMenuButtonActionPerformed
+
+    private void addCandidateButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCandidateButton1ActionPerformed
+        int returnVal = imageChooser.showOpenDialog(this);
+        
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File f = imageChooser.getSelectedFile();
+            ImageIcon myImage = new ImageIcon(f.toString());
+            ImageIcon scaledImage = new ImageIcon(myImage.getImage().getScaledInstance(imageRetrieved.getWidth(),imageRetrieved.getHeight() , java.awt.Image.SCALE_SMOOTH));
+            imageRetrieved.setText("");
+            imageRetrieved.setIcon(scaledImage);
+            
+            dataPath.setText(f.getAbsolutePath());
+        } 
+        else 
+            JOptionPane.showMessageDialog(null, "Couldn't access the file." , this.getTitle(), 1 );
+
+    }//GEN-LAST:event_addCandidateButton1ActionPerformed
     
     /** Set a panel to visible and enabled, and put a button to disabled
      * @param edit
@@ -2389,6 +2449,7 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JButton addCandidateBack;
     private javax.swing.JButton addCandidateButton;
+    private javax.swing.JButton addCandidateButton1;
     private javax.swing.JLabel addCandidateCaption;
     private javax.swing.JFormattedTextField addCandidateDate;
     private javax.swing.JTextField addCandidateDescription;
@@ -2417,6 +2478,7 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JMenuItem blueOption;
     private javax.swing.JPanel chartMainPanel;
     private javax.swing.JButton dataAnalysisButton;
+    private javax.swing.JLabel dataPath;
     private javax.swing.JPanel editCandidatePanel;
     private javax.swing.JButton editCandidatesBack;
     private javax.swing.JLabel editCandidatesCaption;
@@ -2456,11 +2518,12 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JButton exitButton;
     private javax.swing.JMenuItem greenOption;
     private javax.swing.JPanel idlePanel;
+    private javax.swing.JFileChooser imageChooser;
+    private javax.swing.JLabel imageRetrieved;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

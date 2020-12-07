@@ -624,7 +624,6 @@ public class GUI_Voter extends javax.swing.JFrame {
         if (myImage!=null)
         {
             ImageIcon image = new ImageIcon(myImage);
-            
             imageLabel.setText("");
             imageLabel.setIcon(image);
         }
