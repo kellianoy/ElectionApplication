@@ -7,6 +7,10 @@ package Database;
 
 import User.Candidate;
 import User.Voter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -352,31 +356,32 @@ public class UserManagerImpl implements UserManager {
                             temp[0]=candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName");
                             
                         }
+                        String count=candidateRetrieval.getString("count(votedFor)");
                         switch ( candidateRetrieval.getString("state"))
                         {
                             case "Padokea" :
-                                temp[1]=candidateRetrieval.getString("count(votedFor)");
+                                temp[1]=count;
                                 break;
                             case "Heaven's Arena" :
-                                temp[2]=candidateRetrieval.getString("count(votedFor)");
+                                temp[2]=count;
                                 break;
                             case "Kukan'yu" :
-                                temp[3]=candidateRetrieval.getString("count(votedFor)");
+                                temp[3]=count;
                                 break;
                             case "Saherta" :
-                                temp[4]=candidateRetrieval.getString("count(votedFor)");
+                                temp[4]=count;
                                 break;
                             case "Yorbia" :
-                                temp[5]=candidateRetrieval.getString("count(votedFor)");
+                                temp[5]=count;
                                 break;
                             case "Begerosse" :
-                                temp[6]=candidateRetrieval.getString("count(votedFor)");
+                                temp[6]=count;
                                 break;
                             case "Kakin" :
-                                temp[7]=candidateRetrieval.getString("count(votedFor)");
+                                temp[7]=count;
                                 break;
                             case "Ochima" :
-                                temp[8]=candidateRetrieval.getString("count(votedFor)");
+                                temp[8]=count;
                                 break;   
                         }    
                         
@@ -397,6 +402,7 @@ public class UserManagerImpl implements UserManager {
      * @param lastEmail
      * @return 
      */
+    @Override
     public boolean modifyOfficial(String[] info, String lastEmail) {
         try (Connection con = data.getCon()) {
                 PreparedStatement userStm=con.prepareStatement("UPDATE user SET email=?, password=?, firstName=?, lastName=?, dateOfBirth=? WHERE email=?");
@@ -415,4 +421,56 @@ public class UserManagerImpl implements UserManager {
         return false;
     }
     
+    /**
+     * Update an image on a candidate using its email and a file. Returns true if it worked.
+     * @param email
+     * @param file
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    @Override
+    public boolean uploadImage (String email, File file) throws FileNotFoundException, IOException {
+        try (Connection con = data.getCon()) {
+                PreparedStatement userStm=con.prepareStatement("UPDATE candidate, user SET picture=? WHERE user.email=? AND CandidateID=UserID");
+                
+                FileInputStream imageIn = new FileInputStream(file);
+                userStm.setBinaryStream(1, imageIn, imageIn.getChannel().size());
+                userStm.setString(2, email);
+                userStm.executeUpdate();
+                return true;
+            } 
+        catch (SQLException | ClassNotFoundException ex)
+        {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return false;
+    }
+        
+     /**
+     * Used to get the picture of a candidate in the database using his email
+     * @param email
+     * @return 
+     */
+    @Override
+    public byte[] getPicture(String email)
+    {
+        try (Connection con = data.getCon())  
+        {
+            PreparedStatement imageOfCandidate = con.prepareStatement("SELECT picture FROM candidate, user WHERE CandidateID=UserID AND email=?");
+            imageOfCandidate.setString(1, email);
+            ResultSet i = imageOfCandidate.executeQuery(); 
+            if(i.next())
+            {
+                 byte[] img = i.getBytes("picture");
+                 return img;
+            }
+        } 
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+        
 }
+
