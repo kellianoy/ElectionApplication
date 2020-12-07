@@ -9,7 +9,6 @@ import User.Official;
 import User.Voter;
 import User.Candidate;
 import User.User;
-import static Application.ElectionApplication.convertSQLtoGregorian;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -88,7 +87,7 @@ public class LoggerManagerImpl implements LoggerManager {
                         if (user.next())
                         {
                             String userEmail=user.getString("email"), userPassword=user.getString("password"), userFirstName=user.getString("firstName"), userLastName=user.getString("lastName");
-                            GregorianCalendar userDOB=convertSQLtoGregorian(user.getString("dateOfBirth"));
+                            String userDOB=user.getString("dateOfBirth");
                             try (ResultSet testCandidate = stm.executeQuery("SELECT politicalParty, description FROM candidate WHERE CandidateID="+ userID)) 
                             {
                                     if (testCandidate.next())
@@ -119,7 +118,7 @@ public class LoggerManagerImpl implements LoggerManager {
                         if (user.next())
                         {
                             String userEmail=user.getString("email"), userPassword=user.getString("password"), userFirstName=user.getString("firstName"), userLastName=user.getString("lastName");
-                            GregorianCalendar userDOB=convertSQLtoGregorian(user.getString("dateOfBirth"));
+                            String userDOB=user.getString("dateOfBirth");
                             
                             try (ResultSet testVoter = stm.executeQuery("SELECT state, votedFor FROM voter WHERE VoterID="+ userID)) 
                             {
@@ -152,7 +151,7 @@ public class LoggerManagerImpl implements LoggerManager {
                         if (user.next())
                         {
                             String userEmail=user.getString("email"), userPassword=user.getString("password"), userFirstName=user.getString("firstName"), userLastName=user.getString("lastName");
-                            GregorianCalendar userDOB=convertSQLtoGregorian(user.getString("dateOfBirth"));
+                            String userDOB=user.getString("dateOfBirth");
                             try (ResultSet testOfficial = stm.executeQuery("SELECT OfficialID FROM official WHERE OfficialID="+ userID)) 
                             {
                                     if (testOfficial.next())

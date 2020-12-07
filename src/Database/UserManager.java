@@ -7,6 +7,9 @@ package Database;
 
 import User.Candidate;
 import User.Voter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -17,18 +20,17 @@ public interface UserManager {
     
     public boolean insertVoter(Voter v);
     public boolean insertCandidate(Candidate c);
-    
     public boolean modifyVoter(Voter v, String lastEmail) ;
     public boolean modifyCandidate(Candidate c, String lastEmail) ;
-    
     public boolean setVotesToNull();
     public String[][] getAllVoters();
     public String[][] getAllCandidates();
-    
     public boolean deleteUser(String email);
-    
     public boolean addElectionEntry(String status);
     public String getLastStatus();
     public ArrayList<ArrayList<String>> getVotes();
     public ArrayList<String[]> getVotesByStates();
+    public boolean modifyOfficial(String[] info, String lastEmail) ;
+    public boolean uploadImage (String email, File file) throws FileNotFoundException, IOException;
+    public byte[] getPicture(String email);
 }

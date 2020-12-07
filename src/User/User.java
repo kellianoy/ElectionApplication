@@ -16,11 +16,11 @@ public abstract class User {
     
     protected String email;
     protected String password;
-    protected GregorianCalendar dateOfBirth;
+    protected String dateOfBirth;
     protected String firstName;
     protected String lastName;
     
-    public User(String email, String password, GregorianCalendar dateOfBirth, String firstName, String lastName){
+    public User(String email, String password, String dateOfBirth, String firstName, String lastName){
         
         this.email=email;
         this.password=password;
@@ -39,12 +39,9 @@ public abstract class User {
     {
         return password;
     }
-    public GregorianCalendar getDOB()
+    public String getDOB()
     {
         return dateOfBirth;
-    }
-    public String getSQLdate(){
-        return dateOfBirth.get(dateOfBirth.YEAR) + "-" + dateOfBirth.get(dateOfBirth.MONTH)+ "-" + dateOfBirth.get(dateOfBirth.DAY_OF_MONTH);
     }
     
     

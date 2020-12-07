@@ -6,6 +6,8 @@
 package User;
 
 import Database.UserManagerImpl;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -18,7 +20,7 @@ public class Official extends User {
     
     UserManagerImpl dataController;
     
-    public Official(String email, String password, GregorianCalendar dateOfBirth, String firstName, String lastName) throws SQLException, ClassNotFoundException {
+    public Official(String email, String password, String dateOfBirth, String firstName, String lastName) throws SQLException, ClassNotFoundException {
         super(email, password, dateOfBirth, firstName, lastName);
         dataController = new UserManagerImpl();
     }
@@ -123,8 +125,37 @@ public class Official extends User {
     public ArrayList<ArrayList<String>> getVotes(){
         return dataController.getVotes();
     }
+    
+    /**
+     * We're getting the name and last name of each candidates and the number of votes that have been casted for them per state 
+     * @return 
+     */
     public ArrayList<String[]> getVotesByStates(){
         return dataController.getVotesByStates();
     }
+    
+     /**
+     * Modify this official
+     * @return 
+     */
+    public boolean modifySelf(String[] info) {
+        return dataController.modifyOfficial(info, email);
+        
+    }
+    
+    /**
+     * Upload an image on a candidate
+     * @return 
+     */
+    public boolean uploadImage(String email, File file) throws IOException
+    {
+        return dataController.uploadImage(email, file);
+    }
+    
+    public byte[] getPicture(String email)
+    {
+         return dataController.getPicture(email);
+    }
+ 
 }
 

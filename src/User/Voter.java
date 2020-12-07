@@ -19,7 +19,7 @@ public class Voter extends User {
     private boolean votedFor;
     private voterManagerImpl dataController ; 
 
-    public Voter(String email, String password, GregorianCalendar dateOfBirth, String firstName, String lastName, String state, Candidate votedFor) {
+    public Voter(String email, String password, String dateOfBirth, String firstName, String lastName, String state, Candidate votedFor) {
         super(email, password, dateOfBirth, firstName, lastName);
         this.state=state;
         if(votedFor != null)
@@ -58,7 +58,7 @@ public class Voter extends User {
         return false ; 
     }
     
-    public boolean updateProdile(String[] infos)
+    public boolean updateProfile(String[] infos)
     {
         if(dataController.updateVoter(infos, email))
         {
@@ -70,4 +70,13 @@ public class Voter extends User {
         return false ; 
     }
     
+    public byte[] getImage(String email)
+    {
+        return dataController.getPicture(email);
+    }
+    
+    public boolean isElectionOpen()
+    {
+        return dataController.electionIsOpen();
+    }
 }

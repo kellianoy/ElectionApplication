@@ -12,6 +12,7 @@ package Database;
 public interface voterManager {
     public boolean updateVote(String emailCandidate, String email); 
     public boolean updateVoter(String [] infos, String old_email); 
+    public byte[] getPicture(String email);
     public boolean electionIsOpen(); 
 
     public String[][] getAllCandidate(); 

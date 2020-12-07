@@ -8,8 +8,6 @@ package User;
 import Database.CandidateManagerImpl;
 import Database.voterManagerImpl;
 import java.sql.SQLException;
-import java.util.GregorianCalendar;
-
 /**
  * Class used as an administrator, can modify his data and access the database.
  * @author rebec
@@ -21,7 +19,7 @@ public class Candidate extends User {
     private CandidateManagerImpl dataController ; 
    
 
-    public Candidate(String email, String password, GregorianCalendar dateOfBirth, String firstName, String lastName, String politicalParty, String description) {
+    public Candidate(String email, String password, String dateOfBirth, String firstName, String lastName, String politicalParty, String description) {
         super(email, password, dateOfBirth, firstName, lastName);
         this.politicalParty=politicalParty;
         this.description=description;

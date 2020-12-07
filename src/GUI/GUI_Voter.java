@@ -12,11 +12,10 @@ import static GUI.GUI_Start.RED_COLOR;
 import static GUI.GUI_Start.actualColor;
 import User.Voter;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Calendar;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,6 +31,8 @@ public class GUI_Voter extends javax.swing.JFrame {
     /**
      * Creates new form GUI_Voter
      * @param admin
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
      */
     public GUI_Voter(Voter admin) throws SQLException, ClassNotFoundException {
         this.admin = admin ; 
@@ -48,14 +49,22 @@ public class GUI_Voter extends javax.swing.JFrame {
         
         setLocationRelativeTo(null);
         setVisible(true);
-        
-        stateComboBox.addItem("STATE");
-        stateComboBox.setSelectedItem("STATE");
         //Setting State values in the combo boxes
         for (State s : State.values())
             stateComboBox.addItem(s.toString());
-        
+        stateComboBox.setSelectedItem(admin.getState());
         cards = (CardLayout)mainPanel.getLayout();
+        
+        if (admin.isElectionOpen())
+        {
+            electionText.setText("Election is open");
+            electionText.setForeground(GREEN_COLOR);
+        }
+        else
+        {
+            electionText.setText("Election is closed");
+            electionText.setForeground(RED_COLOR);
+        }  
         
     }
     
@@ -91,23 +100,26 @@ public class GUI_Voter extends javax.swing.JFrame {
         profileButton = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         main_menu = new javax.swing.JPanel();
-        mainMenuDescription = new javax.swing.JLabel();
+        colorPanel = new javax.swing.JPanel();
         mainMenuText = new javax.swing.JLabel();
         questionVote = new javax.swing.JLabel();
         answerVote = new javax.swing.JLabel();
         viewCandidateButton = new javax.swing.JButton();
-        profilePanel = new javax.swing.JPanel();
-        profileEditPanel = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        goBackButton = new javax.swing.JButton();
-        saveButton = new javax.swing.JButton();
+        mainMenuText1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        republicText = new javax.swing.JLabel();
+        electionText = new javax.swing.JLabel();
+        profilePanel = new javax.swing.JPanel();
         editProfileFirstName = new javax.swing.JTextField();
         editProfileLastName = new javax.swing.JTextField();
         editVoterDate = new javax.swing.JFormattedTextField();
         editVoterEmail = new javax.swing.JTextField();
         editVoterPassword = new javax.swing.JTextField();
-        stateComboBox = new javax.swing.JComboBox<String>();
+        stateComboBox = new javax.swing.JComboBox<>();
+        mainMenuText2 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        saveButton = new javax.swing.JButton();
+        goBackButton = new javax.swing.JButton();
         viewCandidatePanel = new javax.swing.JPanel();
         nameCandidateLabel = new javax.swing.JLabel();
         partyCandidateText = new javax.swing.JLabel();
@@ -116,6 +128,7 @@ public class GUI_Voter extends javax.swing.JFrame {
         preCandidateButton = new javax.swing.JButton();
         nextCandidateButton = new javax.swing.JButton();
         goBackMenuButton = new javax.swing.JButton();
+        imageLabel = new javax.swing.JLabel();
 
         settingsPopUp.setMaximumSize(new java.awt.Dimension(32773, 98307));
         settingsPopUp.setPreferredSize(new java.awt.Dimension(200, 100));
@@ -150,7 +163,9 @@ public class GUI_Voter extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Election Simulator");
-        setMinimumSize(new java.awt.Dimension(800, 600));
+        setMaximumSize(new java.awt.Dimension(1024, 720));
+        setMinimumSize(new java.awt.Dimension(1024, 720));
+        setSize(new java.awt.Dimension(1024, 720));
 
         leftPanel.setBackground(new java.awt.Color(0, 102, 130));
         leftPanel.setMaximumSize(new java.awt.Dimension(180, 0));
@@ -190,22 +205,22 @@ public class GUI_Voter extends javax.swing.JFrame {
         leftPanelLayout.setHorizontalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(profileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(SetingColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(16, 16, 16))
+                .addContainerGap()
+                .addComponent(exitButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(profileButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(SetingColorButton)
+                .addContainerGap())
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(profileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SetingColorButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(682, Short.MAX_VALUE)
+                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(profileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(SetingColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -217,24 +232,31 @@ public class GUI_Voter extends javax.swing.JFrame {
 
         main_menu.setBackground(new java.awt.Color(255, 255, 255));
 
-        mainMenuDescription.setBackground(new java.awt.Color(255, 255, 255));
-        mainMenuDescription.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        mainMenuDescription.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mainMenuDescription.setText("Official Main Menu");
-        mainMenuDescription.setMaximumSize(new java.awt.Dimension(289, 47));
-        mainMenuDescription.setMinimumSize(new java.awt.Dimension(289, 47));
-        mainMenuDescription.setPreferredSize(new java.awt.Dimension(289, 47));
+        colorPanel.setBackground(actualColor   );
+
+        javax.swing.GroupLayout colorPanelLayout = new javax.swing.GroupLayout(colorPanel);
+        colorPanel.setLayout(colorPanelLayout);
+        colorPanelLayout.setHorizontalGroup(
+            colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 406, Short.MAX_VALUE)
+        );
+        colorPanelLayout.setVerticalGroup(
+            colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 6, Short.MAX_VALUE)
+        );
 
         mainMenuText.setBackground(new java.awt.Color(255, 255, 255));
-        mainMenuText.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
+        mainMenuText.setFont(new java.awt.Font("Montserrat Medium", 0, 18)); // NOI18N
         mainMenuText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mainMenuText.setText("Welcome " + admin.getFirstName() + " " + admin.getLastName() + "to the voter center.");
+        mainMenuText.setText("Welcome " + admin.getFirstName() + " " + admin.getLastName() + " to the voter center.");
 
         questionVote.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
+        questionVote.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         questionVote.setText("Have you voted ? ");
 
-        answerVote.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
+        answerVote.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         answerVote.setForeground(new java.awt.Color(170, 40, 50));
+        answerVote.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         answerVote.setText("Not yet ! ");
 
         viewCandidateButton.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
@@ -245,95 +267,70 @@ public class GUI_Voter extends javax.swing.JFrame {
             }
         });
 
+        mainMenuText1.setBackground(new java.awt.Color(255, 255, 255));
+        mainMenuText1.setFont(new java.awt.Font("Montserrat Medium", 0, 36)); // NOI18N
+        mainMenuText1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mainMenuText1.setText("Voter Main Menu");
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/index.png"))); // NOI18N
+
+        republicText.setBackground(new java.awt.Color(255, 255, 255));
+        republicText.setFont(new java.awt.Font("Montserrat Medium", 0, 24)); // NOI18N
+        republicText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        republicText.setText("Republic of Moebus");
+
+        electionText.setFont(new java.awt.Font("Montserrat Medium", 0, 18)); // NOI18N
+        electionText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        electionText.setText("Election Opened");
+
         javax.swing.GroupLayout main_menuLayout = new javax.swing.GroupLayout(main_menu);
         main_menu.setLayout(main_menuLayout);
         main_menuLayout.setHorizontalGroup(
             main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainMenuDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(mainMenuText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainMenuText1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(republicText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(electionText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_menuLayout.createSequentialGroup()
+                .addContainerGap(221, Short.MAX_VALUE)
+                .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(217, 217, 217))
             .addGroup(main_menuLayout.createSequentialGroup()
-                .addGroup(main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(main_menuLayout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(questionVote)
-                        .addGap(114, 114, 114)
-                        .addComponent(answerVote))
-                    .addGroup(main_menuLayout.createSequentialGroup()
-                        .addGap(220, 220, 220)
-                        .addComponent(viewCandidateButton)))
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(viewCandidateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(answerVote, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(questionVote, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         main_menuLayout.setVerticalGroup(
             main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_menuLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(mainMenuDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                .addGap(3, 3, 3)
+                .addGap(20, 20, 20)
+                .addComponent(mainMenuText1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainMenuText)
-                .addGap(150, 150, 150)
-                .addGroup(main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(questionVote)
-                    .addComponent(answerVote))
-                .addGap(141, 141, 141)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(republicText)
+                .addGap(18, 18, 18)
+                .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(electionText)
+                .addGap(109, 109, 109)
+                .addComponent(questionVote)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(answerVote)
+                .addGap(18, 18, 18)
                 .addComponent(viewCandidateButton)
-                .addGap(105, 105, 105))
+                .addGap(56, 56, 56))
         );
 
         mainPanel.add(main_menu, "mainMenu");
 
         profilePanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        profileEditPanel.setBackground(new java.awt.Color(255, 255, 255));
-        profileEditPanel.setForeground(new java.awt.Color(25, 25, 25));
-
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("If you want to modify your First Name, Last Name and date of birth, please contact an official.");
-
-        goBackButton.setText("Go Back");
-        goBackButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                goBackButtonActionPerformed(evt);
-            }
-        });
-
-        saveButton.setText("Save Modifications");
-        saveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout profileEditPanelLayout = new javax.swing.GroupLayout(profileEditPanel);
-        profileEditPanel.setLayout(profileEditPanelLayout);
-        profileEditPanelLayout.setHorizontalGroup(
-            profileEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
-            .addGroup(profileEditPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(goBackButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(saveButton)
-                .addContainerGap())
-        );
-        profileEditPanelLayout.setVerticalGroup(
-            profileEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(profileEditPanelLayout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jLabel2)
-                .addGap(42, 42, 42)
-                .addGroup(profileEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveButton)
-                    .addComponent(goBackButton))
-                .addContainerGap(188, Short.MAX_VALUE))
-        );
-
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Edit Profile");
 
         editProfileFirstName.setText(admin.getFirstName());
         editProfileFirstName.setBorder(javax.swing.BorderFactory.createTitledBorder("First Name"));
@@ -349,7 +346,7 @@ public class GUI_Voter extends javax.swing.JFrame {
 
         editVoterDate.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Date of birth"));
         editVoterDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
-        editVoterDate.setText(admin.getDOB().get(Calendar.YEAR) + "-" + admin.getDOB().get(Calendar.MONTH) + "-" + admin.getDOB().get(Calendar.DATE));
+        editVoterDate.setText(admin.getDOB());
         editVoterDate.setEnabled(false);
         editVoterDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -370,50 +367,86 @@ public class GUI_Voter extends javax.swing.JFrame {
             }
         });
 
+        mainMenuText2.setBackground(new java.awt.Color(255, 255, 255));
+        mainMenuText2.setFont(new java.awt.Font("Montserrat Medium", 0, 36)); // NOI18N
+        mainMenuText2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mainMenuText2.setText("Profile");
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Montserrat Medium", 2, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("If you want to modify your First Name, Last Name and date of birth, please contact an official.");
+
+        saveButton.setText("Save Modifications");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+
+        goBackButton.setText("Go Back");
+        goBackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goBackButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout profilePanelLayout = new javax.swing.GroupLayout(profilePanel);
         profilePanel.setLayout(profilePanelLayout);
         profilePanelLayout.setHorizontalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(profileEditPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainMenuText2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(profilePanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(profilePanelLayout.createSequentialGroup()
-                        .addComponent(editProfileFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(editProfileLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(editVoterDate, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
-                    .addGroup(profilePanelLayout.createSequentialGroup()
+                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(editVoterEmail)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, profilePanelLayout.createSequentialGroup()
+                                .addComponent(editProfileFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(42, 42, 42)
+                                .addComponent(editProfileLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(42, 42, 42)
                         .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(profilePanelLayout.createSequentialGroup()
-                                .addComponent(editVoterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(editVoterEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(editVoterDate, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                            .addComponent(editVoterPassword)
+                            .addComponent(stateComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(profilePanelLayout.createSequentialGroup()
+                        .addComponent(goBackButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(saveButton)))
+                .addGap(20, 20, 20))
         );
         profilePanelLayout.setVerticalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(62, 62, 62)
+                .addGap(22, 22, 22)
+                .addComponent(mainMenuText2)
+                .addGap(36, 36, 36)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editProfileFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editProfileLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editProfileFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editProfileLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editVoterDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(editVoterEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(40, 40, 40)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editVoterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(profileEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(97, 97, 97))
+                    .addComponent(editVoterEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editVoterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(profilePanelLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 389, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(goBackButton)
+                            .addComponent(saveButton))
+                        .addContainerGap())))
         );
 
         mainPanel.add(profilePanel, "profile");
@@ -421,12 +454,12 @@ public class GUI_Voter extends javax.swing.JFrame {
         viewCandidatePanel.setBackground(new java.awt.Color(255, 255, 255));
 
         nameCandidateLabel.setBackground(new java.awt.Color(255, 255, 255));
-        nameCandidateLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        nameCandidateLabel.setFont(new java.awt.Font("Montserrat Medium", 0, 36)); // NOI18N
         nameCandidateLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nameCandidateLabel.setText("Name");
 
         partyCandidateText.setBackground(new java.awt.Color(255, 255, 255));
-        partyCandidateText.setFont(new java.awt.Font("Tahoma", 2, 30)); // NOI18N
+        partyCandidateText.setFont(new java.awt.Font("Montserrat Medium", 0, 18)); // NOI18N
         partyCandidateText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         partyCandidateText.setText("Party");
 
@@ -441,68 +474,71 @@ public class GUI_Voter extends javax.swing.JFrame {
             }
         });
 
-        preCandidateButton.setText("<-");
+        preCandidateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/leftArrowIcon.png"))); // NOI18N
+        preCandidateButton.setContentAreaFilled(false);
         preCandidateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 preCandidateButtonActionPerformed(evt);
             }
         });
 
-        nextCandidateButton.setText("->");
+        nextCandidateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/rightArrowIcon.png"))); // NOI18N
+        nextCandidateButton.setContentAreaFilled(false);
         nextCandidateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nextCandidateButtonActionPerformed(evt);
             }
         });
 
-        goBackMenuButton.setText("Go back");
+        goBackMenuButton.setText("Go Back");
         goBackMenuButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 goBackMenuButtonActionPerformed(evt);
             }
         });
 
+        imageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout viewCandidatePanelLayout = new javax.swing.GroupLayout(viewCandidatePanel);
         viewCandidatePanel.setLayout(viewCandidatePanelLayout);
         viewCandidatePanelLayout.setHorizontalGroup(
             viewCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(nameCandidateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(nameCandidateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
             .addComponent(partyCandidateText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewCandidatePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(descriptionCandidateText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(26, 26, 26))
             .addGroup(viewCandidatePanelLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(20, 20, 20)
                 .addGroup(viewCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(descriptionCandidateText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(viewCandidatePanelLayout.createSequentialGroup()
-                        .addComponent(goBackMenuButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(viewCandidatePanelLayout.createSequentialGroup()
-                        .addComponent(preCandidateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(77, 77, 77)
-                        .addComponent(voteForButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(95, 95, 95)
-                        .addComponent(nextCandidateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(viewCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(goBackMenuButton)
+                            .addComponent(preCandidateButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(voteForButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(nextCandidateButton)))
+                .addGap(20, 20, 20))
         );
         viewCandidatePanelLayout.setVerticalGroup(
             viewCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(viewCandidatePanelLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(22, 22, 22)
                 .addComponent(nameCandidateLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(partyCandidateText)
-                .addGap(76, 76, 76)
-                .addComponent(descriptionCandidateText, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                .addGap(55, 55, 55)
+                .addGap(18, 18, 18)
+                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(descriptionCandidateText)
+                .addGap(18, 18, 18)
                 .addGroup(viewCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(preCandidateButton)
-                    .addComponent(voteForButton)
+                    .addComponent(voteForButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nextCandidateButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(20, 20, 20)
                 .addComponent(goBackMenuButton)
-                .addGap(20, 20, 20))
+                .addContainerGap())
         );
 
         mainPanel.add(viewCandidatePanel, "viewCandidate");
@@ -512,14 +548,15 @@ public class GUI_Voter extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(1, 1, 1)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE))
+                .addComponent(leftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
             .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
         );
 
         pack();
@@ -542,29 +579,21 @@ public class GUI_Voter extends javax.swing.JFrame {
 
     private void redOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redOptionActionPerformed
         actualColor=RED_COLOR;
-        leftPanel.setBackground(new Color(170,40,50));
+        leftPanel.setBackground(actualColor);
+        colorPanel.setBackground(actualColor);
     }//GEN-LAST:event_redOptionActionPerformed
 
     private void greenOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_greenOptionActionPerformed
         actualColor=GREEN_COLOR;
-        leftPanel.setBackground(new Color(100,210,50));
+        leftPanel.setBackground(actualColor);
+        colorPanel.setBackground(actualColor);
     }//GEN-LAST:event_greenOptionActionPerformed
 
     private void blueOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blueOptionActionPerformed
         actualColor=BLUE_COLOR;
-        leftPanel.setBackground(new Color(0,102,130));
+        leftPanel.setBackground(actualColor);
+        colorPanel.setBackground(actualColor);
     }//GEN-LAST:event_blueOptionActionPerformed
-
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        String [] infosModif = new String[3] ; 
-        infosModif[0] = (String)stateComboBox.getModel().getSelectedItem();
-        infosModif[1] = editVoterEmail.getText(); 
-        infosModif[2] = editVoterPassword.getText(); 
-        if(admin.updateProdile(infosModif))
-            JOptionPane.showMessageDialog(null, "Informations successfully edited" , this.getTitle(), 1 );
-        else 
-            JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
-    }//GEN-LAST:event_saveButtonActionPerformed
 
     private void stateComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stateComboBoxActionPerformed
         
@@ -591,6 +620,19 @@ public class GUI_Voter extends javax.swing.JFrame {
         else 
             voteForButton.setEnabled(true);
         
+        byte[] myImage = admin.getImage(infosCandidate[cursorCandidate][0]);
+        if (myImage!=null)
+        {
+            ImageIcon image = new ImageIcon(myImage);
+            imageLabel.setText("");
+            imageLabel.setIcon(image);
+        }
+        else
+        {
+            imageLabel.setText("There is no picture available.");
+            imageLabel.setIcon(null);
+        }
+        
         nameCandidateLabel.setText(infosCandidate[cursorCandidate][1] + " " + infosCandidate[cursorCandidate][2]); 
         partyCandidateText.setText("Party : " + infosCandidate[cursorCandidate][3]); 
         descriptionCandidateText.setText(infosCandidate[cursorCandidate][4]); 
@@ -606,10 +648,6 @@ public class GUI_Voter extends javax.swing.JFrame {
     }//GEN-LAST:event_viewCandidateButtonActionPerformed
 
     
-    private void goBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackButtonActionPerformed
-        cards.show(mainPanel, "mainMenu");
-    }//GEN-LAST:event_goBackButtonActionPerformed
-
     private void profileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileButtonActionPerformed
         cards.show(mainPanel, "profile");
     }//GEN-LAST:event_profileButtonActionPerformed
@@ -621,6 +659,7 @@ public class GUI_Voter extends javax.swing.JFrame {
 
     private void voteForButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voteForButtonActionPerformed
         admin.vote(infosCandidate[cursorCandidate][0]); 
+        JOptionPane.showMessageDialog(null, "Your vote was successfully taken into account" , this.getTitle(), 1 );
         if(admin.getVotedFor())
         {
             answerVote.setText("You have already voted.");
@@ -638,26 +677,51 @@ public class GUI_Voter extends javax.swing.JFrame {
         cards.show(mainPanel, "mainMenu");
     }//GEN-LAST:event_goBackMenuButtonActionPerformed
 
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        if (editVoterEmail.getText().equals(""))
+            JOptionPane.showMessageDialog(null, "Please enter a valid email" , this.getTitle(), 1 );
+        else if (editVoterPassword.getText().equals(""))
+            JOptionPane.showMessageDialog(null, "Please enter a valid password" , this.getTitle(), 1 );
+        else{
+        String [] infosModif = new String[3] ;
+        infosModif[0] = (String)stateComboBox.getModel().getSelectedItem();
+        infosModif[1] = editVoterEmail.getText();
+        infosModif[2] = editVoterPassword.getText();
+        if(admin.updateProfile(infosModif))
+        JOptionPane.showMessageDialog(null, "Informations successfully edited" , this.getTitle(), 1 );
+        else
+        JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
+        }
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void goBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackButtonActionPerformed
+        cards.show(mainPanel, "mainMenu");
+    }//GEN-LAST:event_goBackButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton SetingColorButton;
     private javax.swing.JLabel answerVote;
     private javax.swing.JMenuItem blueOption;
+    private javax.swing.JPanel colorPanel;
     private javax.swing.JLabel descriptionCandidateText;
     private javax.swing.JTextField editProfileFirstName;
     private javax.swing.JTextField editProfileLastName;
     private javax.swing.JFormattedTextField editVoterDate;
     private javax.swing.JTextField editVoterEmail;
     private javax.swing.JTextField editVoterPassword;
+    private javax.swing.JLabel electionText;
     private javax.swing.JButton exitButton;
     private javax.swing.JButton goBackButton;
     private javax.swing.JButton goBackMenuButton;
     private javax.swing.JMenuItem greenOption;
+    private javax.swing.JLabel imageLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel leftPanel;
-    private javax.swing.JLabel mainMenuDescription;
     private javax.swing.JLabel mainMenuText;
+    private javax.swing.JLabel mainMenuText1;
+    private javax.swing.JLabel mainMenuText2;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel main_menu;
     private javax.swing.JLabel nameCandidateLabel;
@@ -665,10 +729,10 @@ public class GUI_Voter extends javax.swing.JFrame {
     private javax.swing.JLabel partyCandidateText;
     private javax.swing.JButton preCandidateButton;
     private javax.swing.JButton profileButton;
-    private javax.swing.JPanel profileEditPanel;
     private javax.swing.JPanel profilePanel;
     private javax.swing.JLabel questionVote;
     private javax.swing.JMenuItem redOption;
+    private javax.swing.JLabel republicText;
     private javax.swing.JButton saveButton;
     private javax.swing.JPopupMenu settingsPopUp;
     private javax.swing.JComboBox<String> stateComboBox;

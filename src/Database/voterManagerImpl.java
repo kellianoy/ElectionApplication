@@ -13,7 +13,6 @@ import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import java.util.Calendar;
 
 /**
  *
@@ -29,7 +28,7 @@ public class voterManagerImpl implements voterManager{
     private static final String QUERY_UPDATE_VOTE = "UPDATE voter SET votedFor = ? WHERE VoterID = ?"; 
     private static final String QUERY_ELECTION_ISOPEN = "SELECT Status, MAX(StateID) FROM status"; 
     private static final String QUERY_NUMBER_CANDIDATE  = "SELECT COUNT(*) FROM candidate"; 
-    
+    private static final String QUERY_IMAGE_CANDIDATE = "SELECT picture FROM candidate, user WHERE CandidateID=UserID AND email=?";
     
     private PreparedStatement getCandidate ; 
     private PreparedStatement getID ; 
@@ -37,7 +36,7 @@ public class voterManagerImpl implements voterManager{
     private PreparedStatement updateVote ; 
     private PreparedStatement electionOpen ; 
     private PreparedStatement numberOfCandidate;
-    
+    private PreparedStatement imageOfCandidate;
     
     public voterManagerImpl() throws SQLException, ClassNotFoundException
     {
@@ -49,6 +48,7 @@ public class voterManagerImpl implements voterManager{
         updateVote = dbConnection.prepareStatement(QUERY_UPDATE_VOTE);
         electionOpen = dbConnection.prepareStatement(QUERY_ELECTION_ISOPEN);
         numberOfCandidate = dbConnection.prepareStatement(QUERY_NUMBER_CANDIDATE);
+        imageOfCandidate = dbConnection.prepareStatement(QUERY_IMAGE_CANDIDATE);
     }
     
     public static GregorianCalendar convertSQLtoGregorian(String SQLdate){
@@ -85,9 +85,35 @@ public class voterManagerImpl implements voterManager{
     }
     
     /**
+     * Used to get the picture of a candidate in the database using his email
+     * @param email
+     * @return 
+     */
+    @Override
+    public byte[] getPicture(String email)
+    {
+        try {
+            imageOfCandidate.setString(1, email);
+            ResultSet i = imageOfCandidate.executeQuery(); 
+            
+            if(i.next())
+            {
+                 byte[] img = i.getBytes("picture");
+                 return img;
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return null;
+    }
+    
+    /**
      *
-     * @param key_candidate
+     * @param emailCandidate
      * @param email   * @return
+     * @return 
      */
     @Override
     public boolean updateVote(String emailCandidate, String email)
