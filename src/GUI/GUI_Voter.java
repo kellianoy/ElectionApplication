@@ -12,11 +12,9 @@ import static GUI.GUI_Start.RED_COLOR;
 import static GUI.GUI_Start.actualColor;
 import User.Voter;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Calendar;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -33,6 +31,8 @@ public class GUI_Voter extends javax.swing.JFrame {
     /**
      * Creates new form GUI_Voter
      * @param admin
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
      */
     public GUI_Voter(Voter admin) throws SQLException, ClassNotFoundException {
         this.admin = admin ; 
@@ -49,13 +49,10 @@ public class GUI_Voter extends javax.swing.JFrame {
         
         setLocationRelativeTo(null);
         setVisible(true);
-        
-        stateComboBox.addItem("STATE");
-        stateComboBox.setSelectedItem("STATE");
         //Setting State values in the combo boxes
         for (State s : State.values())
             stateComboBox.addItem(s.toString());
-        
+        stateComboBox.setSelectedItem(admin.getState());
         cards = (CardLayout)mainPanel.getLayout();
         
     }
@@ -285,12 +282,12 @@ public class GUI_Voter extends javax.swing.JFrame {
                         .addGroup(main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(viewCandidateButton)
                             .addComponent(jLabel1))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(main_menuLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(main_menuLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         main_menuLayout.setVerticalGroup(
             main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,7 +329,7 @@ public class GUI_Voter extends javax.swing.JFrame {
 
         editVoterDate.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Date of birth"));
         editVoterDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
-        editVoterDate.setText(admin.getDOB().get(Calendar.YEAR) + "-" + admin.getDOB().get(Calendar.MONTH) + "-" + admin.getDOB().get(Calendar.DATE));
+        editVoterDate.setText(admin.getDOB());
         editVoterDate.setEnabled(false);
         editVoterDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -501,7 +498,6 @@ public class GUI_Voter extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(nextCandidateButton))
                     .addGroup(viewCandidatePanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())

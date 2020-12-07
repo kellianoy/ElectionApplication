@@ -5,7 +5,6 @@
  */
 package GUI;
 
-import static Application.ElectionApplication.convertSQLtoGregorian;
 import Enum.*;
 import static GUI.GUI_Start.*;
 import User.*;
@@ -23,8 +22,6 @@ import org.jfree.chart.ChartFactory;
 
 import org.jfree.chart.*;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.labels.ItemLabelAnchor;
-import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
 import org.jfree.chart.plot.CategoryPlot;
@@ -33,7 +30,6 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.StackedBarRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.ui.TextAnchor;
 
 
 
@@ -269,7 +265,7 @@ public class GUI_Official extends javax.swing.JFrame {
         addVoterFirstName = new javax.swing.JTextField();
         addVoterLastName = new javax.swing.JTextField();
         addVoterEmail = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<String>();
+        jComboBox1 = new javax.swing.JComboBox<>();
         addVoterDate = new javax.swing.JFormattedTextField();
         addVoterPassword = new javax.swing.JPasswordField();
         addVoterBack = new javax.swing.JButton();
@@ -281,7 +277,7 @@ public class GUI_Official extends javax.swing.JFrame {
         addCandidateFirstName = new javax.swing.JTextField();
         addCandidateLastName = new javax.swing.JTextField();
         addCandidateEmail = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<String>();
+        jComboBox2 = new javax.swing.JComboBox<>();
         addCandidateDate = new javax.swing.JFormattedTextField();
         addCandidatePassword = new javax.swing.JPasswordField();
         addCandidateDescription = new javax.swing.JTextField();
@@ -304,7 +300,7 @@ public class GUI_Official extends javax.swing.JFrame {
         editVoterLastName = new javax.swing.JTextField();
         editVoterEmail = new javax.swing.JTextField();
         editVoterDate = new javax.swing.JFormattedTextField();
-        jComboBox3 = new javax.swing.JComboBox<String>();
+        jComboBox3 = new javax.swing.JComboBox<>();
         editVoterPassword = new javax.swing.JTextField();
         editCandidatePanel = new javax.swing.JPanel();
         editCandidatesBack = new javax.swing.JButton();
@@ -321,7 +317,7 @@ public class GUI_Official extends javax.swing.JFrame {
         editCandidatesLastName = new javax.swing.JTextField();
         editCandidatesEmail = new javax.swing.JTextField();
         editCandidatesDate = new javax.swing.JFormattedTextField();
-        jComboBox4 = new javax.swing.JComboBox<String>();
+        jComboBox4 = new javax.swing.JComboBox<>();
         editCandidatesPassword = new javax.swing.JTextField();
         editCandidatesDescriptionPanel = new javax.swing.JPanel();
         editCandidatesDescription = new javax.swing.JTextField();
@@ -331,6 +327,15 @@ public class GUI_Official extends javax.swing.JFrame {
         AnalyzeCaption = new javax.swing.JLabel();
         jPanel1 = jPanel1=analyzeChartPanel;
         analyzeBack = new javax.swing.JButton();
+        profilePanel = new javax.swing.JPanel();
+        profileFirstName = new javax.swing.JTextField();
+        profileLastName = new javax.swing.JTextField();
+        profileDate = new javax.swing.JFormattedTextField();
+        profileEmail = new javax.swing.JTextField();
+        profilePassword = new javax.swing.JTextField();
+        profileText = new javax.swing.JLabel();
+        profileSaveButton = new javax.swing.JButton();
+        profileBackButton = new javax.swing.JButton();
         MenuBar = new javax.swing.JMenuBar();
         newMenu = new javax.swing.JMenu();
         newMenuVoter = new javax.swing.JMenuItem();
@@ -522,7 +527,7 @@ public class GUI_Official extends javax.swing.JFrame {
         );
         chartPanelLayout.setVerticalGroup(
             chartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 353, Short.MAX_VALUE)
+            .addGap(0, 393, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout mainMenuLayout = new javax.swing.GroupLayout(mainMenu);
@@ -686,7 +691,7 @@ public class GUI_Official extends javax.swing.JFrame {
                     .addComponent(addVoterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addComponent(addVoterButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 273, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 313, Short.MAX_VALUE)
                 .addComponent(addVoterBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -823,7 +828,7 @@ public class GUI_Official extends javax.swing.JFrame {
                     .addGroup(addCandidatePanelLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(addCandidateButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 290, Short.MAX_VALUE)
                 .addComponent(addCandidateBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -1003,7 +1008,7 @@ public class GUI_Official extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(editVotersDelete))
                     .addComponent(editVotersScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(editVotersEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(editVotersBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1214,7 +1219,7 @@ public class GUI_Official extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(editCandidatesDelete))
                     .addComponent(editCandidatesScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(editCandidatesEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(editCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1295,12 +1300,115 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addComponent(analyzeTextPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addComponent(analyzeBack)
                 .addContainerGap())
         );
 
         mainPanel.add(analyzeVotesPanel, "analyzePanel");
+
+        profilePanel.setBackground(new java.awt.Color(255, 255, 255));
+        profilePanel.setForeground(new java.awt.Color(255, 255, 255));
+
+        profileFirstName.setText(admin.getFirstName());
+        profileFirstName.setBorder(javax.swing.BorderFactory.createTitledBorder("First Name"));
+        profileFirstName.setMinimumSize(new java.awt.Dimension(12, 74));
+        profileFirstName.setPreferredSize(new java.awt.Dimension(12, 74));
+
+        profileLastName.setText(admin.getLastName());
+        profileLastName.setBorder(javax.swing.BorderFactory.createTitledBorder("Last Name"));
+        profileLastName.setMinimumSize(new java.awt.Dimension(12, 74));
+        profileLastName.setPreferredSize(new java.awt.Dimension(12, 74));
+
+        profileDate.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Date of birth"));
+        profileDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
+        profileDate.setText(admin.getDOB());
+        profileDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profileDateActionPerformed(evt);
+            }
+        });
+
+        profileEmail.setText(admin.getEmail());
+        profileEmail.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Email"));
+        profileEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profileEmailActionPerformed(evt);
+            }
+        });
+
+        profilePassword.setText(admin.getPassword());
+        profilePassword.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Password"));
+        profilePassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profilePasswordActionPerformed(evt);
+            }
+        });
+
+        profileText.setBackground(new java.awt.Color(255, 255, 255));
+        profileText.setFont(new java.awt.Font("Montserrat Medium", 0, 36)); // NOI18N
+        profileText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        profileText.setText("Profile");
+
+        profileSaveButton.setText("Save Modifications");
+        profileSaveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profileSaveButtonActionPerformed(evt);
+            }
+        });
+
+        profileBackButton.setText("Go Back");
+        profileBackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profileBackButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout profilePanelLayout = new javax.swing.GroupLayout(profilePanel);
+        profilePanel.setLayout(profilePanelLayout);
+        profilePanelLayout.setHorizontalGroup(
+            profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(profileText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(profilePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(profilePanelLayout.createSequentialGroup()
+                        .addComponent(profileBackButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(profileSaveButton))
+                    .addGroup(profilePanelLayout.createSequentialGroup()
+                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(profilePassword, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(profileEmail)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, profilePanelLayout.createSequentialGroup()
+                                .addComponent(profileFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(profileLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(12, 12, 12)
+                        .addComponent(profileDate, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        profilePanelLayout.setVerticalGroup(
+            profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
+                .addComponent(profileText)
+                .addGap(52, 52, 52)
+                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(profileLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(profileFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(profileDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(profileEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(profilePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(335, 335, 335)
+                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(profileBackButton)
+                    .addComponent(profileSaveButton))
+                .addContainerGap())
+        );
+
+        mainPanel.add(profilePanel, "profile");
 
         MenuBar.setBorder(javax.swing.BorderFactory.createCompoundBorder());
 
@@ -1359,8 +1467,8 @@ public class GUI_Official extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(leftPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+            .addComponent(leftPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
         );
 
         pack();
@@ -1417,7 +1525,7 @@ public class GUI_Official extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter a state" , this.getTitle(), 1 );
         else
         {   
-            if (admin.addVoter(new Voter(addVoterEmail.getText(), new String(addVoterPassword.getPassword()), convertSQLtoGregorian(addVoterDate.getText()), addVoterFirstName.getText(), addVoterLastName.getText(), jComboBox1.getItemAt(jComboBox1.getSelectedIndex())  , null)))
+            if (admin.addVoter(new Voter(addVoterEmail.getText(), new String(addVoterPassword.getPassword()), addVoterDate.getText(), addVoterFirstName.getText(), addVoterLastName.getText(), jComboBox1.getItemAt(jComboBox1.getSelectedIndex())  , null)))
                 JOptionPane.showMessageDialog(null, "Added successfully " + addVoterFirstName.getText() + " " + addVoterLastName.getText() + " to the database" , this.getTitle(), 1 );
             else
                 JOptionPane.showMessageDialog(null, "An error occured. Email adress is already in use." , this.getTitle(), 1 );
@@ -1456,7 +1564,7 @@ public class GUI_Official extends javax.swing.JFrame {
         else
         {
             if (admin.addCandidate(new Candidate(addCandidateEmail.getText(), new String(addCandidatePassword.getPassword()), 
-                    convertSQLtoGregorian(addCandidateDate.getText()), addCandidateFirstName.getText(), addCandidateLastName.getText(), 
+                    addCandidateDate.getText(), addCandidateFirstName.getText(), addCandidateLastName.getText(), 
                     jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), addCandidateDescription.getText())))
             {
                 JOptionPane.showMessageDialog(null, "Added successfully " + addCandidateFirstName.getText() + " " + addCandidateLastName.getText() + " to the database" , this.getTitle(), 1 );
@@ -1635,7 +1743,7 @@ public class GUI_Official extends javax.swing.JFrame {
 
     private void editVotersEditOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editVotersEditOKActionPerformed
         if (Integer.parseInt(editVoterDate.getText().substring(0, 4))>1900 && Integer.parseInt(editVoterDate.getText().substring(0, 4))<2002)
-           if (admin.modifyVoter(new Voter(editVoterEmail.getText(), editVoterPassword.getText(), convertSQLtoGregorian(editVoterDate.getText()), editVoterFirstName.getText(), 
+           if (admin.modifyVoter(new Voter(editVoterEmail.getText(), editVoterPassword.getText(), editVoterDate.getText(), editVoterFirstName.getText(), 
                    editVoterLastName.getText(), (String)jComboBox3.getModel().getSelectedItem(), null) , (String)editVotersTable.getValueAt(editVotersTable.getSelectedRow(), 2)))
            {
                JOptionPane.showMessageDialog(null, "Informations successfully edited" , this.getTitle(), 1 );
@@ -1695,7 +1803,7 @@ public class GUI_Official extends javax.swing.JFrame {
     private void editCandidatesEditOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCandidatesEditOKActionPerformed
       
         if (Integer.parseInt(editCandidatesDate.getText().substring(0, 4))>1900 && Integer.parseInt(editCandidatesDate.getText().substring(0, 4))<2002)
-            if (admin.modifyCandidate(new Candidate(editCandidatesEmail.getText(), editCandidatesPassword.getText(), convertSQLtoGregorian(editCandidatesDate.getText()), editCandidatesFirstName.getText(), 
+            if (admin.modifyCandidate(new Candidate(editCandidatesEmail.getText(), editCandidatesPassword.getText(), editCandidatesDate.getText(), editCandidatesFirstName.getText(), 
                        editCandidatesLastName.getText(), (String)jComboBox4.getModel().getSelectedItem(), editCandidatesDescription.getText()),
                     (String)editCandidatesTable.getValueAt(editCandidatesTable.getSelectedRow(), 2)))
                {
@@ -1803,7 +1911,7 @@ public class GUI_Official extends javax.swing.JFrame {
     }//GEN-LAST:event_pauseButtonActionPerformed
 
     private void settingsButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButton1ActionPerformed
-        // TODO add your handling code here:
+        cards.show(mainPanel, "profile");
     }//GEN-LAST:event_settingsButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -1814,6 +1922,46 @@ public class GUI_Official extends javax.swing.JFrame {
     private void analyzeBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analyzeBackActionPerformed
         cards.show(mainPanel, "mainMenu");
     }//GEN-LAST:event_analyzeBackActionPerformed
+
+    private void profileDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileDateActionPerformed
+
+    }//GEN-LAST:event_profileDateActionPerformed
+
+    private void profileSaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileSaveButtonActionPerformed
+        
+        if (profileEmail.getText().equals(""))
+            JOptionPane.showMessageDialog(null, "Please enter a valid email" , this.getTitle(), 1 );
+        else if (profilePassword.getText().equals(""))
+            JOptionPane.showMessageDialog(null, "Please enter a valid password" , this.getTitle(), 1 );
+        else if (profileFirstName.getText().equals(""))
+            JOptionPane.showMessageDialog(null, "Please enter a valid first name" , this.getTitle(), 1 );
+        else if (profileLastName.getText().equals(""))
+            JOptionPane.showMessageDialog(null, "Please enter a valid last name", this.getTitle(), 1 );
+        else if (profileDate.getText().equals("")||Integer.parseInt(profileDate.getText().substring(0, 4))<1900 || Integer.parseInt(profileDate.getText().substring(0, 4))>2002)
+            JOptionPane.showMessageDialog(null, "Please enter a valid date" , this.getTitle(), 1 );
+        else{
+            String[] info = new String[]{ profileEmail.getText(), profilePassword.getText(), profileFirstName.getText(), profileLastName.getText(), profileDate.getText()};
+            if(admin.modifySelf(info))
+            {
+                JOptionPane.showMessageDialog(null, "Informations successfully edited" , this.getTitle(), 1 );
+                mainMenuDescription.setText("Welcome to the admin center " +  profileFirstName.getText() + " " + profileLastName.getText() + " ! ");
+            }
+            else
+            JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
+        }
+    }//GEN-LAST:event_profileSaveButtonActionPerformed
+
+    private void profileBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBackButtonActionPerformed
+        cards.show(mainPanel, "mainMenu");
+    }//GEN-LAST:event_profileBackButtonActionPerformed
+
+    private void profilePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profilePasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_profilePasswordActionPerformed
+
+    private void profileEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_profileEmailActionPerformed
     
     /** Set a panel to visible and enabled, and put a button to disabled
      * @param edit
@@ -1921,6 +2069,15 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JMenuItem newMenuCandidate;
     private javax.swing.JMenuItem newMenuVoter;
     private javax.swing.JButton pauseButton;
+    private javax.swing.JButton profileBackButton;
+    private javax.swing.JFormattedTextField profileDate;
+    private javax.swing.JTextField profileEmail;
+    private javax.swing.JTextField profileFirstName;
+    private javax.swing.JTextField profileLastName;
+    private javax.swing.JPanel profilePanel;
+    private javax.swing.JTextField profilePassword;
+    private javax.swing.JButton profileSaveButton;
+    private javax.swing.JLabel profileText;
     private javax.swing.JMenuItem redOption;
     private javax.swing.JButton settingsButton;
     private javax.swing.JButton settingsButton1;

@@ -18,7 +18,7 @@ public class Official extends User {
     
     UserManagerImpl dataController;
     
-    public Official(String email, String password, GregorianCalendar dateOfBirth, String firstName, String lastName) throws SQLException, ClassNotFoundException {
+    public Official(String email, String password, String dateOfBirth, String firstName, String lastName) throws SQLException, ClassNotFoundException {
         super(email, password, dateOfBirth, firstName, lastName);
         dataController = new UserManagerImpl();
     }
@@ -125,6 +125,11 @@ public class Official extends User {
     }
     public ArrayList<String[]> getVotesByStates(){
         return dataController.getVotesByStates();
+    }
+
+    public boolean modifySelf(String[] info) {
+        return dataController.modifyOfficial(info, email);
+        
     }
     
  

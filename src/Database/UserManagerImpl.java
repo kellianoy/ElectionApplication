@@ -43,7 +43,7 @@ public class UserManagerImpl implements UserManager {
                 PreparedStatement userStm=con.prepareStatement("INSERT INTO user (email, UserID, password, dateOfBirth, firstName, lastName) VALUES (?, null, ?, ?, ?, ?)");
                 userStm.setString(1, v.getEmail());
                 userStm.setString(2, v.getPassword());
-                userStm.setString(3, v.getSQLdate());
+                userStm.setString(3, v.getDOB());
                 userStm.setString(4, v.getFirstName());
                 userStm.setString(5, v.getLastName());
                 
@@ -159,7 +159,7 @@ public class UserManagerImpl implements UserManager {
                 PreparedStatement userStm=con.prepareStatement("INSERT INTO user (email, UserID, password, dateOfBirth, firstName, lastName) VALUES (?, null, ?, ?, ?, ?)");
                 userStm.setString(1, c.getEmail());
                 userStm.setString(2, c.getPassword());
-                userStm.setString(3, c.getSQLdate());
+                userStm.setString(3, c.getDOB());
                 userStm.setString(4, c.getFirstName());
                 userStm.setString(5, c.getLastName());
                 
@@ -193,7 +193,7 @@ public class UserManagerImpl implements UserManager {
                         + "WHERE email=? AND UserID=VoterID");
                 userStm.setString(1, v.getEmail());
                 userStm.setString(2, v.getPassword());
-                userStm.setString(3, v.getSQLdate());
+                userStm.setString(3, v.getDOB());
                 userStm.setString(4, v.getFirstName());
                 userStm.setString(5, v.getLastName());
                 userStm.setString(6, v.getState());
@@ -219,7 +219,7 @@ public class UserManagerImpl implements UserManager {
                         + "WHERE user.email=? AND user.UserID=candidate.CandidateID");
                 userStm.setString(1, c.getEmail());
                 userStm.setString(2, c.getPassword());
-                userStm.setString(3, c.getSQLdate());
+                userStm.setString(3, c.getDOB());
                 userStm.setString(4, c.getFirstName());
                 userStm.setString(5, c.getLastName());
                 userStm.setString(6, c.getParty());
@@ -389,6 +389,30 @@ public class UserManagerImpl implements UserManager {
             Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
+    }
+
+    /**
+     * Modify the official that's calling the method ie the one that's currently logged
+     * @param info
+     * @param lastEmail
+     * @return 
+     */
+    public boolean modifyOfficial(String[] info, String lastEmail) {
+        try (Connection con = data.getCon()) {
+                PreparedStatement userStm=con.prepareStatement("UPDATE user SET email=?, password=?, firstName=?, lastName=?, dateOfBirth=? WHERE email=?");
+                userStm.setString(1, info[0]);
+                userStm.setString(2, info[1]);
+                userStm.setString(3, info[2]);
+                userStm.setString(4, info[3]);
+                userStm.setString(5, info[4]);
+                userStm.setString(6, lastEmail);
+                userStm.executeUpdate();
+                return true;
+            } 
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return false;
     }
     
 }
