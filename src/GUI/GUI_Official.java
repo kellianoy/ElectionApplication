@@ -24,12 +24,17 @@ import org.jfree.chart.*;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.RingPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.StackedBarRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.ui.RectangleInsets;
+import org.jfree.util.UnitType;
 
 
 
@@ -48,16 +53,15 @@ public class GUI_Official extends javax.swing.JFrame {
     
     private ChartPanel mainMenuChartPanel;
     private JFreeChart mainMenuChart;
-    
     private ChartPanel analyzeChartPanel;
     private JFreeChart analyzeChart;
+    private JFreeChart ringChart;
+    private ChartPanel ringChartPanel;
     
     
     public GUI_Official(Official admin) {
         
         this.admin = admin;
-        
-       
         
         //Chart creation
         mainMenuChart=createVotesBarChart(createBarDataset());
@@ -66,6 +70,8 @@ public class GUI_Official extends javax.swing.JFrame {
         analyzeChart=createVotesStackedBarChart(createStackedBarDataset());
         analyzeChartPanel = new ChartPanel(analyzeChart);
         
+        ringChart=createRingPlotChart(createRingPlotDataset());
+        ringChartPanel = new ChartPanel(ringChart);
         
         initComponents();
         leftPanel.setBackground(actualColor);
@@ -130,7 +136,54 @@ public class GUI_Official extends javax.swing.JFrame {
 
         
     }
-
+    
+    /** 
+     * Create a DefaultPieDataset corresponding to all the votes for each candidates
+     * @return 
+     */
+    public DefaultPieDataset createRingPlotDataset(){
+        
+        //Dataset setting
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        ArrayList<ArrayList<String>> votes = admin.getVotes();
+        int sum = 0;
+        for (int i = 0 ; i<votes.size() ; ++i)
+            sum+=Integer.parseInt(votes.get(i).get(1));
+        for (int i = 0 ; i<votes.size() ; ++i)
+            dataset.setValue(votes.get(i).get(0), Integer.parseInt(votes.get(i).get(1))*100/sum);
+        return dataset;
+    }
+    
+    /** 
+     * Create a JFreeChart out of a DefaultCategoryDataset for votes
+     * @param dataset
+     * @return 
+     */
+     public JFreeChart createRingPlotChart(DefaultPieDataset dataset)
+    {
+        JFreeChart myChart = ChartFactory.createRingChart("Pourcentage of votes per candidate", dataset, true, true, false);
+        
+        StandardChartTheme theme = (StandardChartTheme)StandardChartTheme.createJFreeTheme();
+        theme.setBarPainter(new StandardBarPainter());
+        theme.setRegularFont( new Font("montserrat" , Font.PLAIN , 11));
+        theme.apply(myChart);
+        RingPlot p = (RingPlot) myChart.getPlot();
+        p.setBackgroundPaint(Color.WHITE);
+        
+        p.setOutlineVisible(false);
+        p.setShadowPaint(null);
+        p.setSimpleLabels(true);
+        p.setLabelGenerator(new StandardPieSectionLabelGenerator("{1}"));
+        p.setSimpleLabelOffset(new RectangleInsets(UnitType.RELATIVE, 0.09, 0.09, 0.09, 0.09));
+        p.setLabelBackgroundPaint(null);
+        p.setLabelOutlinePaint(null);
+        p.setLabelShadowPaint(null);
+        p.setSectionDepth(0.33);
+        p.setSectionOutlinesVisible(false);
+        p.setSeparatorsVisible(false);
+        return myChart;
+    }
+    
     /** 
      * Create a DefaultCategoryDataset corresponding to all the votes for each candidates
      * @return 
@@ -141,7 +194,7 @@ public class GUI_Official extends javax.swing.JFrame {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         ArrayList<ArrayList<String>> votes = admin.getVotes();
         for (int i = 0 ; i<votes.size() ; ++i)
-            dataset.setValue(Integer.parseInt(votes.get(i).get(1)), "votes", votes.get(i).get(0));
+            dataset.setValue(Integer.parseInt(votes.get(i).get(1)), "Votes", votes.get(i).get(0));
         return dataset;
     }
     
@@ -154,10 +207,9 @@ public class GUI_Official extends javax.swing.JFrame {
      public JFreeChart createVotesBarChart(DefaultCategoryDataset dataset)
     {
         JFreeChart myChart; 
-        myChart=ChartFactory.createBarChart("Votes", "Candidates", "Number of votes", createBarDataset(), PlotOrientation.VERTICAL, true, true, false);
+        myChart=ChartFactory.createBarChart("Number of votes per candidate", "Candidates", "Number of votes", createBarDataset(), PlotOrientation.VERTICAL, true, true, false);
         
         StandardChartTheme theme = (StandardChartTheme)StandardChartTheme.createJFreeTheme();
-        theme.setTitlePaint(actualColor);
         theme.setBarPainter(new StandardBarPainter());
         theme.setRegularFont( new Font("montserrat" , Font.PLAIN , 11));
         theme.apply(myChart);
@@ -208,10 +260,9 @@ public class GUI_Official extends javax.swing.JFrame {
     public JFreeChart createVotesStackedBarChart(DefaultCategoryDataset dataset)
     {
         JFreeChart myChart; 
-        myChart=ChartFactory.createStackedBarChart("Votes", "Candidates", "Number of votes", createStackedBarDataset(), PlotOrientation.VERTICAL, true, false, false);
+        myChart=ChartFactory.createStackedBarChart("Number of votes per candidate & per state", "Candidates", "Number of votes", createStackedBarDataset(), PlotOrientation.VERTICAL, true, false, false);
         
         StandardChartTheme theme = (StandardChartTheme)StandardChartTheme.createJFreeTheme();
-        theme.setTitlePaint(actualColor);
         theme.setBarPainter(new StandardBarPainter());
         theme.setRegularFont( new Font("montserrat" , Font.PLAIN , 11));
         theme.apply(myChart);
@@ -264,6 +315,7 @@ public class GUI_Official extends javax.swing.JFrame {
         textPanel = new javax.swing.JPanel();
         mainMenuDescription = new javax.swing.JLabel();
         mainMenuText = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         jTextArea3 = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
         jTextArea4 = new javax.swing.JTextArea();
@@ -351,11 +403,12 @@ public class GUI_Official extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextArea9 = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
-        stackedBarPanel = stackedBarPanel=analyzeChartPanel;
-        barPanel = barPanel=mainMenuChartPanel;
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        ringPlotPanel = ringChartPanel;
+        stackedBarPanel = analyzeChartPanel;
+        barPanel = mainMenuChartPanel;
+        stackedBarChartButton = new javax.swing.JButton();
+        ringChartButton = new javax.swing.JButton();
+        barChartButton = new javax.swing.JButton();
         profilePanel = new javax.swing.JPanel();
         profileFirstName = new javax.swing.JTextField();
         profileLastName = new javax.swing.JTextField();
@@ -586,8 +639,8 @@ public class GUI_Official extends javax.swing.JFrame {
         textPanel.setLayout(textPanelLayout);
         textPanelLayout.setHorizontalGroup(
             textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainMenuText, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
             .addComponent(mainMenuDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainMenuText, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
         );
         textPanelLayout.setVerticalGroup(
             textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -595,9 +648,14 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addComponent(mainMenuText)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainMenuDescription)
-                .addGap(0, 30, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
 
+        jLabel13.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(50, 50, 50));
+        jLabel13.setText("What can you do ?");
+
+        jTextArea3.setEditable(false);
         jTextArea3.setBackground(new java.awt.Color(255, 255, 255));
         jTextArea3.setColumns(20);
         jTextArea3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -612,6 +670,7 @@ public class GUI_Official extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(50, 50, 50));
         jLabel4.setText("Edit");
 
+        jTextArea4.setEditable(false);
         jTextArea4.setBackground(new java.awt.Color(255, 255, 255));
         jTextArea4.setColumns(20);
         jTextArea4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -638,13 +697,14 @@ public class GUI_Official extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(50, 50, 50));
         jLabel9.setText("Start");
 
+        jTextArea5.setEditable(false);
         jTextArea5.setBackground(new java.awt.Color(255, 255, 255));
         jTextArea5.setColumns(20);
         jTextArea5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jTextArea5.setForeground(new java.awt.Color(70, 70, 70));
         jTextArea5.setLineWrap(true);
         jTextArea5.setRows(5);
-        jTextArea5.setText("Allows the election to begin by erasing all current votes.");
+        jTextArea5.setText("Allow the election to begin by erasing all current votes.");
         jTextArea5.setWrapStyleWord(true);
         jTextArea5.setBorder(javax.swing.BorderFactory.createCompoundBorder());
 
@@ -652,6 +712,7 @@ public class GUI_Official extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(50, 50, 50));
         jLabel10.setText("Pause");
 
+        jTextArea6.setEditable(false);
         jTextArea6.setBackground(new java.awt.Color(255, 255, 255));
         jTextArea6.setColumns(20);
         jTextArea6.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -662,6 +723,7 @@ public class GUI_Official extends javax.swing.JFrame {
         jTextArea6.setWrapStyleWord(true);
         jTextArea6.setBorder(javax.swing.BorderFactory.createCompoundBorder());
 
+        jTextArea7.setEditable(false);
         jTextArea7.setBackground(new java.awt.Color(255, 255, 255));
         jTextArea7.setColumns(20);
         jTextArea7.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -680,6 +742,7 @@ public class GUI_Official extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(0, 51, 102));
         jLabel12.setText("Data Analysis");
 
+        jTextArea8.setEditable(false);
         jTextArea8.setBackground(new java.awt.Color(255, 255, 255));
         jTextArea8.setColumns(20);
         jTextArea8.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -694,6 +757,10 @@ public class GUI_Official extends javax.swing.JFrame {
         mainMenu.setLayout(mainMenuLayout);
         mainMenuLayout.setHorizontalGroup(
             mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(textPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(mainMenuLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -714,26 +781,25 @@ public class GUI_Official extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
-                    .addGroup(mainMenuLayout.createSequentialGroup()
-                        .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel10))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jTextArea8)
                     .addGroup(mainMenuLayout.createSequentialGroup()
                         .addComponent(jLabel12)
-                        .addGap(486, 486, 486))))
-            .addGroup(mainMenuLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(textPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(mainMenuLayout.createSequentialGroup()
+                        .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel10))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         mainMenuLayout.setVerticalGroup(
             mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainMenuLayout.createSequentialGroup()
                 .addComponent(textPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel13)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
@@ -761,7 +827,7 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextArea8, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(193, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         mainPanel.add(mainMenu, "mainMenu");
@@ -1446,6 +1512,7 @@ public class GUI_Official extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(50, 50, 50));
         jLabel2.setText("Stacked Bar Chart");
 
+        jTextArea1.setEditable(false);
         jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -1456,20 +1523,22 @@ public class GUI_Official extends javax.swing.JFrame {
         jTextArea1.setWrapStyleWord(true);
         jTextArea1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
 
+        jTextArea2.setEditable(false);
         jTextArea2.setBackground(new java.awt.Color(255, 255, 255));
         jTextArea2.setColumns(20);
         jTextArea2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jTextArea2.setForeground(new java.awt.Color(70, 70, 70));
         jTextArea2.setLineWrap(true);
         jTextArea2.setRows(5);
-        jTextArea2.setText("Displays a pie chart of the pourcentage of votes for each candidate. ");
+        jTextArea2.setText("Displays a ring chart of the pourcentage of votes for each candidate. ");
         jTextArea2.setWrapStyleWord(true);
         jTextArea2.setBorder(javax.swing.BorderFactory.createCompoundBorder());
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(50, 50, 50));
-        jLabel3.setText("Pie Chart");
+        jLabel3.setText("Ring Chart");
 
+        jTextArea9.setEditable(false);
         jTextArea9.setBackground(new java.awt.Color(255, 255, 255));
         jTextArea9.setColumns(20);
         jTextArea9.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -1489,20 +1558,17 @@ public class GUI_Official extends javax.swing.JFrame {
         idlePanelLayout.setHorizontalGroup(
             idlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(idlePanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addGroup(idlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, idlePanelLayout.createSequentialGroup()
-                        .addGroup(idlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel6)
-                            .addComponent(jTextArea9, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, idlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextArea2, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3)))
-                .addContainerGap(204, Short.MAX_VALUE))
+                    .addComponent(jLabel3)
+                    .addGroup(idlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jTextArea2)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTextArea9, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTextArea1, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addContainerGap(230, Short.MAX_VALUE))
         );
         idlePanelLayout.setVerticalGroup(
             idlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1520,10 +1586,23 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextArea2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addContainerGap(208, Short.MAX_VALUE))
         );
 
         chartMainPanel.add(idlePanel, "idle");
+
+        javax.swing.GroupLayout ringPlotPanelLayout = new javax.swing.GroupLayout(ringPlotPanel);
+        ringPlotPanel.setLayout(ringPlotPanelLayout);
+        ringPlotPanelLayout.setHorizontalGroup(
+            ringPlotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        ringPlotPanelLayout.setVerticalGroup(
+            ringPlotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 465, Short.MAX_VALUE)
+        );
+
+        chartMainPanel.add(ringPlotPanel, "ringPlot");
 
         stackedBarPanel.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -1535,7 +1614,7 @@ public class GUI_Official extends javax.swing.JFrame {
         );
         stackedBarPanelLayout.setVerticalGroup(
             stackedBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 459, Short.MAX_VALUE)
+            .addGap(0, 465, Short.MAX_VALUE)
         );
 
         chartMainPanel.add(stackedBarPanel, "stackedBar");
@@ -1548,29 +1627,29 @@ public class GUI_Official extends javax.swing.JFrame {
         );
         barPanelLayout.setVerticalGroup(
             barPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 459, Short.MAX_VALUE)
+            .addGap(0, 465, Short.MAX_VALUE)
         );
 
         chartMainPanel.add(barPanel, "bar");
 
-        jButton2.setText("Stacked Bar Chart");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        stackedBarChartButton.setText("Stacked Bar Chart");
+        stackedBarChartButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                stackedBarChartButtonActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Pie chart");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        ringChartButton.setText("Ring chart");
+        ringChartButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                ringChartButtonActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Bar Chart");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        barChartButton.setText("Bar Chart");
+        barChartButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                barChartButtonActionPerformed(evt);
             }
         });
 
@@ -1583,11 +1662,11 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addGroup(analyzeVotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(analyzeVotesPanelLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jButton5)
+                        .addComponent(barChartButton)
                         .addGap(20, 20, 20)
-                        .addComponent(jButton2)
+                        .addComponent(stackedBarChartButton)
                         .addGap(20, 20, 20)
-                        .addComponent(jButton3))
+                        .addComponent(ringChartButton))
                     .addGroup(analyzeVotesPanelLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(chartMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1599,11 +1678,11 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addComponent(analyzeTextPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chartMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addGroup(analyzeVotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(barChartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stackedBarChartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ringChartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -2269,17 +2348,17 @@ public class GUI_Official extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_profileEmailActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void stackedBarChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stackedBarChartButtonActionPerformed
         cardsChart.show(chartMainPanel, "stackedBar");
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_stackedBarChartButtonActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void ringChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ringChartButtonActionPerformed
+       cardsChart.show(chartMainPanel, "ringPlot");
+    }//GEN-LAST:event_ringChartButtonActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void barChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barChartButtonActionPerformed
         cardsChart.show(chartMainPanel, "bar");
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_barChartButtonActionPerformed
 
     private void mainMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainMenuButtonActionPerformed
         cards.show(mainPanel, "mainMenu");
@@ -2333,6 +2412,7 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JPanel addVoterTextPanel;
     private javax.swing.JPanel analyzeTextPanel;
     private javax.swing.JPanel analyzeVotesPanel;
+    private javax.swing.JButton barChartButton;
     private javax.swing.JPanel barPanel;
     private javax.swing.JMenuItem blueOption;
     private javax.swing.JPanel chartMainPanel;
@@ -2376,9 +2456,6 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JButton exitButton;
     private javax.swing.JMenuItem greenOption;
     private javax.swing.JPanel idlePanel;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -2388,6 +2465,7 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -2428,8 +2506,11 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JButton profileSaveButton;
     private javax.swing.JLabel profileText;
     private javax.swing.JMenuItem redOption;
+    private javax.swing.JButton ringChartButton;
+    private javax.swing.JPanel ringPlotPanel;
     private javax.swing.JButton settingsButton;
     private javax.swing.JPopupMenu settingsPopUp;
+    private javax.swing.JButton stackedBarChartButton;
     private javax.swing.JPanel stackedBarPanel;
     private javax.swing.JButton startButton;
     private javax.swing.JLabel statusText;
