@@ -7,7 +7,6 @@ package User;
 
 import Database.voterManagerImpl;
 import java.sql.SQLException;
-import java.util.GregorianCalendar;
 
 /**
  * Self-Explanatory.
