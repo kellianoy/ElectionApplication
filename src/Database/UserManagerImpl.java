@@ -352,31 +352,32 @@ public class UserManagerImpl implements UserManager {
                             temp[0]=candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName");
                             
                         }
+                        String count=candidateRetrieval.getString("count(votedFor)");
                         switch ( candidateRetrieval.getString("state"))
                         {
                             case "Padokea" :
-                                temp[1]=candidateRetrieval.getString("count(votedFor)");
+                                temp[1]=count;
                                 break;
                             case "Heaven's Arena" :
-                                temp[2]=candidateRetrieval.getString("count(votedFor)");
+                                temp[2]=count;
                                 break;
                             case "Kukan'yu" :
-                                temp[3]=candidateRetrieval.getString("count(votedFor)");
+                                temp[3]=count;
                                 break;
                             case "Saherta" :
-                                temp[4]=candidateRetrieval.getString("count(votedFor)");
+                                temp[4]=count;
                                 break;
                             case "Yorbia" :
-                                temp[5]=candidateRetrieval.getString("count(votedFor)");
+                                temp[5]=count;
                                 break;
                             case "Begerosse" :
-                                temp[6]=candidateRetrieval.getString("count(votedFor)");
+                                temp[6]=count;
                                 break;
                             case "Kakin" :
-                                temp[7]=candidateRetrieval.getString("count(votedFor)");
+                                temp[7]=count;
                                 break;
                             case "Ochima" :
-                                temp[8]=candidateRetrieval.getString("count(votedFor)");
+                                temp[8]=count;
                                 break;   
                         }    
                         
@@ -397,6 +398,7 @@ public class UserManagerImpl implements UserManager {
      * @param lastEmail
      * @return 
      */
+    @Override
     public boolean modifyOfficial(String[] info, String lastEmail) {
         try (Connection con = data.getCon()) {
                 PreparedStatement userStm=con.prepareStatement("UPDATE user SET email=?, password=?, firstName=?, lastName=?, dateOfBirth=? WHERE email=?");

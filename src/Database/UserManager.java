@@ -17,18 +17,15 @@ public interface UserManager {
     
     public boolean insertVoter(Voter v);
     public boolean insertCandidate(Candidate c);
-    
     public boolean modifyVoter(Voter v, String lastEmail) ;
     public boolean modifyCandidate(Candidate c, String lastEmail) ;
-    
     public boolean setVotesToNull();
     public String[][] getAllVoters();
     public String[][] getAllCandidates();
-    
     public boolean deleteUser(String email);
-    
     public boolean addElectionEntry(String status);
     public String getLastStatus();
     public ArrayList<ArrayList<String>> getVotes();
     public ArrayList<String[]> getVotesByStates();
+    public boolean modifyOfficial(String[] info, String lastEmail) ;
 }
