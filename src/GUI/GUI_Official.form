@@ -1853,10 +1853,10 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="profileText" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="profileLastName" alignment="0" pref="0" max="32767" attributes="0"/>
                           <Component id="profileFirstName" alignment="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="profileDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="profileDate" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="32767" attributes="0"/>
                       <Component id="profileEmail" min="-2" max="-2" attributes="0"/>

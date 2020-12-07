@@ -70,9 +70,13 @@ public class Voter extends User {
         return false ; 
     }
     
-       public byte[] getImage(String email)
+    public byte[] getImage(String email)
     {
         return dataController.getPicture(email);
     }
     
+    public boolean isElectionOpen()
+    {
+        return dataController.electionIsOpen();
+    }
 }
