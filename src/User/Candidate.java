@@ -5,25 +5,34 @@
  */
 package User;
 
+import Database.CandidateManagerImpl;
+import Database.voterManagerImpl;
+import java.sql.SQLException;
 import java.util.GregorianCalendar;
 
 /**
- * Self-Explanatory.
- * @author Keke
+ * Class used as an administrator, can modify his data and access the database.
+ * @author rebec
  */
-
-
-
 public class Candidate extends User {
     
     private String politicalParty;
     private String description;
+    private CandidateManagerImpl dataController ; 
    
 
     public Candidate(String email, String password, GregorianCalendar dateOfBirth, String firstName, String lastName, String politicalParty, String description) {
         super(email, password, dateOfBirth, firstName, lastName);
         this.politicalParty=politicalParty;
         this.description=description;
+    }
+    
+    /** 
+     * Set the data controller of Candidate, made possible the link with a database. 
+     */
+    public void setDataController() throws SQLException, ClassNotFoundException
+    {
+        this.dataController = new CandidateManagerImpl(); 
     }
 
     public String getParty() {
@@ -34,5 +43,33 @@ public class Candidate extends User {
         return description;
     }
     
+    /** 
+     * Get the state of election.
+     * @return 
+     */
+    public String getStatusElection()
+    {
+        return dataController.electionIsOpen() ; 
+    }
+    
+    /** 
+     * Modify the informations of the profile, take an array first box email, second box password.
+     * @param infos
+     * @return 
+     */
+    public boolean updateProdile(String [] infos)
+    {
+        if(infos[0].equals(""))
+            infos[0] = this.email ; 
+        if(infos[1].equals(""))
+            infos[1] = this.password ; 
+        if(dataController.updateCandidate(infos, email))
+        {
+            this.email = infos[0]; 
+            this.password = infos[1];
+            return true; 
+        }
+        return false ; 
+    }
     
 }

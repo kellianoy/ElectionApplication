@@ -2,6 +2,7 @@ package GUI;
 
 import Database.LoggerManagerImpl;
 import Database.Database;
+import User.Candidate;
 import User.Official;
 import User.User;
 import User.Voter;
@@ -392,7 +393,18 @@ public class GUI_Start extends javax.swing.JFrame {
                 dispose();
             }
             else if (check.getClass().getSimpleName().equals("Candidate"))
-                JOptionPane.showMessageDialog(null, "This is a Candidate. //NOT YET IMPLEMENTED" , this.getTitle(), 1 );
+            {
+                try {
+                    GUI_Candidate candidateWindow = new GUI_Candidate((Candidate) check);
+                    setVisible(false);
+                    candidateWindow.embeddedMain();
+                    dispose();
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUI_Start.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(GUI_Start.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             else
             {
                 try {
