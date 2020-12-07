@@ -15,14 +15,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
-
-import org.jfree.chart.ChartFactory;
 
 import org.jfree.chart.*;
 import org.jfree.chart.axis.NumberAxis;
@@ -68,19 +64,15 @@ public class GUI_Official extends javax.swing.JFrame {
         this.admin = admin;
         
         //Chart creation
-        mainMenuChart=createVotesBarChart(createBarDataset());
-        mainMenuChartPanel= new ChartPanel(mainMenuChart);
-        
-        analyzeChart=createVotesStackedBarChart(createStackedBarDataset());
-        analyzeChartPanel = new ChartPanel(analyzeChart);
-        
-        ringChart=createRingPlotChart(createRingPlotDataset());
-        ringChartPanel = new ChartPanel(ringChart);
+        updateCharts();
         
         initComponents();
-        leftPanel.setBackground(actualColor);
         setLocationRelativeTo(null);
         setVisible(true);
+        
+        //Set the color of the background to the actual color
+        leftPanel.setBackground(actualColor);
+       
         
         //Initialization of combo boxes
        
@@ -114,7 +106,19 @@ public class GUI_Official extends javax.swing.JFrame {
        
     }
     
-    
+    /**
+     * Updating all data into the charts
+     */
+    public void updateCharts(){
+        mainMenuChart=createVotesBarChart(createBarDataset());
+        mainMenuChartPanel= new ChartPanel(mainMenuChart);
+        
+        analyzeChart=createVotesStackedBarChart(createStackedBarDataset());
+        analyzeChartPanel = new ChartPanel(analyzeChart);
+        
+        ringChart=createRingPlotChart(createRingPlotDataset());
+        ringChartPanel = new ChartPanel(ringChart);
+    }
     
      /**
      * Main after construction of JFrame object
@@ -184,6 +188,8 @@ public class GUI_Official extends javax.swing.JFrame {
         p.setSectionDepth(0.33);
         p.setSectionOutlinesVisible(false);
         p.setSeparatorsVisible(false);
+        p.setIgnoreNullValues(false);
+        p.setIgnoreZeroValues(false);
         return myChart;
     }
     
@@ -362,7 +368,8 @@ public class GUI_Official extends javax.swing.JFrame {
         addCandidateTextPanel = new javax.swing.JPanel();
         addCandidateText = new javax.swing.JLabel();
         addCandidateCaption = new javax.swing.JLabel();
-        addCandidateButton1 = new javax.swing.JButton();
+        addCandidateSearchImage = new javax.swing.JButton();
+        addCandidateClearImage = new javax.swing.JButton();
         editVotersPanel = new javax.swing.JPanel();
         editVotersBack = new javax.swing.JButton();
         editVotersScrollPanel = new javax.swing.JScrollPane();
@@ -398,6 +405,8 @@ public class GUI_Official extends javax.swing.JFrame {
         jComboBox4 = new javax.swing.JComboBox<>();
         editCandidatesPassword = new javax.swing.JTextField();
         editCandidatesDescription = new javax.swing.JTextField();
+        imageLabel = new javax.swing.JLabel();
+        editCandidatesChangeImage = new javax.swing.JButton();
         analyzeVotesPanel = new javax.swing.JPanel();
         analyzeTextPanel = new javax.swing.JPanel();
         AnalyzeText = new javax.swing.JLabel();
@@ -501,7 +510,6 @@ public class GUI_Official extends javax.swing.JFrame {
         });
 
         dataAnalysisButton.setText("Data Analysis");
-        dataAnalysisButton.setOpaque(true);
         dataAnalysisButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dataAnalysisButtonActionPerformed(evt);
@@ -782,13 +790,11 @@ public class GUI_Official extends javax.swing.JFrame {
                     .addGroup(mainMenuLayout.createSequentialGroup()
                         .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextArea7)
-                            .addGroup(mainMenuLayout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jTextArea4)
                             .addComponent(jTextArea3)
                             .addGroup(mainMenuLayout.createSequentialGroup()
                                 .addGroup(mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel4))
@@ -840,7 +846,7 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextArea8, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
 
         mainPanel.add(mainMenu, "mainMenu");
@@ -937,13 +943,12 @@ public class GUI_Official extends javax.swing.JFrame {
                         .addGap(72, 72, 72)
                         .addGroup(addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(addVoterDate, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(20, 20, 20))
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(addVoterPanelLayout.createSequentialGroup()
                         .addComponent(addVoterBack)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(addVoterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))))
+                        .addComponent(addVoterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20))
         );
         addVoterPanelLayout.setVerticalGroup(
             addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -958,7 +963,7 @@ public class GUI_Official extends javax.swing.JFrame {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addVoterEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addVoterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 447, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 448, Short.MAX_VALUE)
                 .addGroup(addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addVoterBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addVoterButton))
@@ -1052,10 +1057,17 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addGap(30, 30, 30))
         );
 
-        addCandidateButton1.setText("Search Image");
-        addCandidateButton1.addActionListener(new java.awt.event.ActionListener() {
+        addCandidateSearchImage.setText("Search Image");
+        addCandidateSearchImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addCandidateButton1ActionPerformed(evt);
+                addCandidateSearchImageActionPerformed(evt);
+            }
+        });
+
+        addCandidateClearImage.setText("Clear Image");
+        addCandidateClearImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCandidateClearImageActionPerformed(evt);
             }
         });
 
@@ -1076,17 +1088,19 @@ public class GUI_Official extends javax.swing.JFrame {
                                 .addComponent(addCandidateLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(addCandidateDescription, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(addCandidateEmail)
-                            .addComponent(imageRetrieved, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dataPath, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(dataPath, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(imageRetrieved, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(72, 72, 72)
                         .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addCandidateButton1)
                             .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(addCandidateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(addCandidatePassword)
                                     .addComponent(addCandidateDate, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(addCandidateClearImage, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(addCandidateSearchImage, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGap(20, 20, 20))
         );
         addCandidatePanelLayout.setVerticalGroup(
@@ -1105,15 +1119,18 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addCandidateDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
                 .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(addCandidatePanelLayout.createSequentialGroup()
-                        .addComponent(addCandidateButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 278, Short.MAX_VALUE))
+                        .addGap(30, 30, 30)
+                        .addComponent(addCandidateSearchImage)
+                        .addGap(18, 18, 18)
+                        .addComponent(addCandidateClearImage)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(addCandidatePanelLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
                         .addComponent(imageRetrieved, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(dataPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dataPath, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
                         .addGap(30, 30, 30)))
                 .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addCandidateBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1296,7 +1313,7 @@ public class GUI_Official extends javax.swing.JFrame {
                         .addComponent(editVotersEdit)
                         .addGap(18, 18, 18)
                         .addComponent(editVotersDelete)
-                        .addGap(0, 339, Short.MAX_VALUE))
+                        .addGap(0, 340, Short.MAX_VALUE))
                     .addComponent(editVotersScrollPanel))
                 .addGap(18, 18, 18)
                 .addComponent(editVotersEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1422,12 +1439,22 @@ public class GUI_Official extends javax.swing.JFrame {
             }
         });
 
+        imageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imageLabel.setText("No image");
+
+        editCandidatesChangeImage.setText("Change Image");
+        editCandidatesChangeImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editCandidatesChangeImageActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout editCandidatesEditPanelLayout = new javax.swing.GroupLayout(editCandidatesEditPanel);
         editCandidatesEditPanel.setLayout(editCandidatesEditPanelLayout);
         editCandidatesEditPanelLayout.setHorizontalGroup(
             editCandidatesEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(editCandidatesEditPanelLayout.createSequentialGroup()
-                .addGroup(editCandidatesEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(editCandidatesEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(editCandidatesEditPanelLayout.createSequentialGroup()
                         .addGroup(editCandidatesEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(editCandidatesFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
@@ -1439,11 +1466,15 @@ public class GUI_Official extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addGroup(editCandidatesEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(editCandidatesEditPanelLayout.createSequentialGroup()
-                                .addComponent(editCandidatesDate, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(editCandidatesEditOK, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(editCandidatesDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(editCandidatesDate, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(editCandidatesEditPanelLayout.createSequentialGroup()
+                        .addComponent(editCandidatesDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(editCandidatesChangeImage, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(editCandidatesEditOK, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
         editCandidatesEditPanelLayout.setVerticalGroup(
@@ -1460,8 +1491,11 @@ public class GUI_Official extends javax.swing.JFrame {
                     .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editCandidatesPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(editCandidatesDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(editCandidatesEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editCandidatesDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editCandidatesChangeImage))
+                .addContainerGap(12, Short.MAX_VALUE))
+            .addComponent(imageLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout editCandidatePanelLayout = new javax.swing.GroupLayout(editCandidatePanel);
@@ -1495,7 +1529,7 @@ public class GUI_Official extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(editCandidatesDelete)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(editCandidatesScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE))
+                    .addComponent(editCandidatesScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(editCandidatesEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -1720,7 +1754,7 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addComponent(analyzeTextPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chartMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addGroup(analyzeVotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(barChartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(stackedBarChartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1837,7 +1871,7 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addComponent(profileEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(profilePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 374, Short.MAX_VALUE)
+                .addGap(18, 375, Short.MAX_VALUE)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(profileBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(profileSaveButton))
@@ -1902,8 +1936,8 @@ public class GUI_Official extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(leftPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
+            .addComponent(leftPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
         );
 
         pack();
@@ -2002,9 +2036,21 @@ public class GUI_Official extends javax.swing.JFrame {
                     addCandidateDate.getText(), addCandidateFirstName.getText(), addCandidateLastName.getText(), 
                     jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), addCandidateDescription.getText())))
             {
-                JOptionPane.showMessageDialog(null, "Added successfully " + addCandidateFirstName.getText() + " " + addCandidateLastName.getText() + " to the database" , this.getTitle(), 1 );
-                mainMenuChart=createVotesBarChart(createBarDataset());
-                mainMenuChartPanel.setChart(mainMenuChart);
+                
+                try {
+                    if (imageRetrieved.getIcon()!=null) //If there's an image
+                        if (admin.uploadImage(addCandidateEmail.getText(), imageChooser.getSelectedFile())) //Then try to upload it
+                            JOptionPane.showMessageDialog(null, "Added successfully along with it's picture " + addCandidateFirstName.getText() + " " + addCandidateLastName.getText() + " to the database" , this.getTitle(), 1 );
+                        else
+                            JOptionPane.showMessageDialog(null, "Added successfully " + addCandidateFirstName.getText() + " " + addCandidateLastName.getText() + " to the database" , this.getTitle(), 1 );
+                   //We update the charts because we introduced a new candidate 
+                    updateCharts();
+                    
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(GUI_Official.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
                 
             }
             else
@@ -2166,7 +2212,7 @@ public class GUI_Official extends javax.swing.JFrame {
                     {
                         JOptionPane.showMessageDialog(null, "You have successfully removed " + firstName + " " + lastName + " from the database" , this.getTitle(), 1 );
                         updateVoterTable(voterTableModel, editVotersTable);
-                        
+                        updateCharts();
                     }
                     else
                         JOptionPane.showMessageDialog(null, firstName + " " + lastName + " has not been deleted from the database due to an error" , this.getTitle(), 1 );
@@ -2184,6 +2230,7 @@ public class GUI_Official extends javax.swing.JFrame {
                JOptionPane.showMessageDialog(null, "Informations successfully edited" , this.getTitle(), 1 );
                updateVoterTable(voterTableModel, editVotersTable);
                editInvisible(editVotersEditPanel, editVotersDelete);
+               updateCharts();
            }
            else
                JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
@@ -2221,8 +2268,7 @@ public class GUI_Official extends javax.swing.JFrame {
                     {
                         JOptionPane.showMessageDialog(null, "You have successfully removed " + firstName + " " + lastName + " from the database" , this.getTitle(), 1 );
                         updateCandidateTable(candidateTableModel, editCandidatesTable);
-                        mainMenuChart=createVotesBarChart(createBarDataset());
-                        mainMenuChartPanel.setChart(mainMenuChart);
+                        updateCharts();
                         
                     }
                     else
@@ -2240,13 +2286,19 @@ public class GUI_Official extends javax.swing.JFrame {
                        editCandidatesLastName.getText(), (String)jComboBox4.getModel().getSelectedItem(), editCandidatesDescription.getText()),
                     (String)editCandidatesTable.getValueAt(editCandidatesTable.getSelectedRow(), 2)))
                {
+                   try {
+                    if (imageLabel.getIcon()!=null) //If there's an image
+                        if (!admin.uploadImage(editCandidatesEmail.getText(), imageChooser.getSelectedFile())) //Then try to upload it
+                            JOptionPane.showMessageDialog(null, "Problem uploading the image" , this.getTitle(), 1 );       
+                } catch (IOException ex) {
+                    Logger.getLogger(GUI_Official.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                   
                    JOptionPane.showMessageDialog(null, "Informations successfully edited" , this.getTitle(), 1 );
                    updateCandidateTable(candidateTableModel, editCandidatesTable);
 
                    editInvisible(editCandidatesEditPanel, editCandidatesDelete);
-
-                   mainMenuChart=createVotesBarChart(createBarDataset());
-                   mainMenuChartPanel.setChart(mainMenuChart);
+                   updateCharts();
                }
                else
                    JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
@@ -2302,6 +2354,21 @@ public class GUI_Official extends javax.swing.JFrame {
                 editCandidatesDate.setText((String)editCandidatesTable.getValueAt(row, 4));
                 jComboBox4.getModel().setSelectedItem((String)editCandidatesTable.getValueAt(row, 5));
                 editCandidatesDescription.setText((String)editCandidatesTable.getValueAt(row, 6));
+                byte[] myImage = admin.getPicture((String)editCandidatesTable.getValueAt(row, 2));
+                if (myImage!=null)
+                {
+                    ImageIcon image = new ImageIcon(myImage);
+                    ImageIcon scaledImage = new ImageIcon(image.getImage().getScaledInstance(imageLabel.getWidth(),imageLabel.getHeight() , java.awt.Image.SCALE_SMOOTH));
+                    imageLabel.setText("");
+                    imageLabel.setIcon(scaledImage);
+                    
+                }
+                else
+                {
+                    imageLabel.setText("There is no picture available.");
+                    imageLabel.setIcon(null);
+                }
+                
             }   
         }
     });
@@ -2407,7 +2474,7 @@ public class GUI_Official extends javax.swing.JFrame {
         cards.show(mainPanel, "mainMenu");
     }//GEN-LAST:event_mainMenuButtonActionPerformed
 
-    private void addCandidateButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCandidateButton1ActionPerformed
+    private void addCandidateSearchImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCandidateSearchImageActionPerformed
         int returnVal = imageChooser.showOpenDialog(this);
         
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -2416,13 +2483,31 @@ public class GUI_Official extends javax.swing.JFrame {
             ImageIcon scaledImage = new ImageIcon(myImage.getImage().getScaledInstance(imageRetrieved.getWidth(),imageRetrieved.getHeight() , java.awt.Image.SCALE_SMOOTH));
             imageRetrieved.setText("");
             imageRetrieved.setIcon(scaledImage);
-            
             dataPath.setText(f.getAbsolutePath());
         } 
         else 
             JOptionPane.showMessageDialog(null, "Couldn't access the file." , this.getTitle(), 1 );
 
-    }//GEN-LAST:event_addCandidateButton1ActionPerformed
+    }//GEN-LAST:event_addCandidateSearchImageActionPerformed
+
+    private void addCandidateClearImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCandidateClearImageActionPerformed
+        imageRetrieved.setText("Select an image");
+        imageRetrieved.setIcon(null);
+        dataPath.setText("");
+    }//GEN-LAST:event_addCandidateClearImageActionPerformed
+
+    private void editCandidatesChangeImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCandidatesChangeImageActionPerformed
+        int returnVal = imageChooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File f = imageChooser.getSelectedFile();
+            ImageIcon myImage = new ImageIcon(f.toString());
+            ImageIcon scaledImage = new ImageIcon(myImage.getImage().getScaledInstance(imageRetrieved.getWidth(),imageRetrieved.getHeight() , java.awt.Image.SCALE_SMOOTH));
+            imageLabel.setText("");
+            imageLabel.setIcon(scaledImage);
+        } 
+        else 
+            JOptionPane.showMessageDialog(null, "Couldn't access the file." , this.getTitle(), 1 );
+    }//GEN-LAST:event_editCandidatesChangeImageActionPerformed
     
     /** Set a panel to visible and enabled, and put a button to disabled
      * @param edit
@@ -2449,8 +2534,8 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JButton addCandidateBack;
     private javax.swing.JButton addCandidateButton;
-    private javax.swing.JButton addCandidateButton1;
     private javax.swing.JLabel addCandidateCaption;
+    private javax.swing.JButton addCandidateClearImage;
     private javax.swing.JFormattedTextField addCandidateDate;
     private javax.swing.JTextField addCandidateDescription;
     private javax.swing.JTextField addCandidateEmail;
@@ -2458,6 +2543,7 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JTextField addCandidateLastName;
     private javax.swing.JPanel addCandidatePanel;
     private javax.swing.JPasswordField addCandidatePassword;
+    private javax.swing.JButton addCandidateSearchImage;
     private javax.swing.JLabel addCandidateText;
     private javax.swing.JPanel addCandidateTextPanel;
     private javax.swing.JButton addVoterBack;
@@ -2482,6 +2568,7 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JPanel editCandidatePanel;
     private javax.swing.JButton editCandidatesBack;
     private javax.swing.JLabel editCandidatesCaption;
+    private javax.swing.JButton editCandidatesChangeImage;
     private javax.swing.JFormattedTextField editCandidatesDate;
     private javax.swing.JButton editCandidatesDelete;
     private javax.swing.JTextField editCandidatesDescription;
@@ -2519,6 +2606,7 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JMenuItem greenOption;
     private javax.swing.JPanel idlePanel;
     private javax.swing.JFileChooser imageChooser;
+    private javax.swing.JLabel imageLabel;
     private javax.swing.JLabel imageRetrieved;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;

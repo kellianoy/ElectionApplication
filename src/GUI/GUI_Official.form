@@ -155,8 +155,8 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="leftPanel" alignment="1" pref="699" max="32767" attributes="0"/>
-          <Component id="mainPanel" alignment="0" pref="699" max="32767" attributes="0"/>
+          <Component id="leftPanel" alignment="1" pref="700" max="32767" attributes="0"/>
+          <Component id="mainPanel" alignment="0" pref="700" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -270,7 +270,6 @@
         <Component class="javax.swing.JButton" name="dataAnalysisButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Data Analysis"/>
-            <Property name="opaque" type="boolean" value="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dataAnalysisButtonActionPerformed"/>
@@ -446,14 +445,11 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jTextArea7" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
                                   <Component id="jTextArea4" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jTextArea3" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -515,7 +511,7 @@
                       <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jTextArea8" min="-2" pref="21" max="-2" attributes="0"/>
-                      <EmptySpace pref="143" max="32767" attributes="0"/>
+                      <EmptySpace pref="144" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -854,15 +850,14 @@
                                   <Component id="addVoterDate" pref="220" max="32767" attributes="0"/>
                                   <Component id="jComboBox1" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="addVoterBack" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="addVoterButton" min="-2" pref="74" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -881,7 +876,7 @@
                           <Component id="addVoterEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="addVoterPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="447" max="32767" attributes="0"/>
+                      <EmptySpace pref="448" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="addVoterBack" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                           <Component id="addVoterButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1082,12 +1077,11 @@
                                   </Group>
                                   <Component id="addCandidateDescription" alignment="0" max="32767" attributes="0"/>
                                   <Component id="addCandidateEmail" max="32767" attributes="0"/>
-                                  <Component id="imageRetrieved" alignment="0" max="32767" attributes="0"/>
                                   <Component id="dataPath" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="imageRetrieved" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="addCandidateButton1" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                                       <Component id="addCandidateButton" min="-2" pref="75" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -1095,6 +1089,10 @@
                                           <Component id="addCandidateDate" pref="220" max="32767" attributes="0"/>
                                           <Component id="jComboBox2" max="32767" attributes="0"/>
                                       </Group>
+                                  </Group>
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="addCandidateClearImage" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="addCandidateSearchImage" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -1122,16 +1120,19 @@
                           <Component id="addCandidateDescription" alignment="3" min="-2" pref="77" max="-2" attributes="0"/>
                           <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="addCandidateButton1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="278" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
+                              <Component id="addCandidateSearchImage" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="addCandidateClearImage" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="imageRetrieved" min="-2" pref="240" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="dataPath" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="dataPath" pref="41" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1343,12 +1344,20 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="addCandidateButton1">
+            <Component class="javax.swing.JButton" name="addCandidateSearchImage">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Search Image"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addCandidateButton1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addCandidateSearchImageActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="addCandidateClearImage">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Clear Image"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addCandidateClearImageActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -1401,7 +1410,7 @@
                               <Component id="editVotersEdit" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="editVotersDelete" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="339" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="340" max="32767" attributes="0"/>
                           </Group>
                           <Component id="editVotersScrollPanel" max="32767" attributes="0"/>
                       </Group>
@@ -1723,7 +1732,7 @@
                               <Component id="editCandidatesDelete" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="editCandidatesScrollPanel" pref="338" max="32767" attributes="0"/>
+                          <Component id="editCandidatesScrollPanel" pref="333" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="editCandidatesEditPanel" min="-2" max="-2" attributes="0"/>
@@ -1844,8 +1853,8 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="editCandidatesFirstName" alignment="0" pref="152" max="32767" attributes="0"/>
                                       <Component id="editCandidatesEmail" alignment="0" max="32767" attributes="0"/>
@@ -1858,22 +1867,26 @@
                                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jComboBox4" alignment="0" min="-2" pref="152" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="editCandidatesDate" min="-2" pref="152" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="editCandidatesEditOK" min="-2" pref="63" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="editCandidatesDate" alignment="0" min="-2" pref="152" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="editCandidatesDescription" min="-2" pref="336" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="editCandidatesDescription" min="-2" pref="336" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="editCandidatesChangeImage" pref="154" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="imageLabel" min="-2" pref="192" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="editCandidatesEditOK" min="-2" pref="63" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="editCandidatesDate" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="editCandidatesLastName" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1887,9 +1900,13 @@
                               <Component id="editCandidatesPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="editCandidatesDescription" min="-2" pref="59" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="editCandidatesDescription" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
+                              <Component id="editCandidatesChangeImage" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="12" max="32767" attributes="0"/>
                       </Group>
+                      <Component id="imageLabel" alignment="1" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -2012,6 +2029,20 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editCandidatesDescriptionActionPerformed"/>
                   </Events>
                 </Component>
+                <Component class="javax.swing.JLabel" name="imageLabel">
+                  <Properties>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="text" type="java.lang.String" value="No image"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="editCandidatesChangeImage">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Change Image"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editCandidatesChangeImageActionPerformed"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -2057,7 +2088,7 @@
                       <Component id="analyzeTextPanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="chartMainPanel" max="32767" attributes="0"/>
-                      <EmptySpace pref="78" max="32767" attributes="0"/>
+                      <EmptySpace pref="79" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="barChartButton" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                           <Component id="stackedBarChartButton" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
@@ -2483,7 +2514,7 @@
                       <Component id="profileEmail" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Component id="profilePassword" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" pref="374" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" pref="375" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="profileBackButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="profileSaveButton" alignment="3" min="-2" max="-2" attributes="0"/>

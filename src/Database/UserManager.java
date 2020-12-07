@@ -7,6 +7,9 @@ package Database;
 
 import User.Candidate;
 import User.Voter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -28,4 +31,6 @@ public interface UserManager {
     public ArrayList<ArrayList<String>> getVotes();
     public ArrayList<String[]> getVotesByStates();
     public boolean modifyOfficial(String[] info, String lastEmail) ;
+    public boolean uploadImage (String email, File file) throws FileNotFoundException, IOException;
+    public byte[] getPicture(String email);
 }

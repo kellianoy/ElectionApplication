@@ -7,6 +7,10 @@ package Database;
 
 import User.Candidate;
 import User.Voter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -417,4 +421,56 @@ public class UserManagerImpl implements UserManager {
         return false;
     }
     
+    /**
+     * Update an image on a candidate using its email and a file. Returns true if it worked.
+     * @param email
+     * @param file
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    @Override
+    public boolean uploadImage (String email, File file) throws FileNotFoundException, IOException {
+        try (Connection con = data.getCon()) {
+                PreparedStatement userStm=con.prepareStatement("UPDATE candidate, user SET picture=? WHERE user.email=? AND CandidateID=UserID");
+                
+                FileInputStream imageIn = new FileInputStream(file);
+                userStm.setBinaryStream(1, imageIn, imageIn.getChannel().size());
+                userStm.setString(2, email);
+                userStm.executeUpdate();
+                return true;
+            } 
+        catch (SQLException | ClassNotFoundException ex)
+        {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return false;
+    }
+        
+     /**
+     * Used to get the picture of a candidate in the database using his email
+     * @param email
+     * @return 
+     */
+    @Override
+    public byte[] getPicture(String email)
+    {
+        try (Connection con = data.getCon())  
+        {
+            PreparedStatement imageOfCandidate = con.prepareStatement("SELECT picture FROM candidate, user WHERE CandidateID=UserID AND email=?");
+            imageOfCandidate.setString(1, email);
+            ResultSet i = imageOfCandidate.executeQuery(); 
+            if(i.next())
+            {
+                 byte[] img = i.getBytes("picture");
+                 return img;
+            }
+        } 
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+        
 }
+
