@@ -11,9 +11,8 @@ import static GUI.GUI_Start.RED_COLOR;
 import static GUI.GUI_Start.actualColor;
 import User.Candidate;
 import java.awt.CardLayout;
-import java.awt.Color;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -26,9 +25,12 @@ public class GUI_Candidate extends javax.swing.JFrame {
 
     private CardLayout cards;
     private Candidate admin ; 
-    
+    private FileManager f;
     /**
      * Creates new form GUI_Candidate
+     * @param admin
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
      */
     public GUI_Candidate(Candidate admin) throws SQLException, ClassNotFoundException {
         
@@ -43,6 +45,13 @@ public class GUI_Candidate extends javax.swing.JFrame {
         setVisible(true);
         
         cards = (CardLayout)mainPanel.getLayout();
+        
+        //File Manager to save users preferences
+        try {
+            f=new FileManager(); 
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(GUI_Official.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
@@ -429,17 +438,20 @@ public class GUI_Candidate extends javax.swing.JFrame {
 
     private void redOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redOptionActionPerformed
         actualColor=RED_COLOR;
-        leftPanel.setBackground(new Color(170,40,50));
+        leftPanel.setBackground(actualColor);
+        f.saveColor(actualColor);
     }//GEN-LAST:event_redOptionActionPerformed
 
     private void greenOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_greenOptionActionPerformed
         actualColor=GREEN_COLOR;
-        leftPanel.setBackground(new Color(100,210,50));
+        leftPanel.setBackground(actualColor);
+        f.saveColor(actualColor);
     }//GEN-LAST:event_greenOptionActionPerformed
 
     private void blueOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blueOptionActionPerformed
         actualColor=BLUE_COLOR;
-        leftPanel.setBackground(new Color(0,102,130));
+        leftPanel.setBackground(actualColor);
+        f.saveColor(actualColor);
     }//GEN-LAST:event_blueOptionActionPerformed
 
     private void viewStatisticButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewStatisticButtonActionPerformed

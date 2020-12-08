@@ -12,6 +12,7 @@ import static GUI.GUI_Start.RED_COLOR;
 import static GUI.GUI_Start.actualColor;
 import User.Voter;
 import java.awt.CardLayout;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +29,8 @@ public class GUI_Voter extends javax.swing.JFrame {
     private Voter admin ; 
     private String [][] infosCandidate ;
     private int cursorCandidate ; 
+    private FileManager f;
+    
     /**
      * Creates new form GUI_Voter
      * @param admin
@@ -65,6 +68,13 @@ public class GUI_Voter extends javax.swing.JFrame {
             electionText.setText("Election is closed");
             electionText.setForeground(RED_COLOR);
         }  
+        
+        //File Manager to save users preferences
+        try {
+            f=new FileManager(); 
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(GUI_Official.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
@@ -581,18 +591,21 @@ public class GUI_Voter extends javax.swing.JFrame {
         actualColor=RED_COLOR;
         leftPanel.setBackground(actualColor);
         colorPanel.setBackground(actualColor);
+        f.saveColor(actualColor);
     }//GEN-LAST:event_redOptionActionPerformed
 
     private void greenOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_greenOptionActionPerformed
         actualColor=GREEN_COLOR;
         leftPanel.setBackground(actualColor);
         colorPanel.setBackground(actualColor);
+        f.saveColor(actualColor);
     }//GEN-LAST:event_greenOptionActionPerformed
 
     private void blueOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blueOptionActionPerformed
         actualColor=BLUE_COLOR;
         leftPanel.setBackground(actualColor);
         colorPanel.setBackground(actualColor);
+        f.saveColor(actualColor);
     }//GEN-LAST:event_blueOptionActionPerformed
 
     private void stateComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stateComboBoxActionPerformed

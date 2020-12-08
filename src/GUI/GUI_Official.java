@@ -10,6 +10,7 @@ import static GUI.GUI_Start.*;
 import User.*;
 import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class GUI_Official extends javax.swing.JFrame {
     private JFreeChart ringChart;
     private ChartPanel ringChartPanel;
     
+    private FileManager f;
     
     public GUI_Official(Official admin) {
         
@@ -102,7 +104,12 @@ public class GUI_Official extends javax.swing.JFrame {
         statusText.setText(admin.getLastStatus());
         UpdateStatusButtons(statusText);
         
-        
+        //File Manager to save users preferences
+        try {
+            f=new FileManager(); 
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(GUI_Official.class.getName()).log(Level.SEVERE, null, ex);
+        }
        
     }
     
@@ -2078,16 +2085,19 @@ public class GUI_Official extends javax.swing.JFrame {
     private void redOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redOptionActionPerformed
         actualColor=RED_COLOR;
         leftPanel.setBackground(actualColor);
+        f.saveColor(actualColor);
     }//GEN-LAST:event_redOptionActionPerformed
 
     private void greenOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_greenOptionActionPerformed
         actualColor=GREEN_COLOR;
         leftPanel.setBackground(actualColor);
+        f.saveColor(actualColor);
     }//GEN-LAST:event_greenOptionActionPerformed
 
     private void blueOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blueOptionActionPerformed
         actualColor=BLUE_COLOR;
         leftPanel.setBackground(actualColor);
+        f.saveColor(actualColor);
     }//GEN-LAST:event_blueOptionActionPerformed
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
