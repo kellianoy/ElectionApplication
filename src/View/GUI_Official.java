@@ -62,6 +62,8 @@ public class GUI_Official extends javax.swing.JFrame {
     private JFreeChart analyzeChart;
     private JFreeChart ringChart;
     private ChartPanel ringChartPanel;
+    private JFreeChart ringChart2;
+    private ChartPanel ringChartPanel2;
     
     private FileManager f;
     
@@ -129,6 +131,9 @@ public class GUI_Official extends javax.swing.JFrame {
         
         ringChart=createRingPlotChart(createRingPlotDataset());
         ringChartPanel = new ChartPanel(ringChart);
+        
+        ringChart2=createRingPlotChart(createRingPlotDataset());
+        ringChartPanel2 = new ChartPanel(ringChart);
     }
     
      /**
@@ -321,7 +326,9 @@ public class GUI_Official extends javax.swing.JFrame {
         greenOption = new javax.swing.JMenuItem();
         blueOption = new javax.swing.JMenuItem();
         winnerDialog = new javax.swing.JDialog();
+        winnerDrawPanel = new javax.swing.JPanel();
         winnerPicture = new javax.swing.JLabel();
+        winnerGraph = ringChartPanel2;
         winnerPanel = new javax.swing.JPanel();
         winnerTitle = new javax.swing.JLabel();
         winnerName = new javax.swing.JLabel();
@@ -496,13 +503,55 @@ public class GUI_Official extends javax.swing.JFrame {
         });
         settingsPopUp.add(blueOption);
 
-        winnerDialog.setMaximumSize(new java.awt.Dimension(1024, 720));
-        winnerDialog.setMinimumSize(new java.awt.Dimension(1024, 720));
-        winnerDialog.setPreferredSize(new java.awt.Dimension(1024, 720));
-        winnerDialog.setSize(new java.awt.Dimension(1024, 720));
+        winnerDialog.setBackground(new java.awt.Color(255, 255, 255));
+        winnerDialog.setMaximumSize(new java.awt.Dimension(1600, 900));
+        winnerDialog.setMinimumSize(new java.awt.Dimension(1600, 900));
+        winnerDialog.setPreferredSize(new java.awt.Dimension(1600, 900));
+        winnerDialog.setSize(new java.awt.Dimension(1600, 900));
 
+        winnerDrawPanel.setBackground(new java.awt.Color(255, 255, 255));
+        winnerDrawPanel.setForeground(new java.awt.Color(255, 255, 255));
+
+        winnerPicture.setBackground(new java.awt.Color(255, 255, 255));
+        winnerPicture.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        winnerPicture.setForeground(new java.awt.Color(50, 50, 50));
         winnerPicture.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         winnerPicture.setText("Picture");
+
+        winnerGraph.setBackground(new java.awt.Color(255, 255, 255));
+        winnerGraph.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout winnerGraphLayout = new javax.swing.GroupLayout(winnerGraph);
+        winnerGraph.setLayout(winnerGraphLayout);
+        winnerGraphLayout.setHorizontalGroup(
+            winnerGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 552, Short.MAX_VALUE)
+        );
+        winnerGraphLayout.setVerticalGroup(
+            winnerGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout winnerDrawPanelLayout = new javax.swing.GroupLayout(winnerDrawPanel);
+        winnerDrawPanel.setLayout(winnerDrawPanelLayout);
+        winnerDrawPanelLayout.setHorizontalGroup(
+            winnerDrawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(winnerDrawPanelLayout.createSequentialGroup()
+                .addGap(0, 341, Short.MAX_VALUE)
+                .addComponent(winnerPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                .addComponent(winnerGraph, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 253, Short.MAX_VALUE))
+        );
+        winnerDrawPanelLayout.setVerticalGroup(
+            winnerDrawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(winnerDrawPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(winnerDrawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(winnerPicture, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                    .addComponent(winnerGraph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(61, 61, 61))
+        );
 
         winnerPanel.setBackground(new java.awt.Color(51, 51, 51));
         winnerPanel.setForeground(new java.awt.Color(255, 255, 255));
@@ -521,36 +570,39 @@ public class GUI_Official extends javax.swing.JFrame {
         winnerPanel.setLayout(winnerPanelLayout);
         winnerPanelLayout.setHorizontalGroup(
             winnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(winnerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(winnerPanelLayout.createSequentialGroup()
-                .addComponent(winnerTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 1018, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(winnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(winnerTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1796, Short.MAX_VALUE)
+                    .addComponent(winnerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         winnerPanelLayout.setVerticalGroup(
             winnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(winnerPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, winnerPanelLayout.createSequentialGroup()
                 .addComponent(winnerName, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(winnerTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(winnerTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout winnerDialogLayout = new javax.swing.GroupLayout(winnerDialog.getContentPane());
         winnerDialog.getContentPane().setLayout(winnerDialogLayout);
         winnerDialogLayout.setHorizontalGroup(
             winnerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(winnerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(winnerDialogLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(winnerPicture, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0)
+                .addGroup(winnerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(winnerDialogLayout.createSequentialGroup()
+                        .addComponent(winnerDrawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addComponent(winnerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         winnerDialogLayout.setVerticalGroup(
             winnerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(winnerDialogLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, winnerDialogLayout.createSequentialGroup()
                 .addComponent(winnerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(winnerPicture, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+                .addComponent(winnerDrawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2232,7 +2284,7 @@ public class GUI_Official extends javax.swing.JFrame {
                 winnerTitle.setText("won the election with a total of " + winners.get(0).get(2) + " votes");
                 
                 winnerDialog.setVisible(true);
-                winnerDialog.setSize(1024, 720);
+                winnerDialog.setSize(1600, 900);
                 winnerDialog.setLocationRelativeTo(null);
             }
                 
@@ -2799,6 +2851,8 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JPanel textPanel;
     private javax.swing.JLabel voteStatusText;
     private javax.swing.JDialog winnerDialog;
+    private javax.swing.JPanel winnerDrawPanel;
+    private javax.swing.JPanel winnerGraph;
     private javax.swing.JLabel winnerName;
     private javax.swing.JPanel winnerPanel;
     private javax.swing.JLabel winnerPicture;
