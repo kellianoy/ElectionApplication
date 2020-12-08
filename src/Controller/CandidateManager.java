@@ -5,6 +5,8 @@
  */
 package Controller;
 
+import java.util.ArrayList;
+
 /**
  *  DB Interface for the Candidate Class, can access tables, modify his data on the DB
  * @author rebec
@@ -12,4 +14,6 @@ package Controller;
 public interface CandidateManager {
     public String electionIsOpen(); 
     public boolean updateCandidate(String[] infos, String email); 
+    
+    public ArrayList<String[]> getAllCandidates(String logEmail) ; 
 }

@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,10 +24,12 @@ public class CandidateManagerImpl implements CandidateManager{
     private static final String QUERY_ELECTION_ISOPEN = "SELECT Status FROM status ORDER BY StateID DESC"; 
     private static final String QUERY_UPDATE_CANDIDATE = "UPDATE candidate, user SET user.email = ? , user.password = ? WHERE CandidateID = UserID AND UserId = ?"; 
     private static final String QUERY_FINDID = "SELECT UserID FROM user WHERE email = ?"; 
+    private static final String QUERY_GET_ALL_CANDIDATE_INFOS = "SELECT user.firstName, user.lastName, user.email FROM candidate, user WHERE CandidateID = UserID"; 
     
     private PreparedStatement electionOpen ;
     private PreparedStatement getID ; 
     private PreparedStatement updateCandidate;
+    private PreparedStatement getAllCandidateInfos ; 
     
     
     public CandidateManagerImpl() throws SQLException, ClassNotFoundException
@@ -36,6 +39,7 @@ public class CandidateManagerImpl implements CandidateManager{
         electionOpen = dbConnection.prepareStatement(QUERY_ELECTION_ISOPEN);
         getID = dbConnection.prepareStatement(QUERY_FINDID); 
         updateCandidate = dbConnection.prepareStatement(QUERY_UPDATE_CANDIDATE);
+        getAllCandidateInfos = dbConnection.prepareStatement(QUERY_GET_ALL_CANDIDATE_INFOS);
     }
     
     /** 
@@ -81,5 +85,38 @@ public class CandidateManagerImpl implements CandidateManager{
             Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false ;
+    }
+    
+    /**
+     * Return the name and email of all candidates, unless the candidate login. 
+     * @param logEmail
+     * @return 
+     */
+    @Override
+    public ArrayList<String[]> getAllCandidates(String logEmail)
+    {
+        try
+        {
+            ArrayList<String[]> candidatesInfos = new ArrayList();
+            String [] buf = new String[2];
+            buf[0] = " "; 
+            buf[1] = " "; 
+            candidatesInfos.add(buf); 
+            ResultSet infos = getAllCandidateInfos.executeQuery(); 
+            while(infos.next())
+            {
+                String [] buffer = new String[2] ; 
+                if(!infos.getString("user.email").equals(logEmail))
+                {
+                    buffer[0] = infos.getString("user.firstName") + " " + infos.getString("user.lastName"); 
+                    buffer[1] = infos.getString("user.email"); 
+                    candidatesInfos.add(buffer);
+                }
+            }
+            return candidatesInfos ; 
+        } catch (SQLException ex) {
+            Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

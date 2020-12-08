@@ -15,6 +15,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -28,6 +29,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
     private CardLayout cards;
     private Candidate admin ; 
     private FileManager f;
+    private ArrayList<String[]> allCandidates ; 
     /**
      * Creates new form GUI_Candidate
      * @param admin
@@ -40,11 +42,18 @@ public class GUI_Candidate extends javax.swing.JFrame {
         admin.setDataController();
         initComponents();
         
-        System.out.print(admin.getStatusElection());
         UpdateStatusElection(admin.getStatusElection());
         
         setLocationRelativeTo(null);
         setVisible(true);
+        
+        allCandidates = admin.getAllCandidatesInfos();
+        
+        //Setting State values in the combo boxes
+        for (String[] s : allCandidates)
+        {
+            candidatesComboBox.addItem(s[0]);
+        }
         
         cards = (CardLayout)mainPanel.getLayout();
         
@@ -92,6 +101,11 @@ public class GUI_Candidate extends javax.swing.JFrame {
         goBackButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         editCandidateParty = new javax.swing.JTextField();
+        viewStatsPanel = new javax.swing.JPanel();
+        AnalyzeText = new javax.swing.JLabel();
+        AnalyzeCaption = new javax.swing.JLabel();
+        selectCandidateLabel = new javax.swing.JLabel();
+        candidatesComboBox = new javax.swing.JComboBox();
 
         settingsPopUp.setPreferredSize(new java.awt.Dimension(200, 100));
         settingsPopUp.setRequestFocusEnabled(false);
@@ -166,11 +180,11 @@ public class GUI_Candidate extends javax.swing.JFrame {
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(profileButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                .addComponent(profileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(SetingColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addComponent(SetingColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
         );
         leftPanelLayout.setVerticalGroup(
@@ -372,6 +386,59 @@ public class GUI_Candidate extends javax.swing.JFrame {
 
         mainPanel.add(profilePanel, "profile");
 
+        viewStatsPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        AnalyzeText.setBackground(new java.awt.Color(255, 255, 255));
+        AnalyzeText.setFont(new java.awt.Font("Montserrat Medium", 0, 36)); // NOI18N
+        AnalyzeText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AnalyzeText.setText("Analysis");
+
+        AnalyzeCaption.setBackground(new java.awt.Color(255, 255, 255));
+        AnalyzeCaption.setFont(new java.awt.Font("Montserrat Medium", 0, 18)); // NOI18N
+        AnalyzeCaption.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AnalyzeCaption.setText("Review votes under diverse circumstances");
+
+        selectCandidateLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        selectCandidateLabel.setText("Select the candidate you want to compare with : ");
+
+        candidatesComboBox.setBorder(null);
+
+        javax.swing.GroupLayout viewStatsPanelLayout = new javax.swing.GroupLayout(viewStatsPanel);
+        viewStatsPanel.setLayout(viewStatsPanelLayout);
+        viewStatsPanelLayout.setHorizontalGroup(
+            viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewStatsPanelLayout.createSequentialGroup()
+                .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(viewStatsPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(AnalyzeCaption, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(viewStatsPanelLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(AnalyzeText, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)))
+                .addGap(12, 12, 12))
+            .addGroup(viewStatsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(selectCandidateLabel)
+                .addGap(63, 63, 63)
+                .addComponent(candidatesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        viewStatsPanelLayout.setVerticalGroup(
+            viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(viewStatsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(AnalyzeText)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(AnalyzeCaption)
+                .addGap(34, 34, 34)
+                .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(selectCandidateLabel)
+                    .addComponent(candidatesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(498, Short.MAX_VALUE))
+        );
+
+        mainPanel.add(viewStatsPanel, "statsPanel");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -457,7 +524,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
     }//GEN-LAST:event_blueOptionActionPerformed
 
     private void viewStatisticButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewStatisticButtonActionPerformed
-
+        cards.show(mainPanel, "statsPanel");
     }//GEN-LAST:event_viewStatisticButtonActionPerformed
 
     private void editCandidateDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCandidateDateActionPerformed
@@ -497,9 +564,12 @@ public class GUI_Candidate extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AnalyzeCaption;
+    private javax.swing.JLabel AnalyzeText;
     private javax.swing.JButton SetingColorButton;
     private javax.swing.JLabel answerVote;
     private javax.swing.JMenuItem blueOption;
+    private javax.swing.JComboBox candidatesComboBox;
     private javax.swing.JFormattedTextField editCandidateDate;
     private javax.swing.JTextField editCandidateEmail;
     private javax.swing.JTextField editCandidateParty;
@@ -521,7 +591,9 @@ public class GUI_Candidate extends javax.swing.JFrame {
     private javax.swing.JLabel questionVote;
     private javax.swing.JMenuItem redOption;
     private javax.swing.JButton saveButton;
+    private javax.swing.JLabel selectCandidateLabel;
     private javax.swing.JPopupMenu settingsPopUp;
     private javax.swing.JButton viewStatisticButton;
+    private javax.swing.JPanel viewStatsPanel;
     // End of variables declaration//GEN-END:variables
 }

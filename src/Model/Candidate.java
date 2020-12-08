@@ -8,6 +8,7 @@ package Model;
 import Controller.CandidateManagerImpl;
 import Controller.voterManagerImpl;
 import java.sql.SQLException;
+import java.util.ArrayList;
 /**
  * Class used as an administrator, can modify his data and access the database.
  * @author rebec
@@ -70,4 +71,12 @@ public class Candidate extends User {
         return false ; 
     }
     
+    /**
+     * Get all the candidates from the database unless the actual candidate login. 
+     * @return 
+     */
+    public ArrayList<String[]> getAllCandidatesInfos()
+    {
+        return dataController.getAllCandidates(email); 
+    }
 }
