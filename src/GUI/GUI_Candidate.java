@@ -11,6 +11,7 @@ import static GUI.GUI_Start.RED_COLOR;
 import static GUI.GUI_Start.actualColor;
 import User.Candidate;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -52,7 +53,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(GUI_Official.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        changeColor(actualColor);
     }
 
     /**
@@ -436,22 +437,23 @@ public class GUI_Candidate extends javax.swing.JFrame {
         cards.show(mainPanel, "profile");
     }//GEN-LAST:event_profileButtonActionPerformed
 
+    private void changeColor(Color c){
+        leftPanel.setBackground(c);
+        f.saveColor(c);
+    }
     private void redOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redOptionActionPerformed
         actualColor=RED_COLOR;
-        leftPanel.setBackground(actualColor);
-        f.saveColor(actualColor);
+        changeColor(actualColor);
     }//GEN-LAST:event_redOptionActionPerformed
 
     private void greenOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_greenOptionActionPerformed
         actualColor=GREEN_COLOR;
-        leftPanel.setBackground(actualColor);
-        f.saveColor(actualColor);
+        changeColor(actualColor);
     }//GEN-LAST:event_greenOptionActionPerformed
 
     private void blueOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blueOptionActionPerformed
         actualColor=BLUE_COLOR;
-        leftPanel.setBackground(actualColor);
-        f.saveColor(actualColor);
+        changeColor(actualColor);
     }//GEN-LAST:event_blueOptionActionPerformed
 
     private void viewStatisticButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewStatisticButtonActionPerformed

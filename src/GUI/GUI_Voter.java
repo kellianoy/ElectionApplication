@@ -12,6 +12,7 @@ import static GUI.GUI_Start.RED_COLOR;
 import static GUI.GUI_Start.actualColor;
 import User.Voter;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -75,6 +76,7 @@ public class GUI_Voter extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(GUI_Official.class.getName()).log(Level.SEVERE, null, ex);
         }
+        changeColor(actualColor);
         
     }
     
@@ -587,25 +589,25 @@ public class GUI_Voter extends javax.swing.JFrame {
         settingsPopUp.show(this, SetingColorButton.getX(), SetingColorButton.getY()-settingsPopUp.getHeight()/2-2);
     }//GEN-LAST:event_SetingColorButtonActionPerformed
 
+    private void changeColor(Color c){
+        leftPanel.setBackground(c);
+        colorPanel.setBackground(c);
+        f.saveColor(c);
+    }
+    
     private void redOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redOptionActionPerformed
         actualColor=RED_COLOR;
-        leftPanel.setBackground(actualColor);
-        colorPanel.setBackground(actualColor);
-        f.saveColor(actualColor);
+        changeColor(actualColor);
     }//GEN-LAST:event_redOptionActionPerformed
 
     private void greenOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_greenOptionActionPerformed
         actualColor=GREEN_COLOR;
-        leftPanel.setBackground(actualColor);
-        colorPanel.setBackground(actualColor);
-        f.saveColor(actualColor);
+        changeColor(actualColor);
     }//GEN-LAST:event_greenOptionActionPerformed
 
     private void blueOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blueOptionActionPerformed
         actualColor=BLUE_COLOR;
-        leftPanel.setBackground(actualColor);
-        colorPanel.setBackground(actualColor);
-        f.saveColor(actualColor);
+        changeColor(actualColor);
     }//GEN-LAST:event_blueOptionActionPerformed
 
     private void stateComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stateComboBoxActionPerformed
