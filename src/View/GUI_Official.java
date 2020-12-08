@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package View;
 
+import Model.Voter;
+import Model.Official;
+import Model.Candidate;
 import Misc.ImageFilter;
 import Misc.FileManager;
 import Enum.*;
-import static GUI.GUI_Start.*;
-import User.*;
+import static View.GUI_Start.*;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -500,7 +502,7 @@ public class GUI_Official extends javax.swing.JFrame {
 
         settingsButton.setBackground(new java.awt.Color(255, 255, 255));
         settingsButton.setForeground(new java.awt.Color(255, 255, 255));
-        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/gearIcon.png"))); // NOI18N
+        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/gearIcon.png"))); // NOI18N
         settingsButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         settingsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -510,7 +512,7 @@ public class GUI_Official extends javax.swing.JFrame {
 
         exitButton.setBackground(new java.awt.Color(255, 255, 255));
         exitButton.setForeground(new java.awt.Color(255, 255, 255));
-        exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/logoutIcon.png"))); // NOI18N
+        exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/logoutIcon.png"))); // NOI18N
         exitButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         exitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -527,7 +529,7 @@ public class GUI_Official extends javax.swing.JFrame {
 
         profileButton.setBackground(new java.awt.Color(255, 255, 255));
         profileButton.setForeground(new java.awt.Color(255, 255, 255));
-        profileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/userIcon.png"))); // NOI18N
+        profileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/userIcon.png"))); // NOI18N
         profileButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         profileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

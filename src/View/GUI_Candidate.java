@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package View;
 
 import Misc.FileManager;
-import static GUI.GUI_Start.BLUE_COLOR;
-import static GUI.GUI_Start.GREEN_COLOR;
-import static GUI.GUI_Start.RED_COLOR;
-import static GUI.GUI_Start.actualColor;
-import User.Candidate;
+import static View.GUI_Start.BLUE_COLOR;
+import static View.GUI_Start.GREEN_COLOR;
+import static View.GUI_Start.RED_COLOR;
+import static View.GUI_Start.actualColor;
+import Model.Candidate;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.io.FileNotFoundException;
@@ -126,7 +126,6 @@ public class GUI_Candidate extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Election Simulator");
         setMinimumSize(new java.awt.Dimension(1024, 720));
-        setPreferredSize(new java.awt.Dimension(1024, 720));
 
         leftPanel.setBackground(new java.awt.Color(0, 102, 130));
         leftPanel.setMaximumSize(new java.awt.Dimension(180, 0));
@@ -135,7 +134,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
 
         SetingColorButton.setBackground(new java.awt.Color(255, 255, 255));
         SetingColorButton.setForeground(new java.awt.Color(255, 255, 255));
-        SetingColorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/gearIcon.png"))); // NOI18N
+        SetingColorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/gearIcon.png"))); // NOI18N
         SetingColorButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         SetingColorButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,7 +144,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
 
         exitButton.setBackground(new java.awt.Color(255, 255, 255));
         exitButton.setForeground(new java.awt.Color(255, 255, 255));
-        exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/logoutIcon.png"))); // NOI18N
+        exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/logoutIcon.png"))); // NOI18N
         exitButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         exitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,7 +152,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
             }
         });
 
-        profileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/userIcon.png"))); // NOI18N
+        profileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/userIcon.png"))); // NOI18N
         profileButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         profileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

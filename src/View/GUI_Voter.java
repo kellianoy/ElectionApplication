@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package View;
 
 import Misc.FileManager;
 import Enum.State;
-import static GUI.GUI_Start.BLUE_COLOR;
-import static GUI.GUI_Start.GREEN_COLOR;
-import static GUI.GUI_Start.RED_COLOR;
-import static GUI.GUI_Start.actualColor;
-import User.Voter;
+import static View.GUI_Start.BLUE_COLOR;
+import static View.GUI_Start.GREEN_COLOR;
+import static View.GUI_Start.RED_COLOR;
+import static View.GUI_Start.actualColor;
+import Model.Voter;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.io.FileNotFoundException;
@@ -176,7 +176,6 @@ public class GUI_Voter extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Election Simulator");
-        setMaximumSize(new java.awt.Dimension(1024, 720));
         setMinimumSize(new java.awt.Dimension(1024, 720));
         setSize(new java.awt.Dimension(1024, 720));
 
@@ -187,7 +186,7 @@ public class GUI_Voter extends javax.swing.JFrame {
 
         SetingColorButton.setBackground(new java.awt.Color(255, 255, 255));
         SetingColorButton.setForeground(new java.awt.Color(255, 255, 255));
-        SetingColorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/gearIcon.png"))); // NOI18N
+        SetingColorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/gearIcon.png"))); // NOI18N
         SetingColorButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         SetingColorButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,7 +196,7 @@ public class GUI_Voter extends javax.swing.JFrame {
 
         exitButton.setBackground(new java.awt.Color(255, 255, 255));
         exitButton.setForeground(new java.awt.Color(255, 255, 255));
-        exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/logoutIcon.png"))); // NOI18N
+        exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/logoutIcon.png"))); // NOI18N
         exitButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         exitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,7 +204,7 @@ public class GUI_Voter extends javax.swing.JFrame {
             }
         });
 
-        profileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/userIcon.png"))); // NOI18N
+        profileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/userIcon.png"))); // NOI18N
         profileButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         profileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -286,7 +285,7 @@ public class GUI_Voter extends javax.swing.JFrame {
         mainMenuText1.setText("Voter Main Menu");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/index.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/index.png"))); // NOI18N
 
         republicText.setBackground(new java.awt.Color(255, 255, 255));
         republicText.setFont(new java.awt.Font("Montserrat Medium", 0, 24)); // NOI18N
@@ -487,7 +486,7 @@ public class GUI_Voter extends javax.swing.JFrame {
             }
         });
 
-        preCandidateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/leftArrowIcon.png"))); // NOI18N
+        preCandidateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/leftArrowIcon.png"))); // NOI18N
         preCandidateButton.setContentAreaFilled(false);
         preCandidateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -495,7 +494,7 @@ public class GUI_Voter extends javax.swing.JFrame {
             }
         });
 
-        nextCandidateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/rightArrowIcon.png"))); // NOI18N
+        nextCandidateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/rightArrowIcon.png"))); // NOI18N
         nextCandidateButton.setContentAreaFilled(false);
         nextCandidateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -56,9 +56,6 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="Election Simulator"/>
-    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1024, 720]"/>
-    </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1024, 720]"/>
     </Property>
@@ -155,7 +152,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/GUI/gearIcon.png"/>
+              <Image iconType="3" name="/View/gearIcon.png"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
@@ -176,7 +173,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/GUI/logoutIcon.png"/>
+              <Image iconType="3" name="/View/logoutIcon.png"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
@@ -191,7 +188,7 @@
         <Component class="javax.swing.JButton" name="profileButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/GUI/userIcon.png"/>
+              <Image iconType="3" name="/View/userIcon.png"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
@@ -366,7 +363,7 @@
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/GUI/index.png"/>
+                  <Image iconType="3" name="/View/index.png"/>
                 </Property>
               </Properties>
             </Component>
@@ -748,7 +745,7 @@
             <Component class="javax.swing.JButton" name="preCandidateButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/GUI/leftArrowIcon.png"/>
+                  <Image iconType="3" name="/View/leftArrowIcon.png"/>
                 </Property>
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
               </Properties>
@@ -759,7 +756,7 @@
             <Component class="javax.swing.JButton" name="nextCandidateButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/GUI/rightArrowIcon.png"/>
+                  <Image iconType="3" name="/View/rightArrowIcon.png"/>
                 </Property>
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
               </Properties>

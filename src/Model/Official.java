@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package User;
+package Model;
 
-import Database.UserManagerImpl;
+import Controller.UserManagerImpl;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;

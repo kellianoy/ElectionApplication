@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Database;
+package Controller;
 
-import User.Candidate;
-import User.Voter;
+import Model.Candidate;
+import Model.Voter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

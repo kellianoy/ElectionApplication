@@ -10,8 +10,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -30,6 +28,10 @@ public class FileManager {
       
     }
 
+    /**
+     * Save a color c to a file
+     * @param c
+     */
     public void saveColor(Color c) {
         PrintWriter outputFile;
         try {
@@ -44,7 +46,10 @@ public class FileManager {
             
         }
     }
-    
+    /**
+     * Returns a color from a File 
+     * @return 
+     */
     public Color retrieveColor(){
       
         String[] color = new String[3];

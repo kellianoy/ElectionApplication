@@ -1,12 +1,12 @@
-package GUI;
+package View;
 
 import Misc.FileManager;
-import Database.LoggerManagerImpl;
-import Database.Database;
-import User.Candidate;
-import User.Official;
-import User.User;
-import User.Voter;
+import Controller.LoggerManagerImpl;
+import Controller.Database;
+import Model.Candidate;
+import Model.Official;
+import Model.User;
+import Model.Voter;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
@@ -120,10 +120,8 @@ public class GUI_Start extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Election Simulator");
-        setLocation(new java.awt.Point(0, 0));
         setMinimumSize(new java.awt.Dimension(800, 600));
         setResizable(false);
-        setSize(new java.awt.Dimension(800, 600));
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -141,7 +139,7 @@ public class GUI_Start extends javax.swing.JFrame {
             }
         });
 
-        emailIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/userIcon.png"))); // NOI18N
+        emailIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/userIcon.png"))); // NOI18N
 
         javax.swing.GroupLayout emailPanelLayout = new javax.swing.GroupLayout(emailPanel);
         emailPanel.setLayout(emailPanelLayout);
@@ -174,7 +172,7 @@ public class GUI_Start extends javax.swing.JFrame {
             }
         });
 
-        passwordIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/lockIcon.png"))); // NOI18N
+        passwordIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/lockIcon.png"))); // NOI18N
 
         javax.swing.GroupLayout passwordPanelLayout = new javax.swing.GroupLayout(passwordPanel);
         passwordPanel.setLayout(passwordPanelLayout);
@@ -241,7 +239,7 @@ public class GUI_Start extends javax.swing.JFrame {
 
         settingsButton.setBackground(new java.awt.Color(255, 255, 255));
         settingsButton.setForeground(new java.awt.Color(255, 255, 255));
-        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/gearIcon.png"))); // NOI18N
+        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/gearIcon.png"))); // NOI18N
         settingsButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         settingsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -276,7 +274,7 @@ public class GUI_Start extends javax.swing.JFrame {
         republicText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         republicText.setText("Republic of Moebus");
 
-        flagIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/index.png"))); // NOI18N
+        flagIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/index.png"))); // NOI18N
 
         littleText.setBackground(new java.awt.Color(255, 255, 255));
         littleText.setFont(new java.awt.Font("Montserrat Medium", 2, 12)); // NOI18N
@@ -323,7 +321,7 @@ public class GUI_Start extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(littleText)
                 .addContainerGap())
-            .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+            .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
         );
 
         menubar.setBorder(javax.swing.BorderFactory.createCompoundBorder());

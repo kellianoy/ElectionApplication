@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package User;
+package Model;
 
-import Database.CandidateManagerImpl;
-import Database.voterManagerImpl;
+import Controller.CandidateManagerImpl;
+import Controller.voterManagerImpl;
 import java.sql.SQLException;
 /**
  * Class used as an administrator, can modify his data and access the database.
