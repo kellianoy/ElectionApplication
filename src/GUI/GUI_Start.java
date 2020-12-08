@@ -1,5 +1,6 @@
 package GUI;
 
+import Misc.FileManager;
 import Database.LoggerManagerImpl;
 import Database.Database;
 import User.Candidate;

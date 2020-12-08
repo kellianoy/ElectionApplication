@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import Misc.ImageFilter;
+import Misc.FileManager;
 import Enum.*;
 import static GUI.GUI_Start.*;
 import User.*;

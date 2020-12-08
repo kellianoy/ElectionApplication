@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 /**
  * Class used as an administrator, has almost all accesses to the database. 
