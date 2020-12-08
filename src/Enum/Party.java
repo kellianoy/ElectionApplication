@@ -6,7 +6,7 @@
 package Enum;
 
 /**
- *
+ * Political Party enumeration
  * @author Keke
  */
 public enum Party{ 
@@ -25,6 +25,12 @@ public enum Party{
         this.party = party;
     }
     
+    /**
+     *
+     * Returns string attached to enum member
+     * @return
+     */
+    @Override
     public String toString() {
        return this.party;
     }

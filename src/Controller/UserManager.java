@@ -33,4 +33,9 @@ public interface UserManager {
     public boolean modifyOfficial(String[] info, String lastEmail) ;
     public boolean uploadImage (String email, File file) throws FileNotFoundException, IOException;
     public byte[] getPicture(String email);
+    public ArrayList<ArrayList<String>> getWinner();
+    
+    
+    
+    
 }

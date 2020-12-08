@@ -320,6 +320,11 @@ public class GUI_Official extends javax.swing.JFrame {
         redOption = new javax.swing.JMenuItem();
         greenOption = new javax.swing.JMenuItem();
         blueOption = new javax.swing.JMenuItem();
+        winnerDialog = new javax.swing.JDialog();
+        winnerPicture = new javax.swing.JLabel();
+        winnerPanel = new javax.swing.JPanel();
+        winnerTitle = new javax.swing.JLabel();
+        winnerName = new javax.swing.JLabel();
         leftPanel = new javax.swing.JPanel();
         settingsButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
@@ -431,6 +436,8 @@ public class GUI_Official extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextArea9 = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         ringPlotPanel = ringChartPanel;
         stackedBarPanel = analyzeChartPanel;
         barPanel = mainMenuChartPanel;
@@ -489,11 +496,70 @@ public class GUI_Official extends javax.swing.JFrame {
         });
         settingsPopUp.add(blueOption);
 
+        winnerDialog.setMaximumSize(new java.awt.Dimension(1024, 720));
+        winnerDialog.setMinimumSize(new java.awt.Dimension(1024, 720));
+        winnerDialog.setPreferredSize(new java.awt.Dimension(1024, 720));
+        winnerDialog.setSize(new java.awt.Dimension(1024, 720));
+
+        winnerPicture.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        winnerPicture.setText("Picture");
+
+        winnerPanel.setBackground(new java.awt.Color(51, 51, 51));
+        winnerPanel.setForeground(new java.awt.Color(255, 255, 255));
+
+        winnerTitle.setFont(new java.awt.Font("Montserrat Medium", 0, 24)); // NOI18N
+        winnerTitle.setForeground(new java.awt.Color(255, 255, 255));
+        winnerTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        winnerTitle.setText("Number of votes");
+
+        winnerName.setFont(new java.awt.Font("Montserrat Medium", 1, 36)); // NOI18N
+        winnerName.setForeground(new java.awt.Color(255, 255, 255));
+        winnerName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        winnerName.setText("Name");
+
+        javax.swing.GroupLayout winnerPanelLayout = new javax.swing.GroupLayout(winnerPanel);
+        winnerPanel.setLayout(winnerPanelLayout);
+        winnerPanelLayout.setHorizontalGroup(
+            winnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(winnerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(winnerPanelLayout.createSequentialGroup()
+                .addComponent(winnerTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 1018, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        winnerPanelLayout.setVerticalGroup(
+            winnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(winnerPanelLayout.createSequentialGroup()
+                .addComponent(winnerName, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(winnerTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(8, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout winnerDialogLayout = new javax.swing.GroupLayout(winnerDialog.getContentPane());
+        winnerDialog.getContentPane().setLayout(winnerDialogLayout);
+        winnerDialogLayout.setHorizontalGroup(
+            winnerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(winnerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(winnerDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(winnerPicture, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        winnerDialogLayout.setVerticalGroup(
+            winnerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(winnerDialogLayout.createSequentialGroup()
+                .addComponent(winnerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(winnerPicture, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Election Simulator");
-        setMinimumSize(new java.awt.Dimension(800, 600));
+        setMaximumSize(new java.awt.Dimension(1024, 720));
+        setMinimumSize(new java.awt.Dimension(1024, 720));
         setResizable(false);
-        setSize(new java.awt.Dimension(800, 600));
+        setSize(new java.awt.Dimension(1024, 720));
 
         leftPanel.setBackground(new java.awt.Color(0, 102, 130));
         leftPanel.setMaximumSize(new java.awt.Dimension(180, 0));
@@ -615,26 +681,24 @@ public class GUI_Official extends javax.swing.JFrame {
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(leftPanelLayout.createSequentialGroup()
-                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                        .addComponent(profileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                        .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(leftPanelLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(mainMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dataAnalysisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(profileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mainMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dataAnalysisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(37, 37, 37)
                 .addComponent(dataAnalysisButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(mainMenuButton)
@@ -719,11 +783,11 @@ public class GUI_Official extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 51, 102));
-        jLabel7.setText("Bar options");
+        jLabel7.setText("Bar Options");
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 51, 102));
-        jLabel8.setText("Status options");
+        jLabel8.setText("Status Options");
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(50, 50, 50));
@@ -857,7 +921,7 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextArea8, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(144, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         mainPanel.add(mainMenu, "mainMenu");
@@ -974,7 +1038,7 @@ public class GUI_Official extends javax.swing.JFrame {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addVoterEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addVoterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 448, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 447, Short.MAX_VALUE)
                 .addGroup(addVoterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addVoterBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addVoterButton))
@@ -1141,7 +1205,7 @@ public class GUI_Official extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addComponent(imageRetrieved, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dataPath, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                        .addComponent(dataPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(30, 30, 30)))
                 .addGroup(addCandidatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addCandidateBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1324,8 +1388,8 @@ public class GUI_Official extends javax.swing.JFrame {
                         .addComponent(editVotersEdit)
                         .addGap(18, 18, 18)
                         .addComponent(editVotersDelete)
-                        .addGap(0, 340, Short.MAX_VALUE))
-                    .addComponent(editVotersScrollPanel))
+                        .addGap(0, 339, Short.MAX_VALUE))
+                    .addComponent(editVotersScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(editVotersEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -1540,7 +1604,7 @@ public class GUI_Official extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(editCandidatesDelete)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(editCandidatesScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE))
+                    .addComponent(editCandidatesScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(editCandidatesEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -1572,7 +1636,7 @@ public class GUI_Official extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, analyzeTextPanelLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(analyzeTextPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(AnalyzeCaption, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(AnalyzeCaption, javax.swing.GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE)
                     .addComponent(AnalyzeText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1641,6 +1705,14 @@ public class GUI_Official extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(50, 50, 50));
         jLabel6.setText("Bar Chart");
 
+        jLabel14.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 51, 102));
+        jLabel14.setText("Pie Charts");
+
+        jLabel15.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(0, 51, 102));
+        jLabel15.setText("Bar Charts");
+
         javax.swing.GroupLayout idlePanelLayout = new javax.swing.GroupLayout(idlePanel);
         idlePanel.setLayout(idlePanelLayout);
         idlePanelLayout.setHorizontalGroup(
@@ -1651,11 +1723,13 @@ public class GUI_Official extends javax.swing.JFrame {
                     .addComponent(jTextArea1)
                     .addGroup(idlePanelLayout.createSequentialGroup()
                         .addGroup(idlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
+                            .addComponent(jLabel14)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel6)
                             .addComponent(jTextArea9, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel15))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -1664,18 +1738,22 @@ public class GUI_Official extends javax.swing.JFrame {
             .addGroup(idlePanelLayout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextArea9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextArea2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(258, Short.MAX_VALUE))
+                .addContainerGap(204, Short.MAX_VALUE))
         );
 
         chartMainPanel.add(idlePanel, "idle");
@@ -1688,7 +1766,7 @@ public class GUI_Official extends javax.swing.JFrame {
         );
         ringPlotPanelLayout.setVerticalGroup(
             ringPlotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGap(0, 473, Short.MAX_VALUE)
         );
 
         chartMainPanel.add(ringPlotPanel, "ringPlot");
@@ -1699,11 +1777,11 @@ public class GUI_Official extends javax.swing.JFrame {
         stackedBarPanel.setLayout(stackedBarPanelLayout);
         stackedBarPanelLayout.setHorizontalGroup(
             stackedBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 810, Short.MAX_VALUE)
+            .addGap(0, 800, Short.MAX_VALUE)
         );
         stackedBarPanelLayout.setVerticalGroup(
             stackedBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGap(0, 473, Short.MAX_VALUE)
         );
 
         chartMainPanel.add(stackedBarPanel, "stackedBar");
@@ -1716,7 +1794,7 @@ public class GUI_Official extends javax.swing.JFrame {
         );
         barPanelLayout.setVerticalGroup(
             barPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGap(0, 473, Short.MAX_VALUE)
         );
 
         chartMainPanel.add(barPanel, "bar");
@@ -1750,14 +1828,14 @@ public class GUI_Official extends javax.swing.JFrame {
             .addGroup(analyzeVotesPanelLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(analyzeVotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chartMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chartMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(analyzeVotesPanelLayout.createSequentialGroup()
                         .addComponent(barChartButton)
                         .addGap(20, 20, 20)
                         .addComponent(stackedBarChartButton)
                         .addGap(20, 20, 20)
                         .addComponent(ringChartButton)))
-                .addGap(20, 20, 20))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         analyzeVotesPanelLayout.setVerticalGroup(
             analyzeVotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1765,7 +1843,7 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addComponent(analyzeTextPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chartMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addGroup(analyzeVotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(barChartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(stackedBarChartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1882,7 +1960,7 @@ public class GUI_Official extends javax.swing.JFrame {
                 .addComponent(profileEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(profilePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 375, Short.MAX_VALUE)
+                .addGap(18, 374, Short.MAX_VALUE)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(profileBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(profileSaveButton))
@@ -1947,8 +2025,8 @@ public class GUI_Official extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(leftPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addComponent(leftPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
         );
 
         pack();
@@ -2124,6 +2202,42 @@ public class GUI_Official extends javax.swing.JFrame {
        if (reply == JOptionPane.YES_OPTION) {
             statusText.setText("Done");
             UpdateStatusButtons(statusText);
+            ArrayList<ArrayList<String>> winners = admin.getWinner();
+            if (winners.size()>1)
+            {
+                String message = "There are " + winners.size() + " winners. The election has to be done again. List of current winners :\n" ;
+                for (ArrayList<String> it : winners)
+                    message+=it.get(0) +"\n";
+                
+                JOptionPane.showMessageDialog(null, message, this.getTitle(), 1 );
+            }
+            else if (winners.size()<1)
+                JOptionPane.showMessageDialog(null, "There is no winner to declare.", this.getTitle(), 1 );
+            else 
+            {
+                winnerName.setText(winners.get(0).get(0));
+                
+                byte[] myImage = admin.getPicture(winners.get(0).get(1));
+                if (myImage!=null)
+                {
+                    ImageIcon image = new ImageIcon(myImage);
+                    winnerPicture.setText("");
+                    winnerPicture.setIcon(image);
+                }
+                else
+                {
+                    winnerPicture.setText("There is no picture available.");
+                    winnerPicture.setIcon(null);
+                }
+                winnerTitle.setText("won the election with a total of " + winners.get(0).get(2) + " votes");
+                
+                winnerDialog.setVisible(true);
+                winnerDialog.setSize(1024, 720);
+                winnerDialog.setLocationRelativeTo(null);
+            }
+                
+                
+            
         if (!admin.addElectionEntry(statusText.getText()))
             JOptionPane.showMessageDialog(null, "Something happened with the entry in the status Database." , this.getTitle(), 1 );
        }
@@ -2631,6 +2745,8 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -2682,6 +2798,11 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JButton stopButton;
     private javax.swing.JPanel textPanel;
     private javax.swing.JLabel voteStatusText;
+    private javax.swing.JDialog winnerDialog;
+    private javax.swing.JLabel winnerName;
+    private javax.swing.JPanel winnerPanel;
+    private javax.swing.JLabel winnerPicture;
+    private javax.swing.JLabel winnerTitle;
     // End of variables declaration//GEN-END:variables
 
 

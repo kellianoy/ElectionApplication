@@ -135,6 +135,7 @@ public class Official extends User {
     
      /**
      * Modify this official
+     * @param info
      * @return 
      */
     public boolean modifySelf(String[] info) {
@@ -144,16 +145,28 @@ public class Official extends User {
     
     /**
      * Upload an image on a candidate
+     * @param email
+     * @param file
      * @return 
+     * @throws java.io.IOException 
      */
     public boolean uploadImage(String email, File file) throws IOException
     {
         return dataController.uploadImage(email, file);
     }
     
+    /** 
+     * Get a candidate's image as a byte[] 
+     * @param email
+     * @return 
+     */
     public byte[] getPicture(String email)
     {
          return dataController.getPicture(email);
+    }
+    
+    public ArrayList<ArrayList<String>> getWinner(){
+        return dataController.getWinner();
     }
  
 }
