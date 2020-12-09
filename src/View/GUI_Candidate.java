@@ -5,12 +5,14 @@
  */
 package View;
 
+import Controller.candidateChartDisplay;
 import Misc.FileManager;
 import static View.GUI_Start.BLUE_COLOR;
 import static View.GUI_Start.GREEN_COLOR;
 import static View.GUI_Start.RED_COLOR;
 import static View.GUI_Start.actualColor;
 import Model.Candidate;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.io.FileNotFoundException;
@@ -19,6 +21,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import org.jfree.chart.ChartPanel;
 
 /**
  * GUI used by the candidates. 
@@ -29,7 +33,8 @@ public class GUI_Candidate extends javax.swing.JFrame {
     private CardLayout cards;
     private Candidate admin ; 
     private FileManager f;
-    private ArrayList<String[]> allCandidates ; 
+    private ArrayList<String[]> allCandidates ;
+    
     /**
      * Creates new form GUI_Candidate
      * @param admin
@@ -40,6 +45,10 @@ public class GUI_Candidate extends javax.swing.JFrame {
         
         this.admin = admin ; 
         admin.setDataController();
+        
+        //analyzeChart=createVotesStackedBarChart(createStackedBarDataset(" ", " "), " ", " ");
+        //analyzeChartPanel = new ChartPanel(analyzeChart);
+        
         initComponents();
         
         UpdateStatusElection(admin.getStatusElection());
@@ -106,6 +115,8 @@ public class GUI_Candidate extends javax.swing.JFrame {
         AnalyzeCaption = new javax.swing.JLabel();
         selectCandidateLabel = new javax.swing.JLabel();
         candidatesComboBox = new javax.swing.JComboBox();
+        goBackButton1 = new javax.swing.JButton();
+        statPanel = new javax.swing.JPanel();
 
         settingsPopUp.setPreferredSize(new java.awt.Dimension(200, 100));
         settingsPopUp.setRequestFocusEnabled(false);
@@ -402,6 +413,20 @@ public class GUI_Candidate extends javax.swing.JFrame {
         selectCandidateLabel.setText("Select the candidate you want to compare with : ");
 
         candidatesComboBox.setBorder(null);
+        candidatesComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                candidatesComboBoxActionPerformed(evt);
+            }
+        });
+
+        goBackButton1.setText("Go Back");
+        goBackButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goBackButton1ActionPerformed(evt);
+            }
+        });
+
+        statPanel.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout viewStatsPanelLayout = new javax.swing.GroupLayout(viewStatsPanel);
         viewStatsPanel.setLayout(viewStatsPanelLayout);
@@ -418,9 +443,14 @@ public class GUI_Candidate extends javax.swing.JFrame {
                 .addGap(12, 12, 12))
             .addGroup(viewStatsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(selectCandidateLabel)
-                .addGap(63, 63, 63)
-                .addComponent(candidatesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(statPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(viewStatsPanelLayout.createSequentialGroup()
+                            .addComponent(selectCandidateLabel)
+                            .addGap(63, 63, 63)
+                            .addComponent(candidatesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(goBackButton1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         viewStatsPanelLayout.setVerticalGroup(
@@ -434,7 +464,11 @@ public class GUI_Candidate extends javax.swing.JFrame {
                 .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(selectCandidateLabel)
                     .addComponent(candidatesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(498, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(statPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(goBackButton1)
+                .addContainerGap())
         );
 
         mainPanel.add(viewStatsPanel, "statsPanel");
@@ -547,6 +581,25 @@ public class GUI_Candidate extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    private void goBackButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackButton1ActionPerformed
+        cards.show(mainPanel, "mainMenu");
+    }//GEN-LAST:event_goBackButton1ActionPerformed
+
+    private void loardChart(JPanel board, ChartPanel chart)
+    {
+        board.removeAll();
+        BorderLayout b = (BorderLayout) board.getLayout(); 
+        board.add(chart, b.CENTER); 
+        board.validate();
+    }
+    
+    private void candidatesComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_candidatesComboBoxActionPerformed
+        String nameCompare = (String) candidatesComboBox.getSelectedItem();
+        String emailCompare = allCandidates.get(candidatesComboBox.getSelectedIndex())[1];
+        candidateChartDisplay chartDisplayer = new candidateChartDisplay(admin); 
+        loardChart(statPanel, new ChartPanel(chartDisplayer.createVotesStackedBarChart(chartDisplayer.createStackedBarDataset(nameCompare, emailCompare), nameCompare, emailCompare)));
+    }//GEN-LAST:event_candidatesComboBoxActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -578,6 +631,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
     private javax.swing.JTextField editProfileLastName;
     private javax.swing.JButton exitButton;
     private javax.swing.JButton goBackButton;
+    private javax.swing.JButton goBackButton1;
     private javax.swing.JMenuItem greenOption;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -593,6 +647,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
     private javax.swing.JButton saveButton;
     private javax.swing.JLabel selectCandidateLabel;
     private javax.swing.JPopupMenu settingsPopUp;
+    private javax.swing.JPanel statPanel;
     private javax.swing.JButton viewStatisticButton;
     private javax.swing.JPanel viewStatsPanel;
     // End of variables declaration//GEN-END:variables

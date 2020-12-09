@@ -15,5 +15,6 @@ public interface CandidateManager {
     public String electionIsOpen(); 
     public boolean updateCandidate(String[] infos, String email); 
     
-    public ArrayList<String[]> getAllCandidates(String logEmail) ; 
+    public ArrayList<String[]> getAllCandidates(String logEmail); 
+    public String[][] getVotesByStates(String logEmail, String compareEmail);
 }

@@ -25,11 +25,13 @@ public class CandidateManagerImpl implements CandidateManager{
     private static final String QUERY_UPDATE_CANDIDATE = "UPDATE candidate, user SET user.email = ? , user.password = ? WHERE CandidateID = UserID AND UserId = ?"; 
     private static final String QUERY_FINDID = "SELECT UserID FROM user WHERE email = ?"; 
     private static final String QUERY_GET_ALL_CANDIDATE_INFOS = "SELECT user.firstName, user.lastName, user.email FROM candidate, user WHERE CandidateID = UserID"; 
+    private static final String QUERY_GET_VOTES_CANDIDATE = "SELECT state, count(votedFor) FROM user JOIN candidate ON UserID = CandidateID JOIN voter ON votedFor = CandidateID WHERE email = ? GROUP BY votedFor, state"; 
     
     private PreparedStatement electionOpen ;
     private PreparedStatement getID ; 
     private PreparedStatement updateCandidate;
     private PreparedStatement getAllCandidateInfos ; 
+    private PreparedStatement getVotesCandidate ; 
     
     
     public CandidateManagerImpl() throws SQLException, ClassNotFoundException
@@ -40,6 +42,7 @@ public class CandidateManagerImpl implements CandidateManager{
         getID = dbConnection.prepareStatement(QUERY_FINDID); 
         updateCandidate = dbConnection.prepareStatement(QUERY_UPDATE_CANDIDATE);
         getAllCandidateInfos = dbConnection.prepareStatement(QUERY_GET_ALL_CANDIDATE_INFOS);
+        getVotesCandidate = dbConnection.prepareStatement(QUERY_GET_VOTES_CANDIDATE);
     }
     
     /** 
@@ -118,5 +121,94 @@ public class CandidateManagerImpl implements CandidateManager{
             Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    /**
+     * Return all the votes per states for the candidate log in and the candidate he wants to compare with
+     * @param logEmail
+     * @param compareEmail
+     * @return 
+     */
+    @Override
+    @SuppressWarnings("empty-statement")
+    public String[][] getVotesByStates(String logEmail, String compareEmail)
+    {
+        try
+        {
+            String [][] infos = new String[][] {{""+0,""+0,""+0,""+0,""+0,""+0,""+0,""+0},{""+0,""+0,""+0,""+0,""+0,""+0,""+0,""+0}};
+            
+            getVotesCandidate.setString(1, logEmail); 
+            ResultSet infosCandidate = getVotesCandidate.executeQuery(); 
+            
+            while(infosCandidate.next())
+            {
+                String count = infosCandidate.getString("count(votedFor)");
+                switch (infosCandidate.getString("state")) {
+                    case "Padokea":
+                        infos[0][0] = count;
+                        break;
+                    case "Heaven's Arena":
+                        infos[0][1] = count;
+                        break;
+                    case "Kukan'yu":
+                        infos[0][2] = count;
+                        break;
+                    case "Saherta":
+                        infos[0][3] = count;
+                        break;
+                    case "Yorbia":
+                        infos[0][4] = count;
+                        break;
+                    case "Begerosse":
+                        infos[0][5] = count;
+                        break;
+                    case "Kakin":
+                        infos[0][6] = count;
+                        break;
+                    case "Ochima":
+                        infos[0][7] = count;
+                        break;
+                }
+            }
+            
+            getVotesCandidate.setString(1, compareEmail); 
+            infosCandidate = getVotesCandidate.executeQuery(); 
+            
+            while (infosCandidate.next()) {
+                String count = infosCandidate.getString("count(votedFor)");
+                switch (infosCandidate.getString("state")) {
+                    case "Padokea":
+                        infos[1][0] = count;
+                        break;
+                    case "Heaven's Arena":
+                        infos[1][1] = count;
+                        break;
+                    case "Kukan'yu":
+                        infos[1][2] = count;
+                        break;
+                    case "Saherta":
+                        infos[1][3] = count;
+                        break;
+                    case "Yorbia":
+                        infos[1][4] = count;
+                        break;
+                    case "Begerosse":
+                        infos[1][5] = count;
+                        break;
+                    case "Kakin":
+                        infos[1][6] = count;
+                        break;
+                    case "Ochima":
+                        infos[1][7] = count;
+                        break;
+                }
+            }
+            
+            return infos; 
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null; 
     }
 }

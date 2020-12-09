@@ -79,4 +79,14 @@ public class Candidate extends User {
     {
         return dataController.getAllCandidates(email); 
     }
+    
+    /**
+     * We're getting the number of votes that have been casted for the candidate and the compareCandidate.
+     * @param compareEmail
+     * @return 
+     */
+    public String[][] getVotesByStates(String compareEmail)
+    {
+        return dataController.getVotesByStates(email, compareEmail);
+    }
 }
