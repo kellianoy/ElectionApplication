@@ -55,6 +55,10 @@ public class voterManagerImpl implements voterManager{
       return new GregorianCalendar(Integer.parseInt(SQLdate.substring(0, 4)), Integer.parseInt(SQLdate.substring(5, 7)), Integer.parseInt(SQLdate.substring(8)));
     }
     
+    /**
+     * Get the infos of all candidates
+     * @return 
+     */
     @Override
     public String[][] getAllCandidate()
     {
@@ -110,9 +114,9 @@ public class voterManagerImpl implements voterManager{
     }
     
     /**
-     *
+     * Set the vote of a voter, based on an email of candidate
      * @param emailCandidate
-     * @param email   * @return
+     * @param email 
      * @return 
      */
     @Override
@@ -141,6 +145,12 @@ public class voterManagerImpl implements voterManager{
         return false ; 
     }
     
+    /**
+     * Modify the infos of a voter, take [state, email, password]
+     * @param infos
+     * @param old_email
+     * @return 
+     */
     @Override
     public boolean updateVoter(String [] infos, String old_email)
     {
@@ -164,6 +174,10 @@ public class voterManagerImpl implements voterManager{
         return false ; 
     }
      
+    /**
+     * Return the statue of the election
+     * @return 
+     */
     @Override
     public boolean electionIsOpen()
     {

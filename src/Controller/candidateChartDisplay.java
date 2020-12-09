@@ -36,6 +36,8 @@ public class candidateChartDisplay {
     
     /** 
      * Create a DefaultCategoryDataset corresponding to all the votes for each candidates
+     * @param nameCompare
+     * @param emailCompare
      * @return 
      */
     public DefaultCategoryDataset createStackedBarDataset(String nameCompare, String emailCompare){
@@ -65,6 +67,8 @@ public class candidateChartDisplay {
      /**
      * Creates a StackedBarChart showing the number of votes per states for each candidates
      * @param dataset
+     * @param nameCompare
+     * @param emailCompare
      * @return 
      */
     public JFreeChart createVotesStackedBarChart(DefaultCategoryDataset dataset, String nameCompare, String emailCompare)

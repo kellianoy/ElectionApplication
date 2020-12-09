@@ -26,24 +26,46 @@ public class Voter extends User {
         else this.votedFor = false ; 
     }
     
+    /**
+     * Set the data controller of Candidate, made possible the link with a database. 
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public void setDataController() throws SQLException, ClassNotFoundException
     {
         this.dataController = new voterManagerImpl(); 
     }
     
+    /**
+     * Return the state of the voter
+     * @return 
+     */
     public String getState() {
         return state;
     }
     
+    /**
+     * Return true if the voter have already voted, false in other case
+     * @return 
+     */
     public boolean getVotedFor() {
         return votedFor;
     }
     
+    /**
+     * Return the infos of all the candidates
+     * @return 
+     */
     public String[][] getAllCandidate()
     {
         return dataController.getAllCandidate(); 
     }
     
+    /**
+     * Set the vote of the voter on a candidate in the database, and modify the instance
+     * @param emailCandidate
+     * @return 
+     */
     public boolean vote(String emailCandidate)
     {
         if(votedFor == false || dataController.electionIsOpen())
@@ -57,6 +79,11 @@ public class Voter extends User {
         return false ; 
     }
     
+    /**
+     * Modify the profile in the database and here
+     * @param infos
+     * @return 
+     */
     public boolean updateProfile(String[] infos)
     {
         if(dataController.updateVoter(infos, email))
@@ -69,11 +96,20 @@ public class Voter extends User {
         return false ; 
     }
     
+    /**
+     * Return the image of an instance of the database
+     * @param email
+     * @return 
+     */
     public byte[] getImage(String email)
     {
         return dataController.getPicture(email);
     }
     
+    /**
+     * Return true if the election open, false in other case
+     * @return 
+     */
     public boolean isElectionOpen()
     {
         return dataController.electionIsOpen();

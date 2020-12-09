@@ -589,6 +589,10 @@ public class GUI_Voter extends javax.swing.JFrame {
         settingsPopUp.show(this, SetingColorButton.getX(), SetingColorButton.getY()-settingsPopUp.getHeight()/2-2);
     }//GEN-LAST:event_SetingColorButtonActionPerformed
 
+    /**
+     * Change the color background of the layout
+     * @param c 
+     */
     private void changeColor(Color c){
         leftPanel.setBackground(c);
         colorPanel.setBackground(c);
@@ -618,6 +622,9 @@ public class GUI_Voter extends javax.swing.JFrame {
         
     }//GEN-LAST:event_editVoterDateActionPerformed
 
+    /**
+     * Update the view of infos of the card of a candidate
+     */
     private void viewCardsCandidate()
     {
         if(cursorCandidate == 0 )

@@ -538,10 +538,15 @@ public class GUI_Candidate extends javax.swing.JFrame {
         cards.show(mainPanel, "profile");
     }//GEN-LAST:event_profileButtonActionPerformed
 
+    /**
+     * Change the color background of the layout
+     * @param c 
+     */
     private void changeColor(Color c){
         leftPanel.setBackground(c);
         f.saveColor(c);
     }
+    
     private void redOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redOptionActionPerformed
         actualColor=RED_COLOR;
         changeColor(actualColor);
@@ -585,6 +590,11 @@ public class GUI_Candidate extends javax.swing.JFrame {
         cards.show(mainPanel, "mainMenu");
     }//GEN-LAST:event_goBackButton1ActionPerformed
 
+    /**
+     * Update a Panel following an update of ChartPanel
+     * @param board
+     * @param chart 
+     */
     private void loardChart(JPanel board, ChartPanel chart)
     {
         board.removeAll();
