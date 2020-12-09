@@ -3,15 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package View;
 
+import Controller.FileManager;
 import Enum.State;
-import static GUI.GUI_Start.BLUE_COLOR;
-import static GUI.GUI_Start.GREEN_COLOR;
-import static GUI.GUI_Start.RED_COLOR;
-import static GUI.GUI_Start.actualColor;
-import User.Voter;
+import static View.GUI_Start.BLUE_COLOR;
+import static View.GUI_Start.GREEN_COLOR;
+import static View.GUI_Start.RED_COLOR;
+import static View.GUI_Start.actualColor;
+import Model.Voter;
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +31,8 @@ public class GUI_Voter extends javax.swing.JFrame {
     private Voter admin ; 
     private String [][] infosCandidate ;
     private int cursorCandidate ; 
+    private FileManager f;
+    
     /**
      * Creates new form GUI_Voter
      * @param admin
@@ -65,6 +70,14 @@ public class GUI_Voter extends javax.swing.JFrame {
             electionText.setText("Election is closed");
             electionText.setForeground(RED_COLOR);
         }  
+        
+        //File Manager to save users preferences
+        try {
+            f=new FileManager(); 
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(GUI_Official.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        changeColor(actualColor);
         
     }
     
@@ -163,7 +176,6 @@ public class GUI_Voter extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Election Simulator");
-        setMaximumSize(new java.awt.Dimension(1024, 720));
         setMinimumSize(new java.awt.Dimension(1024, 720));
         setSize(new java.awt.Dimension(1024, 720));
 
@@ -174,7 +186,7 @@ public class GUI_Voter extends javax.swing.JFrame {
 
         SetingColorButton.setBackground(new java.awt.Color(255, 255, 255));
         SetingColorButton.setForeground(new java.awt.Color(255, 255, 255));
-        SetingColorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/gearIcon.png"))); // NOI18N
+        SetingColorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/gearIcon.png"))); // NOI18N
         SetingColorButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         SetingColorButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -184,7 +196,7 @@ public class GUI_Voter extends javax.swing.JFrame {
 
         exitButton.setBackground(new java.awt.Color(255, 255, 255));
         exitButton.setForeground(new java.awt.Color(255, 255, 255));
-        exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/logoutIcon.png"))); // NOI18N
+        exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/logoutIcon.png"))); // NOI18N
         exitButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         exitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,7 +204,7 @@ public class GUI_Voter extends javax.swing.JFrame {
             }
         });
 
-        profileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/userIcon.png"))); // NOI18N
+        profileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/userIcon.png"))); // NOI18N
         profileButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         profileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,7 +228,7 @@ public class GUI_Voter extends javax.swing.JFrame {
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
-                .addContainerGap(682, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(profileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -273,7 +285,7 @@ public class GUI_Voter extends javax.swing.JFrame {
         mainMenuText1.setText("Voter Main Menu");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/index.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/index.png"))); // NOI18N
 
         republicText.setBackground(new java.awt.Color(255, 255, 255));
         republicText.setFont(new java.awt.Font("Montserrat Medium", 0, 24)); // NOI18N
@@ -474,7 +486,7 @@ public class GUI_Voter extends javax.swing.JFrame {
             }
         });
 
-        preCandidateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/leftArrowIcon.png"))); // NOI18N
+        preCandidateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/leftArrowIcon.png"))); // NOI18N
         preCandidateButton.setContentAreaFilled(false);
         preCandidateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -482,7 +494,7 @@ public class GUI_Voter extends javax.swing.JFrame {
             }
         });
 
-        nextCandidateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/rightArrowIcon.png"))); // NOI18N
+        nextCandidateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/rightArrowIcon.png"))); // NOI18N
         nextCandidateButton.setContentAreaFilled(false);
         nextCandidateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -577,22 +589,25 @@ public class GUI_Voter extends javax.swing.JFrame {
         settingsPopUp.show(this, SetingColorButton.getX(), SetingColorButton.getY()-settingsPopUp.getHeight()/2-2);
     }//GEN-LAST:event_SetingColorButtonActionPerformed
 
+    private void changeColor(Color c){
+        leftPanel.setBackground(c);
+        colorPanel.setBackground(c);
+        f.saveColor(c);
+    }
+    
     private void redOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redOptionActionPerformed
         actualColor=RED_COLOR;
-        leftPanel.setBackground(actualColor);
-        colorPanel.setBackground(actualColor);
+        changeColor(actualColor);
     }//GEN-LAST:event_redOptionActionPerformed
 
     private void greenOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_greenOptionActionPerformed
         actualColor=GREEN_COLOR;
-        leftPanel.setBackground(actualColor);
-        colorPanel.setBackground(actualColor);
+        changeColor(actualColor);
     }//GEN-LAST:event_greenOptionActionPerformed
 
     private void blueOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blueOptionActionPerformed
         actualColor=BLUE_COLOR;
-        leftPanel.setBackground(actualColor);
-        colorPanel.setBackground(actualColor);
+        changeColor(actualColor);
     }//GEN-LAST:event_blueOptionActionPerformed
 
     private void stateComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stateComboBoxActionPerformed
@@ -644,7 +659,6 @@ public class GUI_Voter extends javax.swing.JFrame {
         infosCandidate = admin.getAllCandidate(); 
         if(infosCandidate != null)
             viewCardsCandidate() ;
-        else return ; 
     }//GEN-LAST:event_viewCandidateButtonActionPerformed
 
     

@@ -1,11 +1,14 @@
-package GUI;
+package View;
 
-import Database.LoggerManagerImpl;
-import Database.Database;
-import User.Official;
-import User.User;
-import User.Voter;
+import Controller.FileManager;
+import Controller.LoggerManagerImpl;
+import Controller.Database;
+import Model.Candidate;
+import Model.Official;
+import Model.User;
+import Model.Voter;
 import java.awt.Color;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,16 +34,31 @@ public class GUI_Start extends javax.swing.JFrame {
     public final static Color RED_COLOR = new Color(170,40,50);
     public static Color actualColor;
     
+    private FileManager f;
     /**
      * Creates new form GUI_Start
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
      */
     public GUI_Start() throws SQLException, ClassNotFoundException {
         initComponents();
-        if (actualColor==null)
-            actualColor=BLUE_COLOR;
-        colorChange(actualColor);
         manager=new LoggerManagerImpl();
         setLocationRelativeTo(null);
+        
+        
+        if (actualColor==null)
+            actualColor=BLUE_COLOR;
+        try {
+            f = new FileManager();
+            Color c = f.retrieveColor();
+            if (c!=null)
+                actualColor=c;
+        } 
+        catch (FileNotFoundException ex) {
+            Logger.getLogger(GUI_Start.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        colorChange(actualColor);
     }
 
     /**
@@ -102,10 +120,8 @@ public class GUI_Start extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Election Simulator");
-        setLocation(new java.awt.Point(0, 0));
         setMinimumSize(new java.awt.Dimension(800, 600));
         setResizable(false);
-        setSize(new java.awt.Dimension(800, 600));
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -123,7 +139,7 @@ public class GUI_Start extends javax.swing.JFrame {
             }
         });
 
-        emailIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/userIcon.png"))); // NOI18N
+        emailIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/userIcon.png"))); // NOI18N
 
         javax.swing.GroupLayout emailPanelLayout = new javax.swing.GroupLayout(emailPanel);
         emailPanel.setLayout(emailPanelLayout);
@@ -156,7 +172,7 @@ public class GUI_Start extends javax.swing.JFrame {
             }
         });
 
-        passwordIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/lockIcon.png"))); // NOI18N
+        passwordIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/lockIcon.png"))); // NOI18N
 
         javax.swing.GroupLayout passwordPanelLayout = new javax.swing.GroupLayout(passwordPanel);
         passwordPanel.setLayout(passwordPanelLayout);
@@ -223,7 +239,7 @@ public class GUI_Start extends javax.swing.JFrame {
 
         settingsButton.setBackground(new java.awt.Color(255, 255, 255));
         settingsButton.setForeground(new java.awt.Color(255, 255, 255));
-        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/gearIcon.png"))); // NOI18N
+        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/gearIcon.png"))); // NOI18N
         settingsButton.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         settingsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -258,7 +274,7 @@ public class GUI_Start extends javax.swing.JFrame {
         republicText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         republicText.setText("Republic of Moebus");
 
-        flagIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/index.png"))); // NOI18N
+        flagIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/index.png"))); // NOI18N
 
         littleText.setBackground(new java.awt.Color(255, 255, 255));
         littleText.setFont(new java.awt.Font("Montserrat Medium", 2, 12)); // NOI18N
@@ -305,7 +321,7 @@ public class GUI_Start extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(littleText)
                 .addContainerGap())
-            .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+            .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
         );
 
         menubar.setBorder(javax.swing.BorderFactory.createCompoundBorder());
@@ -347,7 +363,7 @@ public class GUI_Start extends javax.swing.JFrame {
     private void InformationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InformationsActionPerformed
         
     }//GEN-LAST:event_InformationsActionPerformed
-
+    
     private void InformationsMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_InformationsMenuSelected
         JOptionPane.showMessageDialog(null, "Hello ! This program was made by two ECE Paris Students.\nKind regards,\nRebecca Fossa & Kellian Cottart" , this.getTitle(), 1 );
     }//GEN-LAST:event_InformationsMenuSelected
@@ -358,10 +374,13 @@ public class GUI_Start extends javax.swing.JFrame {
         emailPanel.setBackground(darkerColor);
         passwordPanel.setBackground(darkerColor);
         coloredPanel.setBackground(darkerColor);
+        f.saveColor(color);
     }
     private void redOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redOptionActionPerformed
         actualColor=RED_COLOR;
         colorChange(actualColor);
+        
+        
     }//GEN-LAST:event_redOptionActionPerformed
 
     private void greenOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_greenOptionActionPerformed
@@ -384,27 +403,34 @@ public class GUI_Start extends javax.swing.JFrame {
         User check=manager.loggingCheck(emailField.getText(), new String(PasswordField.getPassword()));
         if (check!=null)
         {
-            if (check.getClass().getSimpleName().equals("Official"))
-            {
-                setVisible(false);
-                GUI_Official officialWindow = new GUI_Official((Official) check);
-                officialWindow.embeddedMain();
-                dispose();
-            }
-            else if (check.getClass().getSimpleName().equals("Candidate"))
-                JOptionPane.showMessageDialog(null, "This is a Candidate. //NOT YET IMPLEMENTED" , this.getTitle(), 1 );
-            else
-            {
-                try {
-                    GUI_Voter voterWindow = new GUI_Voter((Voter) check);
+            switch (check.getClass().getSimpleName()) {
+                case "Official":
                     setVisible(false);
-                    voterWindow.embeddedMain();
+                    GUI_Official officialWindow = new GUI_Official((Official) check);
+                    officialWindow.embeddedMain();
                     dispose();
-                } catch (SQLException ex) {
-                    Logger.getLogger(GUI_Start.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(GUI_Start.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    break;
+                case "Candidate":
+                    try {
+                        GUI_Candidate candidateWindow = new GUI_Candidate((Candidate) check);
+                        setVisible(false);
+                        candidateWindow.embeddedMain();
+                        dispose();
+                    } catch (SQLException | ClassNotFoundException ex) {
+                        Logger.getLogger(GUI_Start.class.getName()).log(Level.SEVERE, null, ex);
+                    }   break;
+                case "Voter":
+                    try {
+                        GUI_Voter voterWindow = new GUI_Voter((Voter) check);
+                        setVisible(false);
+                        voterWindow.embeddedMain();
+                        dispose();
+                    } catch (SQLException | ClassNotFoundException ex) {
+                        Logger.getLogger(GUI_Start.class.getName()).log(Level.SEVERE, null, ex);
+                    }   break;
+                default :
+                    JOptionPane.showMessageDialog(null, "Couldn't retrieve your account." , this.getTitle(), 1 );
+                    break;
             }
         }
         else

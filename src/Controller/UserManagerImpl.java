@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Database;
+package Controller;
 
-import User.Candidate;
-import User.Voter;
+import Model.Candidate;
+import Model.Voter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -318,6 +318,45 @@ public class UserManagerImpl implements UserManager {
                         //I set the first case of my array to firstname + lastname
                         ArrayList<String> temp=new ArrayList();
                         temp.add(candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName"));
+                        temp.add(candidateRetrieval.getString("count(votedFor)"));
+                        retrievedData.add(temp);
+                        
+                }
+                candidateRetrieval.close();                 
+                return retrievedData;
+        } 
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return null;
+    }
+    
+    /**
+     * Return an arraylist of all possible winner with the name, email and the number of votes
+     * @return
+     */
+    @Override
+    public ArrayList<ArrayList<String>> getWinner(){
+        try (Connection con = data.getCon()) {
+
+                
+                ArrayList<ArrayList<String>> retrievedData= new ArrayList();
+                
+                PreparedStatement stm=con.prepareStatement("SELECT firstName, lastName, email,  count(votedFor) "
+                        + "FROM user JOIN candidate ON UserID = CandidateID JOIN voter ON votedFor = CandidateID "
+                        + "GROUP BY votedFor "
+                        + "HAVING count(votedFor) >= ALL (SELECT count(votedFor) "
+                        + "FROM user JOIN candidate ON UserID = CandidateID JOIN voter ON votedFor = CandidateID "
+                        + "GROUP BY votedFor)");
+                
+                ResultSet candidateRetrieval=stm.executeQuery();
+                
+                while(candidateRetrieval.next())
+                {
+                        //I set the first case of my array to firstname + lastname
+                        ArrayList<String> temp=new ArrayList();
+                        temp.add(candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName"));
+                        temp.add(candidateRetrieval.getString("email"));
                         temp.add(candidateRetrieval.getString("count(votedFor)"));
                         retrievedData.add(temp);
                         

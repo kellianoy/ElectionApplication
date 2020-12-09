@@ -259,7 +259,7 @@
                 <Component class="javax.swing.JLabel" name="emailIcon">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/GUI/userIcon.png"/>
+                      <Image iconType="3" name="/View/userIcon.png"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -322,7 +322,7 @@
                 <Component class="javax.swing.JLabel" name="passwordIcon">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/GUI/lockIcon.png"/>
+                      <Image iconType="3" name="/View/lockIcon.png"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -364,7 +364,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="122" max="32767" attributes="0"/>
+                      <EmptySpace pref="142" max="32767" attributes="0"/>
                       <Component id="settingsButton" min="-2" pref="32" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -390,7 +390,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/GUI/gearIcon.png"/>
+                  <Image iconType="3" name="/View/gearIcon.png"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
@@ -431,7 +431,7 @@
         <Component class="javax.swing.JLabel" name="flagIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/GUI/index.png"/>
+              <Image iconType="3" name="/View/index.png"/>
             </Property>
           </Properties>
         </Component>

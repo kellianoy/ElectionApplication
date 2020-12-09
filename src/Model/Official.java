@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package User;
+package Model;
 
-import Database.UserManagerImpl;
+import Controller.UserManagerImpl;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 /**
  * Class used as an administrator, has almost all accesses to the database. 
@@ -136,6 +135,7 @@ public class Official extends User {
     
      /**
      * Modify this official
+     * @param info
      * @return 
      */
     public boolean modifySelf(String[] info) {
@@ -145,16 +145,28 @@ public class Official extends User {
     
     /**
      * Upload an image on a candidate
+     * @param email
+     * @param file
      * @return 
+     * @throws java.io.IOException 
      */
     public boolean uploadImage(String email, File file) throws IOException
     {
         return dataController.uploadImage(email, file);
     }
     
+    /** 
+     * Get a candidate's image as a byte[] 
+     * @param email
+     * @return 
+     */
     public byte[] getPicture(String email)
     {
          return dataController.getPicture(email);
+    }
+    
+    public ArrayList<ArrayList<String>> getWinner(){
+        return dataController.getWinner();
     }
  
 }

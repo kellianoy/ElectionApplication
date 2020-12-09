@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package User;
+package Model;
 
-import Database.voterManagerImpl;
+import Controller.voterManagerImpl;
 import java.sql.SQLException;
-import java.util.GregorianCalendar;
 
 /**
  * Self-Explanatory.

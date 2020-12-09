@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Database;
+package Controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -169,9 +169,9 @@ public class voterManagerImpl implements voterManager{
     {
         try 
         {
-            ResultSet statue = electionOpen.executeQuery(); 
-            if(statue.next())
-                return statue.next() && statue.getString(1).equals("Active"); 
+            ResultSet status = electionOpen.executeQuery(); 
+            if(status.next())
+                return status.getString("Status").equals("Active"); 
         } catch (SQLException ex) {
             Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 

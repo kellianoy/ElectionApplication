@@ -6,7 +6,7 @@
 package Enum;
 
 /**
- *
+ * State enumeration
  * @author Keke
  */
 public enum State{ 
@@ -26,6 +26,11 @@ public enum State{
         this.state = state;
     }
     
+    /**
+     * Returns string attached to enum member
+     * @return
+     */
+    @Override
     public String toString() {
        return this.state;
     }

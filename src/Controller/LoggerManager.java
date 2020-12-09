@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Database;
+package Controller;
 
-import User.Voter;
-import User.Official;
-import User.Candidate;
-import User.User;
+import Model.Voter;
+import Model.Official;
+import Model.Candidate;
+import Model.User;
 import java.sql.SQLException;
 
 
@@ -18,7 +18,7 @@ import java.sql.SQLException;
  */
 public interface LoggerManager {
     
-    public User loggingCheck(String email, String password) ;
+    public User loggingCheck(String email, String password);
     public Official retrieveOfficial(int userID) throws SQLException, ClassNotFoundException;
     public Candidate retrieveCandidate(int userID) throws SQLException, ClassNotFoundException;
     public Voter retrieveVoter(int userID) throws SQLException, ClassNotFoundException;

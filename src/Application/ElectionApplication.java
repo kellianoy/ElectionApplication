@@ -5,7 +5,7 @@
  */
 package Application;
 
-import GUI.GUI_Start;
+import View.GUI_Start;
 import java.sql.SQLException;
 
 /**

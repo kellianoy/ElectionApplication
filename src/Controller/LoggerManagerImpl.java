@@ -3,18 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Database;
+package Controller;
 
-import User.Official;
-import User.Voter;
-import User.Candidate;
-import User.User;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.GregorianCalendar;
+import Model.Official;
+import Model.Voter;
+import Model.Candidate;
+import Model.User;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
