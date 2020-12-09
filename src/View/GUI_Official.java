@@ -5,11 +5,12 @@
  */
 package View;
 
+import Controller.officialChartDisplay;
 import Model.Voter;
 import Model.Official;
 import Model.Candidate;
-import Misc.ImageFilter;
-import Misc.FileManager;
+import Controller.ImageFilter;
+import Controller.FileManager;
 import Enum.*;
 import static View.GUI_Start.*;
 import java.awt.*;
@@ -24,22 +25,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
 import org.jfree.chart.*;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
-import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
-import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.RingPlot;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.StackedBarRenderer;
-import org.jfree.chart.renderer.category.StandardBarPainter;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.util.UnitType;
 
 
 
@@ -56,23 +42,11 @@ public class GUI_Official extends javax.swing.JFrame {
     private DefaultTableModel voterTableModel;
     private DefaultTableModel candidateTableModel;
     
-    private ChartPanel mainMenuChartPanel;
-    private JFreeChart mainMenuChart;
-    private ChartPanel analyzeChartPanel;
-    private JFreeChart analyzeChart;
-    private JFreeChart ringChart;
-    private ChartPanel ringChartPanel;
-    private JFreeChart ringChart2;
-    private ChartPanel ringChartPanel2;
-    
     private FileManager f;
     
     public GUI_Official(Official admin) {
         
         this.admin = admin;
-        
-        //Chart creation
-        updateCharts();
         
         initComponents();
         setLocationRelativeTo(null);
@@ -92,7 +66,6 @@ public class GUI_Official extends javax.swing.JFrame {
             jComboBox1.addItem(s.toString());
             jComboBox3.addItem(s.toString());
         }
-        
         //Setting Party values in the combo boxes
         jComboBox2.addItem("PARTY");
         jComboBox2.setSelectedItem("PARTY");
@@ -119,23 +92,6 @@ public class GUI_Official extends javax.swing.JFrame {
        
     }
     
-    /**
-     * Updating all data into the charts
-     */
-    public void updateCharts(){
-        mainMenuChart=createVotesBarChart(createBarDataset());
-        mainMenuChartPanel= new ChartPanel(mainMenuChart);
-        
-        analyzeChart=createVotesStackedBarChart(createStackedBarDataset());
-        analyzeChartPanel = new ChartPanel(analyzeChart);
-        
-        ringChart=createRingPlotChart(createRingPlotDataset());
-        ringChartPanel = new ChartPanel(ringChart);
-        
-        ringChart2=createRingPlotChart(createRingPlotDataset());
-        ringChartPanel2 = new ChartPanel(ringChart);
-    }
-    
      /**
      * Main after construction of JFrame object
      */
@@ -157,159 +113,7 @@ public class GUI_Official extends javax.swing.JFrame {
         }
         
         UpdateStatusButtons(statusText);
-
-        
     }
-    
-    /** 
-     * Create a DefaultPieDataset corresponding to all the votes for each candidates
-     * @return 
-     */
-    public DefaultPieDataset createRingPlotDataset(){
-        
-        //Dataset setting
-        DefaultPieDataset dataset = new DefaultPieDataset();
-        ArrayList<ArrayList<String>> votes = admin.getVotes();
-        int sum = 0;
-        for (int i = 0 ; i<votes.size() ; ++i)
-            sum+=Integer.parseInt(votes.get(i).get(1));
-        for (int i = 0 ; i<votes.size() ; ++i)
-            dataset.setValue(votes.get(i).get(0), Integer.parseInt(votes.get(i).get(1))*100/sum);
-        return dataset;
-    }
-    
-    /** 
-     * Create a JFreeChart out of a DefaultCategoryDataset for votes
-     * @param dataset
-     * @return 
-     */
-     public JFreeChart createRingPlotChart(DefaultPieDataset dataset)
-    {
-        JFreeChart myChart = ChartFactory.createRingChart("Pourcentage of votes per candidate", dataset, true, true, false);
-        StandardChartTheme theme = (StandardChartTheme)StandardChartTheme.createJFreeTheme();
-        theme.setBarPainter(new StandardBarPainter());
-        theme.setRegularFont( new Font("montserrat" , Font.PLAIN , 11));
-        theme.apply(myChart);
-        RingPlot p = (RingPlot) myChart.getPlot();
-        p.setBackgroundPaint(Color.WHITE);
-        
-        p.setOutlineVisible(false);
-        p.setShadowPaint(null);
-        p.setSimpleLabels(true);
-        p.setLabelGenerator(new StandardPieSectionLabelGenerator("{1}"));
-        p.setSimpleLabelOffset(new RectangleInsets(UnitType.RELATIVE, 0.09, 0.09, 0.09, 0.09));
-        p.setLabelBackgroundPaint(null);
-        p.setLabelOutlinePaint(null);
-        p.setLabelShadowPaint(null);
-        p.setSectionDepth(0.33);
-        p.setSectionOutlinesVisible(false);
-        p.setSeparatorsVisible(false);
-        p.setIgnoreNullValues(false);
-        p.setIgnoreZeroValues(false);
-        return myChart;
-    }
-    
-    /** 
-     * Create a DefaultCategoryDataset corresponding to all the votes for each candidates
-     * @return 
-     */
-    public DefaultCategoryDataset createBarDataset(){
-        
-        //Dataset setting
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        ArrayList<ArrayList<String>> votes = admin.getVotes();
-        for (int i = 0 ; i<votes.size() ; ++i)
-            dataset.setValue(Integer.parseInt(votes.get(i).get(1)), "Votes", votes.get(i).get(0));
-        return dataset;
-    }
-    
-
-    /** 
-     * Create a JFreeChart out of a DefaultCategoryDataset for votes
-     * @param dataset
-     * @return 
-     */
-     public JFreeChart createVotesBarChart(DefaultCategoryDataset dataset)
-    {
-        JFreeChart myChart; 
-        myChart=ChartFactory.createBarChart("Number of votes per candidate", "Candidates", "Number of votes", createBarDataset(), PlotOrientation.VERTICAL, true, true, false);
-        
-        StandardChartTheme theme = (StandardChartTheme)StandardChartTheme.createJFreeTheme();
-        theme.setBarPainter(new StandardBarPainter());
-        theme.setRegularFont( new Font("montserrat" , Font.PLAIN , 11));
-        theme.apply(myChart);
-        
-        CategoryPlot p=myChart.getCategoryPlot();
-        p.getRangeAxis().setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        p.setBackgroundPaint(Color.white);
-        p.setRangeGridlinePaint(Color.black);
-        
-        BarRenderer r = (BarRenderer) p.getRenderer();
-        r.setSeriesPaint(0, actualColor);
-        r.setMaximumBarWidth(0.1);
-        r.setBaseItemLabelsVisible(true);
-        r.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
-        r.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
-        r.setDrawBarOutline(false);
-        return myChart;
-    }
-     
-       /** 
-     * Create a DefaultCategoryDataset corresponding to all the votes for each candidates
-     * @return 
-     */
-    public DefaultCategoryDataset createStackedBarDataset(){
-        
-        //Dataset setting
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        ArrayList<String[]> votes = admin.getVotesByStates();
-        for (String[] current : votes)
-        {
-            int j=1;
-            for (State s : State.values())
-            {
-                if (j<current.length)
-                {
-                    dataset.setValue(Integer.parseInt(current[j]), s.toString() , current[0] );
-                    j++;
-                }
-            } 
-        }
-
-        return dataset;
-    }
-    
-    /**
-     * Creates a StackedBarChart showing the number of votes per states for each candidates
-     * @param dataset
-     * @return 
-     */
-    public JFreeChart createVotesStackedBarChart(DefaultCategoryDataset dataset)
-    {
-        JFreeChart myChart; 
-        myChart=ChartFactory.createStackedBarChart("Number of votes per candidate & per state", "Candidates", "Number of votes", createStackedBarDataset(), PlotOrientation.VERTICAL, true, false, false);
-        
-        StandardChartTheme theme = (StandardChartTheme)StandardChartTheme.createJFreeTheme();
-        theme.setBarPainter(new StandardBarPainter());
-        theme.setRegularFont( new Font("montserrat" , Font.PLAIN , 11));
-        theme.apply(myChart);
-        
-        CategoryPlot p=myChart.getCategoryPlot();
-        p.getRangeAxis().setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        p.setBackgroundPaint(Color.white);
-        p.setRangeGridlinePaint(Color.black);
-
-        StackedBarRenderer r = (StackedBarRenderer) p.getRenderer();
-        r.setSeriesPaint(0, new Color(40,40,40));
-        r.setMaximumBarWidth(0.1);
-        r.setBaseItemLabelsVisible(true);
-        r.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
-        r.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
-
-        return myChart;
-    }
-     
-     
      
     /**
      * This method is called from within the constructor to initialize the form.
@@ -328,7 +132,7 @@ public class GUI_Official extends javax.swing.JFrame {
         winnerDialog = new javax.swing.JDialog();
         winnerDrawPanel = new javax.swing.JPanel();
         winnerPicture = new javax.swing.JLabel();
-        winnerGraph = ringChartPanel2;
+        winnerGraph = new javax.swing.JPanel();
         winnerPanel = new javax.swing.JPanel();
         winnerTitle = new javax.swing.JLabel();
         winnerName = new javax.swing.JLabel();
@@ -445,9 +249,7 @@ public class GUI_Official extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        ringPlotPanel = ringChartPanel;
-        stackedBarPanel = analyzeChartPanel;
-        barPanel = mainMenuChartPanel;
+        graphPanel = new javax.swing.JPanel();
         stackedBarChartButton = new javax.swing.JButton();
         ringChartButton = new javax.swing.JButton();
         barChartButton = new javax.swing.JButton();
@@ -504,9 +306,7 @@ public class GUI_Official extends javax.swing.JFrame {
         settingsPopUp.add(blueOption);
 
         winnerDialog.setBackground(new java.awt.Color(255, 255, 255));
-        winnerDialog.setMaximumSize(new java.awt.Dimension(1600, 900));
         winnerDialog.setMinimumSize(new java.awt.Dimension(1600, 900));
-        winnerDialog.setPreferredSize(new java.awt.Dimension(1600, 900));
         winnerDialog.setSize(new java.awt.Dimension(1600, 900));
 
         winnerDrawPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -520,17 +320,7 @@ public class GUI_Official extends javax.swing.JFrame {
 
         winnerGraph.setBackground(new java.awt.Color(255, 255, 255));
         winnerGraph.setForeground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout winnerGraphLayout = new javax.swing.GroupLayout(winnerGraph);
-        winnerGraph.setLayout(winnerGraphLayout);
-        winnerGraphLayout.setHorizontalGroup(
-            winnerGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 552, Short.MAX_VALUE)
-        );
-        winnerGraphLayout.setVerticalGroup(
-            winnerGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        winnerGraph.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout winnerDrawPanelLayout = new javax.swing.GroupLayout(winnerDrawPanel);
         winnerDrawPanel.setLayout(winnerDrawPanelLayout);
@@ -733,19 +523,21 @@ public class GUI_Official extends javax.swing.JFrame {
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(profileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(leftPanelLayout.createSequentialGroup()
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addComponent(profileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mainMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dataAnalysisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mainMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dataAnalysisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1810,46 +1602,8 @@ public class GUI_Official extends javax.swing.JFrame {
 
         chartMainPanel.add(idlePanel, "idle");
 
-        javax.swing.GroupLayout ringPlotPanelLayout = new javax.swing.GroupLayout(ringPlotPanel);
-        ringPlotPanel.setLayout(ringPlotPanelLayout);
-        ringPlotPanelLayout.setHorizontalGroup(
-            ringPlotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        ringPlotPanelLayout.setVerticalGroup(
-            ringPlotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 473, Short.MAX_VALUE)
-        );
-
-        chartMainPanel.add(ringPlotPanel, "ringPlot");
-
-        stackedBarPanel.setForeground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout stackedBarPanelLayout = new javax.swing.GroupLayout(stackedBarPanel);
-        stackedBarPanel.setLayout(stackedBarPanelLayout);
-        stackedBarPanelLayout.setHorizontalGroup(
-            stackedBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
-        stackedBarPanelLayout.setVerticalGroup(
-            stackedBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 473, Short.MAX_VALUE)
-        );
-
-        chartMainPanel.add(stackedBarPanel, "stackedBar");
-
-        javax.swing.GroupLayout barPanelLayout = new javax.swing.GroupLayout(barPanel);
-        barPanel.setLayout(barPanelLayout);
-        barPanelLayout.setHorizontalGroup(
-            barPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        barPanelLayout.setVerticalGroup(
-            barPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 473, Short.MAX_VALUE)
-        );
-
-        chartMainPanel.add(barPanel, "bar");
+        graphPanel.setLayout(new java.awt.BorderLayout());
+        chartMainPanel.add(graphPanel, "graph");
 
         stackedBarChartButton.setText("Stacked Bar Chart");
         stackedBarChartButton.addActionListener(new java.awt.event.ActionListener() {
@@ -2184,8 +1938,7 @@ public class GUI_Official extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Added successfully along with it's picture " + addCandidateFirstName.getText() + " " + addCandidateLastName.getText() + " to the database" , this.getTitle(), 1 );
                         else
                             JOptionPane.showMessageDialog(null, "Added successfully " + addCandidateFirstName.getText() + " " + addCandidateLastName.getText() + " to the database" , this.getTitle(), 1 );
-                   //We update the charts because we introduced a new candidate 
-                    updateCharts();
+                   
                     
                     
                 } catch (IOException ex) {
@@ -2282,10 +2035,12 @@ public class GUI_Official extends javax.swing.JFrame {
                     winnerPicture.setIcon(null);
                 }
                 winnerTitle.setText("won the election with a total of " + winners.get(0).get(2) + " votes");
-                
+                officialChartDisplay chartDisplayer=new officialChartDisplay(admin);
+                loadChart(winnerGraph, new ChartPanel(chartDisplayer.createRingPlotChart(chartDisplayer.createRingPlotDataset())));
                 winnerDialog.setVisible(true);
                 winnerDialog.setSize(1600, 900);
                 winnerDialog.setLocationRelativeTo(null);
+                
             }
                 
                 
@@ -2301,7 +2056,6 @@ public class GUI_Official extends javax.swing.JFrame {
 
     private void addCandidateBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCandidateBackActionPerformed
         cards.show(mainPanel, "mainMenu");
-        mainMenuChart=createVotesBarChart(createBarDataset());
     }//GEN-LAST:event_addCandidateBackActionPerformed
 
     private void editVotersBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editVotersBackActionPerformed
@@ -2392,7 +2146,6 @@ public class GUI_Official extends javax.swing.JFrame {
                     {
                         JOptionPane.showMessageDialog(null, "You have successfully removed " + firstName + " " + lastName + " from the database" , this.getTitle(), 1 );
                         updateVoterTable(voterTableModel, editVotersTable);
-                        updateCharts();
                     }
                     else
                         JOptionPane.showMessageDialog(null, firstName + " " + lastName + " has not been deleted from the database due to an error" , this.getTitle(), 1 );
@@ -2410,7 +2163,6 @@ public class GUI_Official extends javax.swing.JFrame {
                JOptionPane.showMessageDialog(null, "Informations successfully edited" , this.getTitle(), 1 );
                updateVoterTable(voterTableModel, editVotersTable);
                editInvisible(editVotersEditPanel, editVotersDelete);
-               updateCharts();
            }
            else
                JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
@@ -2448,7 +2200,6 @@ public class GUI_Official extends javax.swing.JFrame {
                     {
                         JOptionPane.showMessageDialog(null, "You have successfully removed " + firstName + " " + lastName + " from the database" , this.getTitle(), 1 );
                         updateCandidateTable(candidateTableModel, editCandidatesTable);
-                        updateCharts();
                         
                     }
                     else
@@ -2478,7 +2229,6 @@ public class GUI_Official extends javax.swing.JFrame {
                    updateCandidateTable(candidateTableModel, editCandidatesTable);
 
                    editInvisible(editCandidatesEditPanel, editCandidatesDelete);
-                   updateCharts();
                }
                else
                    JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );
@@ -2638,16 +2388,33 @@ public class GUI_Official extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_profileEmailActionPerformed
 
+        
+    private void loadChart(JPanel board, ChartPanel chart){
+       board.removeAll();
+       BorderLayout b = (BorderLayout) board.getLayout();
+       board.add(chart, b.CENTER);
+       board.validate();
+    }
+    
     private void stackedBarChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stackedBarChartButtonActionPerformed
-        cardsChart.show(chartMainPanel, "stackedBar");
+        cardsChart.show(chartMainPanel, "graph");
+        officialChartDisplay chartDisplayer=new officialChartDisplay(admin);
+        
+        loadChart(graphPanel, new ChartPanel(chartDisplayer.createStackedBarChart(chartDisplayer.createStackedBarDataset())));
     }//GEN-LAST:event_stackedBarChartButtonActionPerformed
 
+    
     private void ringChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ringChartButtonActionPerformed
-       cardsChart.show(chartMainPanel, "ringPlot");
+       cardsChart.show(chartMainPanel, "graph");
+       officialChartDisplay chartDisplayer=new officialChartDisplay(admin);
+       loadChart(graphPanel, new ChartPanel(chartDisplayer.createRingPlotChart(chartDisplayer.createRingPlotDataset())));
+       
     }//GEN-LAST:event_ringChartButtonActionPerformed
 
     private void barChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barChartButtonActionPerformed
-        cardsChart.show(chartMainPanel, "bar");
+        cardsChart.show(chartMainPanel, "graph");
+        officialChartDisplay chartDisplayer=new officialChartDisplay(admin);
+        loadChart(graphPanel, new ChartPanel(chartDisplayer.createBarChart(chartDisplayer.createBarDataset())));
     }//GEN-LAST:event_barChartButtonActionPerformed
 
     private void mainMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainMenuButtonActionPerformed
@@ -2740,7 +2507,6 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JPanel analyzeTextPanel;
     private javax.swing.JPanel analyzeVotesPanel;
     private javax.swing.JButton barChartButton;
-    private javax.swing.JPanel barPanel;
     private javax.swing.JMenuItem blueOption;
     private javax.swing.JPanel chartMainPanel;
     private javax.swing.JButton dataAnalysisButton;
@@ -2783,6 +2549,7 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JLabel editVotersText;
     private javax.swing.JPanel editVotersTextPanel;
     private javax.swing.JButton exitButton;
+    private javax.swing.JPanel graphPanel;
     private javax.swing.JMenuItem greenOption;
     private javax.swing.JPanel idlePanel;
     private javax.swing.JFileChooser imageChooser;
@@ -2840,11 +2607,9 @@ public class GUI_Official extends javax.swing.JFrame {
     private javax.swing.JLabel profileText;
     private javax.swing.JMenuItem redOption;
     private javax.swing.JButton ringChartButton;
-    private javax.swing.JPanel ringPlotPanel;
     private javax.swing.JButton settingsButton;
     private javax.swing.JPopupMenu settingsPopUp;
     private javax.swing.JButton stackedBarChartButton;
-    private javax.swing.JPanel stackedBarPanel;
     private javax.swing.JButton startButton;
     private javax.swing.JLabel statusText;
     private javax.swing.JButton stopButton;

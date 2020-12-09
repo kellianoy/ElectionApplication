@@ -5,7 +5,7 @@
  */
 package View;
 
-import Misc.FileManager;
+import Controller.FileManager;
 import Enum.State;
 import static View.GUI_Start.BLUE_COLOR;
 import static View.GUI_Start.GREEN_COLOR;

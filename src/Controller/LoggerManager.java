@@ -18,7 +18,7 @@ import java.sql.SQLException;
  */
 public interface LoggerManager {
     
-    public User loggingCheck(String email, String password) ;
+    public User loggingCheck(String email, String password);
     public Official retrieveOfficial(int userID) throws SQLException, ClassNotFoundException;
     public Candidate retrieveCandidate(int userID) throws SQLException, ClassNotFoundException;
     public Voter retrieveVoter(int userID) throws SQLException, ClassNotFoundException;

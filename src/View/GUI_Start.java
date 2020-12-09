@@ -1,6 +1,6 @@
 package View;
 
-import Misc.FileManager;
+import Controller.FileManager;
 import Controller.LoggerManagerImpl;
 import Controller.Database;
 import Model.Candidate;
