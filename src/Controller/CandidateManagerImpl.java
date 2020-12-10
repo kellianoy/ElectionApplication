@@ -5,6 +5,10 @@
  */
 package Controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,6 +31,7 @@ public class CandidateManagerImpl implements CandidateManager{
     private static final String QUERY_GET_ALL_CANDIDATE_INFOS = "SELECT user.firstName, user.lastName, user.email FROM candidate, user WHERE CandidateID = UserID"; 
     private static final String QUERY_GET_VOTES_CANDIDATE = "SELECT state, count(votedFor) FROM user JOIN candidate ON UserID = CandidateID JOIN voter ON votedFor = CandidateID WHERE email = ? GROUP BY votedFor, state"; 
     private static final String QUERY_IMAGE_CANDIDATE = "SELECT picture FROM candidate, user WHERE CandidateID=UserID AND email=?";
+    private static final String QUERY_UPLOAD_IMAGE = "UPDATE candidate, user SET picture=? WHERE user.email=? AND CandidateID=UserID";
     
     private PreparedStatement electionOpen ;
     private PreparedStatement getID ; 
@@ -34,6 +39,7 @@ public class CandidateManagerImpl implements CandidateManager{
     private PreparedStatement getAllCandidateInfos ; 
     private PreparedStatement getVotesCandidate ; 
     private PreparedStatement imageOfCandidate;
+    private PreparedStatement uploadImage ; 
     
     
     public CandidateManagerImpl() throws SQLException, ClassNotFoundException
@@ -46,6 +52,7 @@ public class CandidateManagerImpl implements CandidateManager{
         getAllCandidateInfos = dbConnection.prepareStatement(QUERY_GET_ALL_CANDIDATE_INFOS);
         getVotesCandidate = dbConnection.prepareStatement(QUERY_GET_VOTES_CANDIDATE);
         imageOfCandidate = dbConnection.prepareStatement(QUERY_IMAGE_CANDIDATE);
+        uploadImage = dbConnection.prepareStatement(QUERY_UPLOAD_IMAGE); 
     }
     
     /** 
@@ -238,5 +245,29 @@ public class CandidateManagerImpl implements CandidateManager{
             Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
+    }
+    
+    /**
+     * Update an image on a candidate using its email and a file. Returns true if it worked.
+     * @param email
+     * @param file
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    @Override
+    public boolean uploadImage (String email, File file) throws FileNotFoundException, IOException {
+        try{    
+                FileInputStream imageIn = new FileInputStream(file);
+                uploadImage.setBinaryStream(1, imageIn, imageIn.getChannel().size());
+                uploadImage.setString(2, email);
+                uploadImage.executeUpdate();
+                return true;
+        } 
+        catch (SQLException ex)
+        {
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return false;
     }
 }

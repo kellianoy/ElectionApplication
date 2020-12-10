@@ -5,6 +5,9 @@
  */
 package Controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -19,4 +22,5 @@ public interface CandidateManager {
     public String[][] getVotesByStates(String logEmail, String compareEmail);
     
     public byte[] getPicture(String email);
+    public boolean uploadImage (String email, File file) throws FileNotFoundException, IOException;
 }

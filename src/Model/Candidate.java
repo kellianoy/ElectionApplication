@@ -7,6 +7,8 @@ package Model;
 
 import Controller.CandidateManagerImpl;
 import Controller.voterManagerImpl;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 /**
@@ -98,5 +100,14 @@ public class Candidate extends User {
     public byte[] getImage()
     {
         return dataController.getPicture(email);
+    }
+    
+    /**
+     * Upload an image on a candidate
+     * @return 
+     */
+    public boolean uploadImage(File file) throws IOException
+    {
+        return dataController.uploadImage(email, file);
     }
 }

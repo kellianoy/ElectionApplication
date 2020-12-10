@@ -7,6 +7,7 @@ package View;
 
 import Controller.candidateChartDisplay;
 import Misc.FileManager;
+import Misc.ImageFilter;
 import static View.GUI_Start.BLUE_COLOR;
 import static View.GUI_Start.GREEN_COLOR;
 import static View.GUI_Start.RED_COLOR;
@@ -15,12 +16,15 @@ import Model.Candidate;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
@@ -91,6 +95,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
         redOption = new javax.swing.JMenuItem();
         greenOption = new javax.swing.JMenuItem();
         blueOption = new javax.swing.JMenuItem();
+        imageChooser = new javax.swing.JFileChooser();
         leftPanel = new javax.swing.JPanel();
         SetingColorButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
@@ -117,6 +122,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
         saveButton = new javax.swing.JButton();
         editCandidateParty = new javax.swing.JTextField();
         imageLabel = new javax.swing.JLabel();
+        changeImageButton = new javax.swing.JButton();
         viewStatsPanel = new javax.swing.JPanel();
         AnalyzeText = new javax.swing.JLabel();
         AnalyzeCaption = new javax.swing.JLabel();
@@ -124,6 +130,8 @@ public class GUI_Candidate extends javax.swing.JFrame {
         candidatesComboBox = new javax.swing.JComboBox();
         goBackButton1 = new javax.swing.JButton();
         statPanel = new javax.swing.JPanel();
+        bufferPanel = new javax.swing.JPanel();
+        imageRetrieved = new javax.swing.JLabel();
 
         settingsPopUp.setPreferredSize(new java.awt.Dimension(200, 100));
         settingsPopUp.setRequestFocusEnabled(false);
@@ -154,6 +162,13 @@ public class GUI_Candidate extends javax.swing.JFrame {
             }
         });
         settingsPopUp.add(blueOption);
+
+        imageChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        imageChooser.setApproveButtonText("");
+        imageChooser.setApproveButtonToolTipText("");
+        imageChooser.setBackground(java.awt.Color.darkGray);
+        imageChooser.setCurrentDirectory(new java.io.File("C:\\Users"));
+        imageChooser.setFileFilter(new ImageFilter());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Election Simulator");
@@ -359,7 +374,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(153, 153, 153));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("If you want to modify your name, date of birth, image or party, please contact an official.");
+        jLabel2.setText("If you want to modify your name, date of birth or party, please contact an official.");
 
         goBackButton.setText("Go Back");
         goBackButton.addActionListener(new java.awt.event.ActionListener() {
@@ -379,6 +394,15 @@ public class GUI_Candidate extends javax.swing.JFrame {
         editCandidateParty.setBorder(javax.swing.BorderFactory.createTitledBorder("Party"));
         editCandidateParty.setEnabled(false);
 
+        imageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        changeImageButton.setText("Change the photo");
+        changeImageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeImageButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout profilePanelLayout = new javax.swing.GroupLayout(profilePanel);
         profilePanel.setLayout(profilePanelLayout);
         profilePanelLayout.setHorizontalGroup(
@@ -388,24 +412,20 @@ public class GUI_Candidate extends javax.swing.JFrame {
             .addGroup(profilePanelLayout.createSequentialGroup()
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(profilePanelLayout.createSequentialGroup()
-                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(18, 18, 18)
+                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(editCandidateEmail, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(profilePanelLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(editCandidateEmail, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(profilePanelLayout.createSequentialGroup()
-                                        .addComponent(editProfileFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(40, 40, 40)
-                                        .addComponent(editProfileLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(165, 165, 165)))
+                                .addComponent(editProfileFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(editProfileLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(imageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 39, Short.MAX_VALUE)
                         .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(editCandidateDate, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(editCandidatePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(editCandidateParty, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(editCandidateDate, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                            .addComponent(editCandidatePassword, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                            .addComponent(editCandidateParty, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                            .addComponent(changeImageButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(profilePanelLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(goBackButton)
@@ -431,20 +451,18 @@ public class GUI_Candidate extends javax.swing.JFrame {
                     .addGroup(profilePanelLayout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(editCandidateParty, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(changeImageButton))
+                    .addGroup(profilePanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
-                        .addComponent(goBackButton)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
-                        .addComponent(saveButton)
-                        .addContainerGap())))
+                    .addComponent(goBackButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(saveButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
 
         mainPanel.add(profilePanel, "profile");
@@ -520,6 +538,35 @@ public class GUI_Candidate extends javax.swing.JFrame {
         );
 
         mainPanel.add(viewStatsPanel, "statsPanel");
+
+        imageRetrieved.setBackground(new java.awt.Color(255, 255, 255));
+        imageRetrieved.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        imageRetrieved.setForeground(new java.awt.Color(50, 50, 50));
+        imageRetrieved.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imageRetrieved.setText("Select an image");
+
+        javax.swing.GroupLayout bufferPanelLayout = new javax.swing.GroupLayout(bufferPanel);
+        bufferPanel.setLayout(bufferPanelLayout);
+        bufferPanelLayout.setHorizontalGroup(
+            bufferPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 844, Short.MAX_VALUE)
+            .addGroup(bufferPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(bufferPanelLayout.createSequentialGroup()
+                    .addGap(166, 166, 166)
+                    .addComponent(imageRetrieved, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(166, 166, 166)))
+        );
+        bufferPanelLayout.setVerticalGroup(
+            bufferPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 686, Short.MAX_VALUE)
+            .addGroup(bufferPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(bufferPanelLayout.createSequentialGroup()
+                    .addGap(223, 223, 223)
+                    .addComponent(imageRetrieved, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(223, Short.MAX_VALUE)))
+        );
+
+        mainPanel.add(bufferPanel, "card5");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -676,6 +723,27 @@ public class GUI_Candidate extends javax.swing.JFrame {
         loardChart(statPanel, new ChartPanel(chartDisplayer.createVotesStackedBarChart(chartDisplayer.createStackedBarDataset(nameCompare, emailCompare), nameCompare, emailCompare)));
     }//GEN-LAST:event_candidatesComboBoxActionPerformed
 
+    private void changeImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeImageButtonActionPerformed
+        int returnVal = imageChooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File f = imageChooser.getSelectedFile();
+            ImageIcon myImage = new ImageIcon(f.toString());
+            ImageIcon scaledImage = new ImageIcon(myImage.getImage().getScaledInstance(imageRetrieved.getWidth(),imageRetrieved.getHeight() , java.awt.Image.SCALE_SMOOTH));
+            imageLabel.setText("");
+            imageLabel.setIcon(scaledImage);
+            
+            try {
+                    if (imageLabel.getIcon()!=null) //If there's an image
+                        if (!admin.uploadImage(imageChooser.getSelectedFile())) //Then try to upload it
+                            JOptionPane.showMessageDialog(null, "Problem uploading the image" , this.getTitle(), 1 );       
+            } catch (IOException ex) {
+                    Logger.getLogger(GUI_Official.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+        else 
+            JOptionPane.showMessageDialog(null, "Couldn't access the file." , this.getTitle(), 1 );
+    }//GEN-LAST:event_changeImageButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -698,7 +766,9 @@ public class GUI_Candidate extends javax.swing.JFrame {
     private javax.swing.JButton SetingColorButton;
     private javax.swing.JLabel answerVote;
     private javax.swing.JMenuItem blueOption;
+    private javax.swing.JPanel bufferPanel;
     private javax.swing.JComboBox candidatesComboBox;
+    private javax.swing.JButton changeImageButton;
     private javax.swing.JPanel colorPanel;
     private javax.swing.JFormattedTextField editCandidateDate;
     private javax.swing.JTextField editCandidateEmail;
@@ -710,7 +780,9 @@ public class GUI_Candidate extends javax.swing.JFrame {
     private javax.swing.JButton goBackButton;
     private javax.swing.JButton goBackButton1;
     private javax.swing.JMenuItem greenOption;
+    private javax.swing.JFileChooser imageChooser;
     private javax.swing.JLabel imageLabel;
+    private javax.swing.JLabel imageRetrieved;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
