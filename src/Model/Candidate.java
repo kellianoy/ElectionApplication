@@ -89,4 +89,14 @@ public class Candidate extends User {
     {
         return dataController.getVotesByStates(email, compareEmail);
     }
+    
+    /**
+     * Return the image of an instance of the database
+     * @param email
+     * @return 
+     */
+    public byte[] getImage()
+    {
+        return dataController.getPicture(email);
+    }
 }

@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
@@ -66,6 +67,8 @@ public class GUI_Candidate extends javax.swing.JFrame {
         
         cards = (CardLayout)mainPanel.getLayout();
         
+        setImage(); 
+        
         //File Manager to save users preferences
         try {
             f=new FileManager(); 
@@ -99,6 +102,9 @@ public class GUI_Candidate extends javax.swing.JFrame {
         questionVote = new javax.swing.JLabel();
         answerVote = new javax.swing.JLabel();
         viewStatisticButton = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        republicText = new javax.swing.JLabel();
+        colorPanel = new javax.swing.JPanel();
         profilePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         editProfileFirstName = new javax.swing.JTextField();
@@ -110,6 +116,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
         goBackButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         editCandidateParty = new javax.swing.JTextField();
+        imageLabel = new javax.swing.JLabel();
         viewStatsPanel = new javax.swing.JPanel();
         AnalyzeText = new javax.swing.JLabel();
         AnalyzeCaption = new javax.swing.JLabel();
@@ -190,13 +197,13 @@ public class GUI_Candidate extends javax.swing.JFrame {
         leftPanelLayout.setHorizontalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(15, 15, 15)
                 .addComponent(profileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(15, 15, 15)
                 .addComponent(SetingColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(16, 16, 16))
+                .addGap(26, 26, 26))
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,23 +225,25 @@ public class GUI_Candidate extends javax.swing.JFrame {
         main_menu.setPreferredSize(new java.awt.Dimension(668, 686));
 
         mainMenuDescription.setBackground(new java.awt.Color(255, 255, 255));
-        mainMenuDescription.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
+        mainMenuDescription.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         mainMenuDescription.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mainMenuDescription.setText("Candidate Main Menu");
-        mainMenuDescription.setMaximumSize(new java.awt.Dimension(289, 47));
-        mainMenuDescription.setMinimumSize(new java.awt.Dimension(289, 47));
+        mainMenuDescription.setMaximumSize(new java.awt.Dimension(268, 47));
+        mainMenuDescription.setMinimumSize(new java.awt.Dimension(2, 47));
         mainMenuDescription.setPreferredSize(new java.awt.Dimension(289, 47));
 
         mainMenuText.setBackground(new java.awt.Color(255, 255, 255));
-        mainMenuText.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
+        mainMenuText.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         mainMenuText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mainMenuText.setText("Welcome " + admin.getFirstName() + " " + admin.getLastName() + "to the candidate center.");
 
         questionVote.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
+        questionVote.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         questionVote.setText("Statue of the election : ");
 
         answerVote.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
         answerVote.setForeground(new java.awt.Color(0, 153, 51));
+        answerVote.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         answerVote.setText("Active");
 
         viewStatisticButton.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
@@ -245,37 +254,66 @@ public class GUI_Candidate extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/index.png"))); // NOI18N
+
+        republicText.setBackground(new java.awt.Color(255, 255, 255));
+        republicText.setFont(new java.awt.Font("Montserrat Medium", 0, 24)); // NOI18N
+        republicText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        republicText.setText("Republic of Moebus");
+
+        colorPanel.setBackground(actualColor   );
+
+        javax.swing.GroupLayout colorPanelLayout = new javax.swing.GroupLayout(colorPanel);
+        colorPanel.setLayout(colorPanelLayout);
+        colorPanelLayout.setHorizontalGroup(
+            colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 406, Short.MAX_VALUE)
+        );
+        colorPanelLayout.setVerticalGroup(
+            colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 6, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout main_menuLayout = new javax.swing.GroupLayout(main_menu);
         main_menu.setLayout(main_menuLayout);
         main_menuLayout.setHorizontalGroup(
             main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainMenuDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(questionVote, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(republicText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(mainMenuText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainMenuDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(answerVote, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(main_menuLayout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(questionVote)
-                .addGap(115, 115, 115)
-                .addComponent(answerVote)
-                .addContainerGap(385, Short.MAX_VALUE))
+                .addGap(219, 219, 219)
+                .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_menuLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(236, 236, 236)
                 .addComponent(viewStatisticButton)
-                .addGap(230, 230, 230))
+                .addGap(237, 237, 237))
         );
         main_menuLayout.setVerticalGroup(
             main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_menuLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(mainMenuDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
+                .addGap(20, 20, 20)
+                .addComponent(mainMenuDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
                 .addComponent(mainMenuText)
-                .addGap(164, 164, 164)
-                .addGroup(main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(questionVote)
-                    .addComponent(answerVote))
-                .addGap(112, 112, 112)
+                .addGap(50, 50, 50)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(republicText)
+                .addGap(18, 18, 18)
+                .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64)
+                .addComponent(questionVote)
+                .addGap(18, 18, 18)
+                .addComponent(answerVote)
+                .addGap(60, 60, 60)
                 .addComponent(viewStatisticButton)
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addGap(67, 67, 67))
         );
 
         mainPanel.add(main_menu, "mainMenu");
@@ -287,7 +325,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Edit Profile");
+        jLabel1.setText("Profile");
 
         editProfileFirstName.setText(admin.getFirstName());
         editProfileFirstName.setBorder(javax.swing.BorderFactory.createTitledBorder("First Name"));
@@ -321,7 +359,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(153, 153, 153));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("If you want to modify your First Name, Last Name and date of birth, please contact an official.");
+        jLabel2.setText("If you want to modify your name, date of birth, image or party, please contact an official.");
 
         goBackButton.setText("Go Back");
         goBackButton.addActionListener(new java.awt.event.ActionListener() {
@@ -346,53 +384,67 @@ public class GUI_Candidate extends javax.swing.JFrame {
         profilePanelLayout.setHorizontalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(profilePanelLayout.createSequentialGroup()
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                    .addGroup(profilePanelLayout.createSequentialGroup()
                         .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(profilePanelLayout.createSequentialGroup()
-                                .addComponent(editCandidatePassword)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(editCandidateParty, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(editCandidateEmail)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
-                                .addComponent(editProfileFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
-                                .addComponent(editProfileLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editCandidateDate, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(editCandidateEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(profilePanelLayout.createSequentialGroup()
+                                        .addComponent(editProfileFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(40, 40, 40)
+                                        .addComponent(editProfileLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(165, 165, 165)))
+                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(editCandidateDate, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editCandidatePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editCandidateParty, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(profilePanelLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(20, 20, 20)
                         .addComponent(goBackButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(saveButton)))
-                .addContainerGap())
+                .addGap(20, 20, 20))
         );
         profilePanelLayout.setVerticalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profilePanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(22, 22, 22)
                 .addComponent(jLabel1)
-                .addGap(62, 62, 62)
+                .addGap(36, 36, 36)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editProfileFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editProfileLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editCandidateDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(editCandidateEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                    .addComponent(editProfileFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editCandidateDate, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editProfileLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editCandidatePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editCandidateParty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
+                    .addComponent(editCandidateEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editCandidatePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(profilePanelLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(editCandidateParty, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jLabel2)
-                .addGap(44, 44, 44)
-                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(goBackButton)
-                    .addComponent(saveButton))
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
+                        .addComponent(goBackButton)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePanelLayout.createSequentialGroup()
+                        .addComponent(saveButton)
+                        .addContainerGap())))
         );
 
         mainPanel.add(profilePanel, "profile");
@@ -432,31 +484,27 @@ public class GUI_Candidate extends javax.swing.JFrame {
         viewStatsPanel.setLayout(viewStatsPanelLayout);
         viewStatsPanelLayout.setHorizontalGroup(
             viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewStatsPanelLayout.createSequentialGroup()
-                .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(viewStatsPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(AnalyzeCaption, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(viewStatsPanelLayout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(AnalyzeText, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)))
-                .addGap(12, 12, 12))
+            .addComponent(AnalyzeText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(viewStatsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(statPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(viewStatsPanelLayout.createSequentialGroup()
-                            .addComponent(selectCandidateLabel)
-                            .addGap(63, 63, 63)
-                            .addComponent(candidatesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(goBackButton1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(viewStatsPanelLayout.createSequentialGroup()
+                        .addComponent(goBackButton1)
+                        .addGap(408, 695, Short.MAX_VALUE))
+                    .addGroup(viewStatsPanelLayout.createSequentialGroup()
+                        .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(statPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(viewStatsPanelLayout.createSequentialGroup()
+                                .addComponent(selectCandidateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(candidatesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20))))
+            .addComponent(AnalyzeCaption, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         viewStatsPanelLayout.setVerticalGroup(
             viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(viewStatsPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addComponent(AnalyzeText)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AnalyzeCaption)
@@ -465,10 +513,10 @@ public class GUI_Candidate extends javax.swing.JFrame {
                     .addComponent(selectCandidateLabel)
                     .addComponent(candidatesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(statPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(statPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(goBackButton1)
-                .addContainerGap())
+                .addGap(16, 16, 16))
         );
 
         mainPanel.add(viewStatsPanel, "statsPanel");
@@ -485,9 +533,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -519,6 +565,25 @@ public class GUI_Candidate extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Set the image of the candidate
+     */
+    private void setImage()
+    {
+        byte[] myImage = admin.getImage();
+        if (myImage!=null)
+        {
+            ImageIcon image = new ImageIcon(myImage);
+            imageLabel.setText("");
+            imageLabel.setIcon(image);
+        }
+        else
+        {
+            imageLabel.setText("There is no picture available.");
+            imageLabel.setIcon(null);
+        }
+    }
+    
     private void SetingColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SetingColorButtonActionPerformed
         settingsPopUp.show(this, SetingColorButton.getX(), SetingColorButton.getY()-settingsPopUp.getHeight()/2-2);
     }//GEN-LAST:event_SetingColorButtonActionPerformed
@@ -534,6 +599,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_exitButtonActionPerformed
 
+    
     private void profileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileButtonActionPerformed
         cards.show(mainPanel, "profile");
     }//GEN-LAST:event_profileButtonActionPerformed
@@ -633,6 +699,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
     private javax.swing.JLabel answerVote;
     private javax.swing.JMenuItem blueOption;
     private javax.swing.JComboBox candidatesComboBox;
+    private javax.swing.JPanel colorPanel;
     private javax.swing.JFormattedTextField editCandidateDate;
     private javax.swing.JTextField editCandidateEmail;
     private javax.swing.JTextField editCandidateParty;
@@ -643,8 +710,10 @@ public class GUI_Candidate extends javax.swing.JFrame {
     private javax.swing.JButton goBackButton;
     private javax.swing.JButton goBackButton1;
     private javax.swing.JMenuItem greenOption;
+    private javax.swing.JLabel imageLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JLabel mainMenuDescription;
     private javax.swing.JLabel mainMenuText;
@@ -654,6 +723,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
     private javax.swing.JPanel profilePanel;
     private javax.swing.JLabel questionVote;
     private javax.swing.JMenuItem redOption;
+    private javax.swing.JLabel republicText;
     private javax.swing.JButton saveButton;
     private javax.swing.JLabel selectCandidateLabel;
     private javax.swing.JPopupMenu settingsPopUp;

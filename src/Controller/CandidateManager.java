@@ -17,4 +17,6 @@ public interface CandidateManager {
     
     public ArrayList<String[]> getAllCandidates(String logEmail); 
     public String[][] getVotesByStates(String logEmail, String compareEmail);
+    
+    public byte[] getPicture(String email);
 }

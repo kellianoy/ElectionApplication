@@ -26,12 +26,14 @@ public class CandidateManagerImpl implements CandidateManager{
     private static final String QUERY_FINDID = "SELECT UserID FROM user WHERE email = ?"; 
     private static final String QUERY_GET_ALL_CANDIDATE_INFOS = "SELECT user.firstName, user.lastName, user.email FROM candidate, user WHERE CandidateID = UserID"; 
     private static final String QUERY_GET_VOTES_CANDIDATE = "SELECT state, count(votedFor) FROM user JOIN candidate ON UserID = CandidateID JOIN voter ON votedFor = CandidateID WHERE email = ? GROUP BY votedFor, state"; 
+    private static final String QUERY_IMAGE_CANDIDATE = "SELECT picture FROM candidate, user WHERE CandidateID=UserID AND email=?";
     
     private PreparedStatement electionOpen ;
     private PreparedStatement getID ; 
     private PreparedStatement updateCandidate;
     private PreparedStatement getAllCandidateInfos ; 
     private PreparedStatement getVotesCandidate ; 
+    private PreparedStatement imageOfCandidate;
     
     
     public CandidateManagerImpl() throws SQLException, ClassNotFoundException
@@ -43,6 +45,7 @@ public class CandidateManagerImpl implements CandidateManager{
         updateCandidate = dbConnection.prepareStatement(QUERY_UPDATE_CANDIDATE);
         getAllCandidateInfos = dbConnection.prepareStatement(QUERY_GET_ALL_CANDIDATE_INFOS);
         getVotesCandidate = dbConnection.prepareStatement(QUERY_GET_VOTES_CANDIDATE);
+        imageOfCandidate = dbConnection.prepareStatement(QUERY_IMAGE_CANDIDATE);
     }
     
     /** 
@@ -210,5 +213,30 @@ public class CandidateManagerImpl implements CandidateManager{
             Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null; 
+    }
+    
+    /**
+     * Used to get the picture of a candidate in the database using his email
+     * @param email
+     * @return 
+     */
+    @Override
+    public byte[] getPicture(String email)
+    {
+        try {
+            imageOfCandidate.setString(1, email);
+            ResultSet i = imageOfCandidate.executeQuery(); 
+            
+            if(i.next())
+            {
+                 byte[] img = i.getBytes("picture");
+                 return img;
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return null;
     }
 }
