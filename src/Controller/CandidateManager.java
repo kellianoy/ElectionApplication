@@ -20,6 +20,7 @@ public interface CandidateManager {
     
     public ArrayList<String[]> getAllCandidates(String logEmail); 
     public String[][] getVotesByStates(String logEmail, String compareEmail);
+    public ArrayList<String[]> getAllVotesByStates();
     
     public byte[] getPicture(String email);
     public boolean uploadImage (String email, File file) throws FileNotFoundException, IOException;
