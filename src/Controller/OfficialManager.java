@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * DB Interface for the Official Class, can access tables, delete, modify, add on the DB
  * @author Keke
  */
-public interface UserManager {
+public interface OfficialManager {
     
     public boolean insertVoter(Voter v);
     public boolean insertCandidate(Candidate c);

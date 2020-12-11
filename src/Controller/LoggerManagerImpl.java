@@ -60,7 +60,7 @@ public class LoggerManagerImpl implements LoggerManager {
                 }
             } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
     }

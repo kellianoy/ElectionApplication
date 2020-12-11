@@ -5,7 +5,7 @@
  */
 package View;
 
-import Controller.officialChartDisplay;
+import Controller.OfficialChartDisplay;
 import Model.Voter;
 import Model.Official;
 import Model.Candidate;
@@ -2035,7 +2035,7 @@ public class GUI_Official extends javax.swing.JFrame {
                     winnerPicture.setIcon(null);
                 }
                 winnerTitle.setText("won the election with a total of " + winners.get(0).get(2) + " votes");
-                officialChartDisplay chartDisplayer=new officialChartDisplay(admin);
+                OfficialChartDisplay chartDisplayer=new OfficialChartDisplay(admin);
                 loadChart(winnerGraph, new ChartPanel(chartDisplayer.createRingPlotChart(chartDisplayer.createRingPlotDataset())));
                 winnerDialog.setVisible(true);
                 winnerDialog.setSize(1600, 900);
@@ -2398,7 +2398,7 @@ public class GUI_Official extends javax.swing.JFrame {
     
     private void stackedBarChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stackedBarChartButtonActionPerformed
         cardsChart.show(chartMainPanel, "graph");
-        officialChartDisplay chartDisplayer=new officialChartDisplay(admin);
+        OfficialChartDisplay chartDisplayer=new OfficialChartDisplay(admin);
         
         loadChart(graphPanel, new ChartPanel(chartDisplayer.createStackedBarChart(chartDisplayer.createStackedBarDataset())));
     }//GEN-LAST:event_stackedBarChartButtonActionPerformed
@@ -2406,14 +2406,14 @@ public class GUI_Official extends javax.swing.JFrame {
     
     private void ringChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ringChartButtonActionPerformed
        cardsChart.show(chartMainPanel, "graph");
-       officialChartDisplay chartDisplayer=new officialChartDisplay(admin);
+       OfficialChartDisplay chartDisplayer=new OfficialChartDisplay(admin);
        loadChart(graphPanel, new ChartPanel(chartDisplayer.createRingPlotChart(chartDisplayer.createRingPlotDataset())));
        
     }//GEN-LAST:event_ringChartButtonActionPerformed
 
     private void barChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barChartButtonActionPerformed
         cardsChart.show(chartMainPanel, "graph");
-        officialChartDisplay chartDisplayer=new officialChartDisplay(admin);
+        OfficialChartDisplay chartDisplayer=new OfficialChartDisplay(admin);
         loadChart(graphPanel, new ChartPanel(chartDisplayer.createBarChart(chartDisplayer.createBarDataset())));
     }//GEN-LAST:event_barChartButtonActionPerformed
 

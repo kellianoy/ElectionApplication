@@ -5,7 +5,7 @@
  */
 package Model;
 
-import Controller.UserManagerImpl;
+import Controller.OfficialManagerImpl;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,11 +17,11 @@ import java.util.ArrayList;
  */
 public class Official extends User {
     
-    UserManagerImpl dataController;
+    OfficialManagerImpl dataController;
     
     public Official(String email, String password, String dateOfBirth, String firstName, String lastName) throws SQLException, ClassNotFoundException {
         super(email, password, dateOfBirth, firstName, lastName);
-        dataController = new UserManagerImpl();
+        dataController = new OfficialManagerImpl();
     }
     
     /** 

@@ -35,12 +35,12 @@ import org.jfree.util.UnitType;
  *
  * @author Keke
  */
-public class officialChartDisplay {
+public class OfficialChartDisplay {
     
     
     private Official admin;
      
-    public officialChartDisplay(Official admin){
+    public OfficialChartDisplay(Official admin){
          this.admin=admin;
      }
     

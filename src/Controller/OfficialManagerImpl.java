@@ -26,11 +26,11 @@ import java.util.logging.Logger;
  * @author Keke
  * 
  */
-public class UserManagerImpl implements UserManager {
+public class OfficialManagerImpl implements OfficialManager {
    
     private Database data;
     
-    public UserManagerImpl() throws SQLException, ClassNotFoundException{
+    public OfficialManagerImpl() throws SQLException, ClassNotFoundException{
         data=new Database();
     }
     
@@ -61,7 +61,7 @@ public class UserManagerImpl implements UserManager {
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return false;
     }
@@ -78,7 +78,7 @@ public class UserManagerImpl implements UserManager {
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return false;
         
@@ -112,7 +112,7 @@ public class UserManagerImpl implements UserManager {
                 
             } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
     }
@@ -146,7 +146,7 @@ public class UserManagerImpl implements UserManager {
                 
             } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
     }
@@ -178,7 +178,7 @@ public class UserManagerImpl implements UserManager {
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return false;
     }
@@ -206,7 +206,7 @@ public class UserManagerImpl implements UserManager {
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return false;
     }
@@ -233,7 +233,7 @@ public class UserManagerImpl implements UserManager {
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return false;
     }
@@ -257,7 +257,7 @@ public class UserManagerImpl implements UserManager {
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return false;
     }
@@ -276,7 +276,7 @@ public class UserManagerImpl implements UserManager {
                     return set.getString(1);
             } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
     }
@@ -293,7 +293,7 @@ public class UserManagerImpl implements UserManager {
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return false;
     }
@@ -326,7 +326,7 @@ public class UserManagerImpl implements UserManager {
                 return retrievedData;
         } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
     }
@@ -365,7 +365,7 @@ public class UserManagerImpl implements UserManager {
                 return retrievedData;
         } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
     }
@@ -430,7 +430,7 @@ public class UserManagerImpl implements UserManager {
                 return retrievedData;
         } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
     }
@@ -455,7 +455,7 @@ public class UserManagerImpl implements UserManager {
                 return true;
             } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return false;
     }
@@ -481,7 +481,7 @@ public class UserManagerImpl implements UserManager {
             } 
         catch (SQLException | ClassNotFoundException ex)
         {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return false;
     }
@@ -506,7 +506,7 @@ public class UserManagerImpl implements UserManager {
             }
         } 
         catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

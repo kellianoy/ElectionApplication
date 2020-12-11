@@ -9,7 +9,7 @@ package Controller;
  *
  * @author rebec
  */
-public interface voterManager {
+public interface VoterManager {
     public boolean updateVote(String emailCandidate, String email); 
     public boolean updateVoter(String [] infos, String old_email); 
     public byte[] getPicture(String email);

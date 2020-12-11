@@ -5,6 +5,11 @@
  */
 package Controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+
 /**
  *  DB Interface for the Candidate Class, can access tables, modify his data on the DB
  * @author rebec
@@ -12,4 +17,10 @@ package Controller;
 public interface CandidateManager {
     public String electionIsOpen(); 
     public boolean updateCandidate(String[] infos, String email); 
+    
+    public ArrayList<String[]> getAllCandidates(String logEmail); 
+    public String[][] getVotesByStates(String logEmail, String compareEmail);
+    
+    public byte[] getPicture(String email);
+    public boolean uploadImage (String email, File file) throws FileNotFoundException, IOException;
 }

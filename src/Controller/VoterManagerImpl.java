@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author rebec
  */
-public class voterManagerImpl implements voterManager{
+public class VoterManagerImpl implements VoterManager{
     
     private Database data ; 
     
@@ -38,7 +38,7 @@ public class voterManagerImpl implements voterManager{
     private PreparedStatement numberOfCandidate;
     private PreparedStatement imageOfCandidate;
     
-    public voterManagerImpl() throws SQLException, ClassNotFoundException
+    public VoterManagerImpl() throws SQLException, ClassNotFoundException
     {
         data = new Database() ; 
         Connection dbConnection = data.getCon();
@@ -55,6 +55,10 @@ public class voterManagerImpl implements voterManager{
       return new GregorianCalendar(Integer.parseInt(SQLdate.substring(0, 4)), Integer.parseInt(SQLdate.substring(5, 7)), Integer.parseInt(SQLdate.substring(8)));
     }
     
+    /**
+     * Get the infos of all candidates
+     * @return 
+     */
     @Override
     public String[][] getAllCandidate()
     {
@@ -79,7 +83,7 @@ public class voterManagerImpl implements voterManager{
             
             
         } catch (SQLException ex) {
-            Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VoterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
     }
@@ -104,15 +108,15 @@ public class voterManagerImpl implements voterManager{
             
             
         } catch (SQLException ex) {
-            Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VoterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
     }
     
     /**
-     *
+     * Set the vote of a voter, based on an email of candidate
      * @param emailCandidate
-     * @param email   * @return
+     * @param email 
      * @return 
      */
     @Override
@@ -136,11 +140,17 @@ public class voterManagerImpl implements voterManager{
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VoterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false ; 
     }
     
+    /**
+     * Modify the infos of a voter, take [state, email, password]
+     * @param infos
+     * @param old_email
+     * @return 
+     */
     @Override
     public boolean updateVoter(String [] infos, String old_email)
     {
@@ -159,11 +169,15 @@ public class voterManagerImpl implements voterManager{
                 return true; 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VoterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false ; 
     }
      
+    /**
+     * Return the statue of the election
+     * @return 
+     */
     @Override
     public boolean electionIsOpen()
     {
@@ -173,7 +187,7 @@ public class voterManagerImpl implements voterManager{
             if(status.next())
                 return status.getString("Status").equals("Active"); 
         } catch (SQLException ex) {
-            Logger.getLogger(voterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VoterManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return false ; 
     }

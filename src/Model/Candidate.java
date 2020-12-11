@@ -6,8 +6,11 @@
 package Model;
 
 import Controller.CandidateManagerImpl;
-import Controller.voterManagerImpl;
+import Controller.VoterManagerImpl;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 /**
  * Class used as an administrator, can modify his data and access the database.
  * @author rebec
@@ -70,4 +73,41 @@ public class Candidate extends User {
         return false ; 
     }
     
+    /**
+     * Get all the candidates from the database unless the actual candidate login. 
+     * @return 
+     */
+    public ArrayList<String[]> getAllCandidatesInfos()
+    {
+        return dataController.getAllCandidates(email); 
+    }
+    
+    /**
+     * We're getting the number of votes that have been casted for the candidate and the compareCandidate.
+     * @param compareEmail
+     * @return 
+     */
+    public String[][] getVotesByStates(String compareEmail)
+    {
+        return dataController.getVotesByStates(email, compareEmail);
+    }
+    
+    /**
+     * Return the image of an instance of the database
+     * @param email
+     * @return 
+     */
+    public byte[] getImage()
+    {
+        return dataController.getPicture(email);
+    }
+    
+    /**
+     * Upload an image on a candidate
+     * @return 
+     */
+    public boolean uploadImage(File file) throws IOException
+    {
+        return dataController.uploadImage(email, file);
+    }
 }

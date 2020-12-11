@@ -177,7 +177,6 @@ public class GUI_Voter extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Election Simulator");
         setMinimumSize(new java.awt.Dimension(1024, 720));
-        setSize(new java.awt.Dimension(1024, 720));
 
         leftPanel.setBackground(new java.awt.Color(0, 102, 130));
         leftPanel.setMaximumSize(new java.awt.Dimension(180, 0));
@@ -260,7 +259,7 @@ public class GUI_Voter extends javax.swing.JFrame {
         mainMenuText.setBackground(new java.awt.Color(255, 255, 255));
         mainMenuText.setFont(new java.awt.Font("Montserrat Medium", 0, 18)); // NOI18N
         mainMenuText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mainMenuText.setText("Welcome " + admin.getFirstName() + " " + admin.getLastName() + " to the voter center.");
+        mainMenuText.setText(admin.getFirstName() + " " + admin.getLastName() + ", welcome to the candidate center.");
 
         questionVote.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
         questionVote.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -589,6 +588,10 @@ public class GUI_Voter extends javax.swing.JFrame {
         settingsPopUp.show(this, SetingColorButton.getX(), SetingColorButton.getY()-settingsPopUp.getHeight()/2-2);
     }//GEN-LAST:event_SetingColorButtonActionPerformed
 
+    /**
+     * Change the color background of the layout
+     * @param c 
+     */
     private void changeColor(Color c){
         leftPanel.setBackground(c);
         colorPanel.setBackground(c);
@@ -618,6 +621,9 @@ public class GUI_Voter extends javax.swing.JFrame {
         
     }//GEN-LAST:event_editVoterDateActionPerformed
 
+    /**
+     * Update the view of infos of the card of a candidate
+     */
     private void viewCardsCandidate()
     {
         if(cursorCandidate == 0 )
