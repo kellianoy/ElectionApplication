@@ -110,4 +110,11 @@ public class Candidate extends User {
     {
         return dataController.uploadImage(email, file);
     }
+    /**
+     * We're getting the name and last name of each candidates and the number of votes that have been casted for them per state 
+     * @return 
+     */
+    public ArrayList<String[]> getAllVotesByStates(){
+        return dataController.getAllVotesByStates();
+    }
 }

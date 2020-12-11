@@ -68,6 +68,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
         {
             candidatesComboBox.addItem(s[0]);
         }
+        candidatesComboBox.addItem("(All)");
         
         cards = (CardLayout)mainPanel.getLayout();
         
@@ -718,9 +719,18 @@ public class GUI_Candidate extends javax.swing.JFrame {
     
     private void candidatesComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_candidatesComboBoxActionPerformed
         String nameCompare = (String) candidatesComboBox.getSelectedItem();
-        String emailCompare = allCandidates.get(candidatesComboBox.getSelectedIndex())[1];
-        candidateChartDisplay chartDisplayer = new candidateChartDisplay(admin); 
-        loardChart(statPanel, new ChartPanel(chartDisplayer.createVotesStackedBarChart(chartDisplayer.createStackedBarDataset(nameCompare, emailCompare), nameCompare, emailCompare)));
+        if(nameCompare.equals("(All)"))
+        {
+            candidateChartDisplay chartDisplayer = new candidateChartDisplay(admin);
+            loardChart(statPanel, new ChartPanel(chartDisplayer.createAllStackedBarChart(chartDisplayer.createAllStackedBarDataset())));
+        }
+        else
+        {
+            System.out.print("ok");
+            String emailCompare = allCandidates.get(candidatesComboBox.getSelectedIndex())[1];
+            candidateChartDisplay chartDisplayer = new candidateChartDisplay(admin); 
+            loardChart(statPanel, new ChartPanel(chartDisplayer.createVotesStackedBarChart(chartDisplayer.createStackedBarDataset(nameCompare, emailCompare), nameCompare, emailCompare)));
+        }
     }//GEN-LAST:event_candidatesComboBoxActionPerformed
 
     private void changeImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeImageButtonActionPerformed

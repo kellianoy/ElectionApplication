@@ -129,10 +129,10 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="exitButton" max="32767" attributes="0"/>
-                  <EmptySpace pref="35" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="profileButton" max="32767" attributes="0"/>
-                  <EmptySpace pref="35" max="32767" attributes="0"/>
-                  <Component id="SetingColorButton" pref="34" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="SetingColorButton" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -432,11 +432,11 @@
                                   </Group>
                                   <Component id="imageLabel" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace type="unrelated" pref="39" max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="editCandidateDate" pref="249" max="32767" attributes="0"/>
-                                  <Component id="editCandidatePassword" pref="249" max="32767" attributes="0"/>
-                                  <Component id="editCandidateParty" alignment="0" pref="249" max="32767" attributes="0"/>
+                                  <Component id="editCandidateDate" max="32767" attributes="0"/>
+                                  <Component id="editCandidatePassword" max="32767" attributes="0"/>
+                                  <Component id="editCandidateParty" alignment="0" max="32767" attributes="0"/>
                                   <Component id="changeImageButton" max="32767" attributes="0"/>
                               </Group>
                           </Group>

@@ -30,6 +30,7 @@ public class CandidateManagerImpl implements CandidateManager{
     private static final String QUERY_FINDID = "SELECT UserID FROM user WHERE email = ?"; 
     private static final String QUERY_GET_ALL_CANDIDATE_INFOS = "SELECT user.firstName, user.lastName, user.email FROM candidate, user WHERE CandidateID = UserID"; 
     private static final String QUERY_GET_VOTES_CANDIDATE = "SELECT state, count(votedFor) FROM user JOIN candidate ON UserID = CandidateID JOIN voter ON votedFor = CandidateID WHERE email = ? GROUP BY votedFor, state"; 
+    private static final String QUERY_GET_VOTES_ALL_CANDIDATES = "SELECT firstName, lastName, state, count(votedFor) FROM user JOIN candidate ON UserID = CandidateID JOIN voter ON votedFor = CandidateID GROUP BY votedFor, state";
     private static final String QUERY_IMAGE_CANDIDATE = "SELECT picture FROM candidate, user WHERE CandidateID=UserID AND email=?";
     private static final String QUERY_UPLOAD_IMAGE = "UPDATE candidate, user SET picture=? WHERE user.email=? AND CandidateID=UserID";
     
@@ -38,6 +39,7 @@ public class CandidateManagerImpl implements CandidateManager{
     private PreparedStatement updateCandidate;
     private PreparedStatement getAllCandidateInfos ; 
     private PreparedStatement getVotesCandidate ; 
+    private PreparedStatement getVotesAllCandidates ;
     private PreparedStatement imageOfCandidate;
     private PreparedStatement uploadImage ; 
     
@@ -51,6 +53,7 @@ public class CandidateManagerImpl implements CandidateManager{
         updateCandidate = dbConnection.prepareStatement(QUERY_UPDATE_CANDIDATE);
         getAllCandidateInfos = dbConnection.prepareStatement(QUERY_GET_ALL_CANDIDATE_INFOS);
         getVotesCandidate = dbConnection.prepareStatement(QUERY_GET_VOTES_CANDIDATE);
+        getVotesAllCandidates = dbConnection.prepareStatement(QUERY_GET_VOTES_ALL_CANDIDATES); 
         imageOfCandidate = dbConnection.prepareStatement(QUERY_IMAGE_CANDIDATE);
         uploadImage = dbConnection.prepareStatement(QUERY_UPLOAD_IMAGE); 
     }
@@ -269,5 +272,67 @@ public class CandidateManagerImpl implements CandidateManager{
             Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return false;
+    }
+    
+    /**
+     * Return all the votes per states for each candidates in the form of an arraylist of string arrays
+     * @return
+     */
+    @Override
+    public ArrayList<String[]> getAllVotesByStates() {
+        try {
+                ArrayList<String[]> retrievedData= new ArrayList();
+                ResultSet candidateRetrieval = getVotesAllCandidates.executeQuery();
+                String[] temp= new String[] { "name" , ""+0, "" +0 , ""+0,  "" +0 , ""+0,  "" +0 , ""+0, ""+0 };
+                while(candidateRetrieval.next())
+                {
+                        if (!temp[0].equals(candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName")))
+                        {
+                            if (!temp[0].equals("name"))
+                            {
+                                retrievedData.add(temp);
+                            }
+                            temp = new String[] { ""+0 , ""+0, "" +0 , ""+0,  "" +0 , ""+0,  "" +0 , ""+0, ""+0 };
+                            temp[0]=candidateRetrieval.getString("firstName") + " " + candidateRetrieval.getString("lastName");
+                            
+                        }
+                        String count=candidateRetrieval.getString("count(votedFor)");
+                        switch ( candidateRetrieval.getString("state"))
+                        {
+                            case "Padokea" :
+                                temp[1]=count;
+                                break;
+                            case "Heaven's Arena" :
+                                temp[2]=count;
+                                break;
+                            case "Kukan'yu" :
+                                temp[3]=count;
+                                break;
+                            case "Saherta" :
+                                temp[4]=count;
+                                break;
+                            case "Yorbia" :
+                                temp[5]=count;
+                                break;
+                            case "Begerosse" :
+                                temp[6]=count;
+                                break;
+                            case "Kakin" :
+                                temp[7]=count;
+                                break;
+                            case "Ochima" :
+                                temp[8]=count;
+                                break;   
+                        }    
+                        
+                }
+                retrievedData.add(temp);
+                candidateRetrieval.close();           
+                return retrievedData;
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(OfficialManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return null;
     }
 }
