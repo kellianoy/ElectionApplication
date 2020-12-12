@@ -26,7 +26,7 @@ public class VoterManagerImpl implements VoterManager{
     private static final String QUERY_UPDATE_VOTER = "UPDATE voter, user SET voter.state = ? , user.email = ? , user.password = ? WHERE VoterID = UserID AND VoterId = ?"; 
     private static final String QUERY_FINDID = "SELECT UserID FROM user WHERE email = ?"; 
     private static final String QUERY_UPDATE_VOTE = "UPDATE voter SET votedFor = ? WHERE VoterID = ?"; 
-    private static final String QUERY_ELECTION_ISOPEN = "SELECT Status, MAX(StateID) FROM status"; 
+    private static final String QUERY_ELECTION_ISOPEN = "SELECT Status FROM status ORDER BY StateID DESC"; 
     private static final String QUERY_NUMBER_CANDIDATE  = "SELECT COUNT(*) FROM candidate"; 
     private static final String QUERY_IMAGE_CANDIDATE = "SELECT picture FROM candidate, user WHERE CandidateID=UserID AND email=?";
     
