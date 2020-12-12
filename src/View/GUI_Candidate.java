@@ -694,7 +694,7 @@ public class GUI_Candidate extends javax.swing.JFrame {
         infosModif[1] = editCandidatePassword.getText(); 
         if(infosModif[0].equals("") || infosModif[1].equals(""))
             JOptionPane.showMessageDialog(null, "The new email or password enter is empty, please complet it to be able to modify your profil." , this.getTitle(), 1 );
-        else if(admin.updateProdile(infosModif))
+        else if(admin.updateProfile(infosModif))
             JOptionPane.showMessageDialog(null, "Informations successfully edited" , this.getTitle(), 1 );
         else 
             JOptionPane.showMessageDialog(null, "A problem occured. Your modification was not taken into account." , this.getTitle(), 1 );

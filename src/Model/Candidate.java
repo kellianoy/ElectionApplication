@@ -58,7 +58,7 @@ public class Candidate extends User {
      * @param infos
      * @return 
      */
-    public boolean updateProdile(String [] infos)
+    public boolean updateProfile(String [] infos)
     {
         if(infos[0].equals(""))
             infos[0] = this.email ; 
