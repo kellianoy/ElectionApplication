@@ -132,7 +132,6 @@ public class GUI_Start extends javax.swing.JFrame {
         emailPanel.setBackground(new java.awt.Color(44, 82, 104));
         emailPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createCompoundBorder(), "Email", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        emailField.setText("admin");
         emailField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emailFieldActionPerformed(evt);
@@ -164,7 +163,6 @@ public class GUI_Start extends javax.swing.JFrame {
         passwordPanel.setBackground(new java.awt.Color(44, 82, 104));
         passwordPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createCompoundBorder(), "Password", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        PasswordField.setText("123");
         PasswordField.setToolTipText("");
         PasswordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

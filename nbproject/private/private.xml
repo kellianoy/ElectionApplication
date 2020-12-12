@@ -3,14 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/A:/RiseT/Documents/Code%20&amp;%20Programmation/ElectionApplication/ElectionApplication/src/Controller/UserManager.java</file>
-            <file>file:/A:/RiseT/Documents/Code%20&amp;%20Programmation/ElectionApplication/ElectionApplication/src/Controller/voterManagerImpl.java</file>
+            <file>file:/A:/RiseT/Documents/Code%20&amp;%20Programmation/ElectionApplication/ElectionApplication/src/Controller/candidateChartDisplay.java</file>
             <file>file:/A:/RiseT/Documents/Code%20&amp;%20Programmation/ElectionApplication/ElectionApplication/src/View/GUI_Official.java</file>
-            <file>file:/A:/RiseT/Documents/Code%20&amp;%20Programmation/ElectionApplication/ElectionApplication/src/Controller/LoggerManagerImpl.java</file>
-            <file>file:/A:/RiseT/Documents/Code%20&amp;%20Programmation/ElectionApplication/ElectionApplication/src/Charts.java</file>
-            <file>file:/A:/RiseT/Documents/Code%20&amp;%20Programmation/ElectionApplication/ElectionApplication/src/Controller/voterManager.java</file>
-            <file>file:/A:/RiseT/Documents/Code%20&amp;%20Programmation/ElectionApplication/ElectionApplication/src/Controller/UserManagerImpl.java</file>
-            <file>file:/A:/RiseT/Documents/Code%20&amp;%20Programmation/ElectionApplication/ElectionApplication/src/Controller/LoggerManager.java</file>
+            <file>file:/A:/RiseT/Documents/Code%20&amp;%20Programmation/ElectionApplication/ElectionApplication/src/Model/Official.java</file>
+            <file>file:/A:/RiseT/Documents/Code%20&amp;%20Programmation/ElectionApplication/ElectionApplication/src/Controller/CandidateManagerImpl.java</file>
+            <file>file:/A:/RiseT/Documents/Code%20&amp;%20Programmation/ElectionApplication/ElectionApplication/src/Controller/OfficialChartDisplay.java</file>
+            <file>file:/A:/RiseT/Documents/Code%20&amp;%20Programmation/ElectionApplication/ElectionApplication/src/Controller/Database.java</file>
+            <file>file:/A:/RiseT/Documents/Code%20&amp;%20Programmation/ElectionApplication/ElectionApplication/src/View/GUI_Candidate.java</file>
         </group>
     </open-files>
 </project-private>
